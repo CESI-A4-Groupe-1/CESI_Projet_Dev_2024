@@ -17,12 +17,11 @@ export default {
 }
 </script>
 
-
-
-
 <template>
   <h1>CESI eats</h1>
-
+  <div>
+    <router-view></router-view>
+  </div>
 
 </template>
 
