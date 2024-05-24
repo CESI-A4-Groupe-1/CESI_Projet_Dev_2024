@@ -1,19 +1,36 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import {useSlots} from "vue";
+</script>
+
+
+<script>
+export default {
+  data() {
+    return {
+      UneVariable: 4
+    }
+  },
+  methods: {
+    uneFonction() {
+      return null;
+    }
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <header v-on:click="uneFonction()"> <!--ajout de lignes inutiles ici -->
+    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125"/>
     <router-view/>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="You did it!"/>
     </div>
   </header>
 
   <main>
-    <TheWelcome />
+    <TheWelcome/>
   </main>
 </template>
 
