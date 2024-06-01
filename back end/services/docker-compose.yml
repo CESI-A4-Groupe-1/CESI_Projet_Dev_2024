@@ -1,0 +1,92 @@
+version: "3.9"
+
+services:
+    orders_deliveries:
+        build:
+            context: ./orders_deliveries
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./orders_deliveries/src:/home/node/app/src
+            - ./orders_deliveries/nodemon.json:/home/node/app/nodemon.json
+        container_name: orders_deliveries
+        expose:
+            - "${ORDERS_PORT}"
+        ports:
+            -   "${ORDERS_PORT}:${ORDERS_PORT}"
+        command: npm run dev
+
+    accounts:
+        build:
+            context: ./accounts
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./accounts/src:/home/node/app/src
+            - ./accounts/nodemon.json:/home/node/app/nodemon.json
+        container_name: accounts
+        expose:
+            - "${ACCOUNTS_PORT}"
+        ports:
+            - "${ACCOUNTS_PORT}:${ACCOUNTS_PORT}"
+        command: npm run dev
+
+    menus:
+        build:
+            context: ./menus
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./menus/src:/home/node/app/src
+            - ./menus/nodemon.json:/home/node/app/nodemon.json
+        container_name: menus
+        expose:
+            - "${MENUS_PORT}"
+        ports:
+            - "${MENUS_PORT}:${MENUS_PORT}"
+        command: npm run dev
+
+    statistics:
+        build:
+            context: ./statistics
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./statistics/src:/home/node/app/src
+            - ./statistics/nodemon.json:/home/node/app/nodemon.json
+        container_name: statistics
+        expose:
+            - "${STATISTICS_PORT}"
+        ports:
+            - "${STATISTICS_PORT}:${STATISTICS_PORT}"
+        command: npm run dev
+
+    referrals:
+        build:
+            context: ./referrals
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./referrals/src:/home/node/app/src
+            - ./referrals/nodemon.json:/home/node/app/nodemon.json
+        container_name: referrals
+        expose:
+            - "${REFERRALS_PORT}"
+        ports:
+            - "${REFERRALS_PORT}:${REFERRALS_PORT}"
+        command: npm run dev
+
+    notifications:
+        build:
+            context: ./notifications
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./notifications/src:/home/node/app/src
+            - ./notifications/nodemon.json:/home/node/app/nodemon.json
+        container_name: notifications
+        expose:
+            - "${NOTIFICATIONS_PORT}"
+        ports:
+            - "${NOTIFICATIONS_PORT}:${NOTIFICATIONS_PORT}"
+        command: npm run dev

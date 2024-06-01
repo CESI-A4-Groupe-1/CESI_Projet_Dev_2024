@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  orders_deliveries:
+    build:
+      target: production
+    command: node build/index.js
+
+  accounts:
+    build:
+      target: production
+    command: node build/index.js
+
+  menus:
+    build:
+      target: production
+    command: node build/index.js
+
+  statistics:
+    build:
+      target: production
+    command: node build/index.js
+
+  referrals:
+    build:
+      target: production
+    command: node build/index.js
