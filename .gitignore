@@ -28,4 +28,3 @@ front end/CEeats/.vscode/extensions.json
 *.sw?
 
 *.tsbuildinfo
-/back end/services/.env
