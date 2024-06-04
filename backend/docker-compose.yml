@@ -1,0 +1,118 @@
+version: "3.9"
+networks:
+    app-network:
+
+services:
+    orders_deliveries:
+        build:
+            context: services/orders_deliveries
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/orders_deliveries/src:/home/node/app/src
+            - ./services/orders_deliveries/nodemon.json:/home/node/app/nodemon.json
+        container_name: orders_deliveries
+        expose:
+            - "${ORDERS_PORT}"
+        ports:
+            -   "${ORDERS_PORT}:${ORDERS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    accounts:
+        build:
+            context: services/accounts
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/accounts/src:/home/node/app/src
+            - ./services/accounts/nodemon.json:/home/node/app/nodemon.json
+        container_name: accounts
+        expose:
+            - "${ACCOUNTS_PORT}"
+        ports:
+            - "${ACCOUNTS_PORT}:${ACCOUNTS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    menus:
+        build:
+            context: services/menus
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/menus/src:/home/node/app/src
+            - ./services/menus/nodemon.json:/home/node/app/nodemon.json
+        container_name: menus
+        expose:
+            - "${MENUS_PORT}"
+        ports:
+            - "${MENUS_PORT}:${MENUS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    statistics:
+        build:
+            context: services/statistics
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/statistics/src:/home/node/app/src
+            - ./services/statistics/nodemon.json:/home/node/app/nodemon.json
+        container_name: statistics
+        expose:
+            - "${STATISTICS_PORT}"
+        ports:
+            - "${STATISTICS_PORT}:${STATISTICS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    referrals:
+        build:
+            context: services/referrals
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/referrals/src:/home/node/app/src
+            - ./services/referrals/nodemon.json:/home/node/app/nodemon.json
+        container_name: referrals
+        expose:
+            - "${REFERRALS_PORT}"
+        ports:
+            - "${REFERRALS_PORT}:${REFERRALS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    notifications:
+        build:
+            context: services/notifications
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./services/notifications/src:/home/node/app/src
+            - ./services/notifications/nodemon.json:/home/node/app/nodemon.json
+        container_name: notifications
+        expose:
+            - "${NOTIFICATIONS_PORT}"
+        ports:
+            - "${NOTIFICATIONS_PORT}:${NOTIFICATIONS_PORT}"
+        command: npm run dev
+        networks:
+            - app-network
+    nginx:
+        image: nginx:latest
+        container_name: api_gateway
+        volumes:
+            - ./api_gateway/nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - "8080:8080"
+
+        networks:
+            - app-network
+        depends_on:
+            - accounts
+            - orders_deliveries
+            - referrals
+            - menus
+            - notifications
+            - statistics
