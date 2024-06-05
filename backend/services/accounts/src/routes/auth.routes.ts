@@ -6,5 +6,5 @@ import authController from "../controllers/auth.controller"
 export default function (app: any) {
     app.post('/register', (new authController()).register)
     app.post('/login', (new authController()).login)
-    app.post('/authenticate', (new authController()).authenticate)
+    app.get('/authenticate', (new authController()).authenticate)
 }
