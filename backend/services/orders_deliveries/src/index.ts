@@ -6,5 +6,5 @@ app.listen(3001, () => {
 })
 
 app.get("/", (req: any, res: any) => {
-    res.status(200).json({msg: "Welcome to the Accounts Service"})
+    res.status(200).json({msg: "Welcome to the Orders Service"})
 })
