@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import RowCategory from "@/components/CategoryRow.vue";
-  import SingleCategory from "@/components/CategoryCard.vue";
 </script>
 
 <template>
@@ -18,10 +17,8 @@
   .search {
     width: 100%;
   }
-  .category_row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.category_rows {
     margin-bottom: 20px;
   }
 </style>
