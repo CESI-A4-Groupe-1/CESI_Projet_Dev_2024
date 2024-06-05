@@ -10,6 +10,7 @@
     <div class="category_rows">
       <RowCategory v-for="(row, i) in 6" :key="i"></RowCategory>
     </div>
+
   </main>
 </template>
 
