@@ -17,7 +17,8 @@
   .search {
     width: 100%;
   }
-  .category_rows {
+
+.category_rows {
     margin-bottom: 20px;
   }
 </style>
