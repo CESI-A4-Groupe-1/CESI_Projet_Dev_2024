@@ -2,6 +2,16 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import TagView from '@/views/customer/TagsView.vue'
 
+//TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
+function authenticateUser(): boolean {
+    return false;
+}
+
+//TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier les permissions de l'utilisateurs
+function authenticateAdmin(): boolean {
+    return false;
+}
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -25,7 +35,7 @@ const router = createRouter({
                     name: 'users_orders',
                     component: MainView,
                     beforeEnter: (to, from, next): void => {
-                        let isAdmin: boolean = false;
+                        let isAdmin: boolean = authenticateAdmin();
                         if (isAdmin) {
                             return next(to)
                         }
@@ -35,7 +45,7 @@ const router = createRouter({
                     path: '/:id',
                     component: MainView, //TODO : changer le composant pour que ce soit la vue d'un utilisateur unique. Utiliser la variable "isAdmin" pour valider ou invalider la requête
                     beforeEnter: (to, from, next) => {
-                        let isAdmin: boolean = false;
+                        let isAdmin: boolean = authenticateAdmin();
                         if (isAdmin) {
                             return next(to)
                         }
@@ -53,7 +63,7 @@ const router = createRouter({
                     name: 'specific_article',
                     component: MainView,
                     beforeEnter: (to, from, next) => {
-                        let isAllowed: boolean = false;
+                        let isAllowed: boolean = authenticateUser();
                         if (isAllowed) {
                             return next(to)
                         }
