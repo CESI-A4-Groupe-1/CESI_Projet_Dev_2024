@@ -18,6 +18,7 @@
     justify-content: flex-end;
     align-items: flex-end;
     padding: 10px;
+    margin-bottom: 20px;
     .category_name {
       position: absolute;
       bottom: 0;
