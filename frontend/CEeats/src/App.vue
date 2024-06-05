@@ -1,5 +1,8 @@
 <script lang="ts">
+import Sidebar from '@/components/Sidebar.vue'
+
 export default {
+  components: { Sidebar },
   data() {
     return {
       isMenuOpen: false,
@@ -8,7 +11,8 @@ export default {
         page_content_1: false
       }
     }
-  }, methods: {
+  },
+  methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
       this.page_content.page_content_2 = !this.page_content.page_content_2
@@ -16,15 +20,23 @@ export default {
     }
   }
 }
-
-
 </script>
 
 <template>
   <header class="flex-container">
-    <button class="btn btn-primary" type="button"
-            style="background: white;color: rgb(42, 66, 82);border-radius: 6px;margin: 0px;text-align: center;border: 4px solid rgb(42, 66, 82);"
-            @click="toggleMenu">
+    <button
+      class="btn btn-primary"
+      type="button"
+      style="
+        background: white;
+        color: rgb(42, 66, 82);
+        border-radius: 6px;
+        margin: 0px;
+        text-align: center;
+        border: 4px solid rgb(42, 66, 82);
+      "
+      @click="toggleMenu"
+    >
       Menu
     </button>
     <h1><strong>CESeats</strong></h1>
@@ -32,16 +44,15 @@ export default {
   </header>
 
   <div
-    v-bind:class="{main_page_content_1: page_content.page_content_1, main_page_content_2: page_content.page_content_2}">
+    v-bind:class="{
+      main_page_content_1: page_content.page_content_1,
+      main_page_content_2: page_content.page_content_2
+    }"
+  >
+    <sidebar :is-menu-open="isMenuOpen" />
 
-    <div class="sidebar_class" v-if="isMenuOpen">
-
-      qzemoifjmoqsdijfmoqziejfmoijsdmfoijqzemofijqzoif
-    </div>
     <router-view class="router_class" />
   </div>
-
-
 </template>
 
 <style scoped>
@@ -73,10 +84,9 @@ span.logo {
   border: 10px solid #2a4252;
 }
 
-
 .main_page_content_1 {
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: 10% auto;
   grid-template-rows: 1fr;
   grid-auto-columns: 1fr;
   grid-gap: 1em 1em;
@@ -90,17 +100,5 @@ span.logo {
 
 .router_class {
   grid-area: 1 / 2 / 2 / 3;
-
-}
-
-.sidebar_class {
-  grid-area: 1 / 1 / 2 / 2;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: flex-start;
-  border: 2px solid #2a4252;
 }
 </style>
