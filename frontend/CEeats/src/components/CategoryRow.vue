@@ -11,8 +11,10 @@
 <style scoped>
 .category_row {
   display: flex;
-  flex-direction: row;
+  flex-direction: row!important;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
 }
 
 </style>
