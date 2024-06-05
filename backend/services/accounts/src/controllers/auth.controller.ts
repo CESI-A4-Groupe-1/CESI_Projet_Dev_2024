@@ -38,7 +38,23 @@ export default class AuthController {
     }
 
     authenticate = (req: any, res: any) => {
-        let token = req.headers.authorization.spli(" ")[1];
+        let token;
+        try {
+            token = req.headers.authorization.split(" ")[1];
+        }
+         catch (error) {
+            return res.status(401).json({
+                message: "No Token Provided",
+            });
+        }
+
+
+        if (!token) {
+            return res.status(401).json({
+                message: "No Token Provided",
+            });
+        }
+
         jwt.verify(
             token,
             process.env.ACCESS_JWT_KEY,
