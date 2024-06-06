@@ -1,6 +1,9 @@
 version: "3.9"
 networks:
     app-network:
+volumes:
+    db_data:
+
 
 services:
     orders_deliveries:
@@ -125,6 +128,7 @@ services:
             -   "3306:3306"
         volumes:
             - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+            - db_data:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
             MYSQL_DATABASE: "${MYSQL_DATABASE}"
