@@ -70,6 +70,48 @@ const router = createRouter({
                     }
                 }
             ]
+        },
+        {
+            path: '/menus',
+            name: 'menus_view',
+            component: MainView, //FIXME : Changer le composant pour le vrai composant
+            children: [
+                {
+                    path: '/:id',
+                    name: 'specific_menu',
+                    component: MainView
+                }
+            ]
+        },
+        {
+            path: '/restaurants',
+            name: 'restaurants_list_view',
+            component: MainView,
+            children: [
+                {
+                    path: '/:id',
+                    component: MainView,
+                    name: "specific_restaurant",
+                    children: [
+                        {
+                            path: '/orders',
+                            name: "specific_restaurant_orders",
+                            component: MainView,
+                        },
+                        {
+                            path: '/statistics',
+                            name: 'specific_restaurant_statistics',
+                            component: MainView,
+
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            path: '/categories',
+            name: 'categories_view',
+            component: MainView,
         }
     ]
 })
