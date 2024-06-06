@@ -2,7 +2,6 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
-import TagView from '@/views/customer/TagsView.vue'
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -31,11 +30,6 @@ const router = createRouter({
           path: '/resultats', 
           name: 'resultats', 
           component: ResultsView 
-        },
-        {
-            path: '/parcourir',
-            name: 'parcourir',
-            component: TagView
         },
         {
             path: '/users',
@@ -82,6 +76,48 @@ const router = createRouter({
                     }
                 }
             ]
+        },
+        {
+            path: '/menus',
+            name: 'menus_view',
+            component: MainView, //FIXME : Changer le composant pour le vrai composant
+            children: [
+                {
+                    path: '/:id',
+                    name: 'specific_menu',
+                    component: MainView
+                }
+            ]
+        },
+        {
+            path: '/restaurants',
+            name: 'restaurants_list_view',
+            component: MainView,
+            children: [
+                {
+                    path: '/:id',
+                    component: MainView,
+                    name: "specific_restaurant",
+                    children: [
+                        {
+                            path: '/orders',
+                            name: "specific_restaurant_orders",
+                            component: MainView,
+                        },
+                        {
+                            path: '/statistics',
+                            name: 'specific_restaurant_statistics',
+                            component: MainView,
+
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            path: '/categories',
+            name: 'categories_view',
+            component: MainView,
         }
     ]
 })
