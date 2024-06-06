@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
+import RestaurantView from '@/views/customer/RestaurantView.vue'
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -26,11 +27,19 @@ const router = createRouter({
           name: 'parcourir', 
           component: ExploreView 
         },
+        // correspond au 'restaurants' dans ces routes
         { 
           path: '/resultats', 
           name: 'resultats', 
           component: ResultsView 
         },
+        // temporaire le temps de tester. se mettre d'accord sur le nom des routes.
+        {
+            path: '/restaurants/:id',
+            name: 'restaurant',
+            component: RestaurantView
+        },
+
         {
             path: '/users',
             name: 'users',
@@ -92,11 +101,11 @@ const router = createRouter({
         {
             path: '/restaurants',
             name: 'restaurants_list_view',
-            component: MainView,
+            component: ResultsView,
             children: [
                 {
                     path: '/:id',
-                    component: MainView,
+                    component: RestaurantView,
                     name: "specific_restaurant",
                     children: [
                         {

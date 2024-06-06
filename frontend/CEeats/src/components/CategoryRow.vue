@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import SingleCategory from "@/components/CategoryCard.vue";
+  import CategoryCard from "@/components/CategoryCard.vue";
 </script>
 
 <template>
     <RouterLink class="category_row" to="/resultats">
-      <SingleCategory v-for="(category, i) in 2" :key="i"/>
+      <CategoryCard v-for="(category, i) in 2" :key="i"/>
     </RouterLink>
 </template>
 

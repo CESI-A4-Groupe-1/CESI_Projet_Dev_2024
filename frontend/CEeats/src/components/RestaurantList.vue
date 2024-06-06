@@ -4,7 +4,9 @@
 
 <template>
   <div class="restaurant_card" v-for="(restaurant, i) in 6" :key="i">
-    <RestaurantCard></RestaurantCard>
+    <RouterLink class="restaurant_card_link" to="/restaurants/1">
+      <RestaurantCard></RestaurantCard>
+    </RouterLink>
   </div>
 </template>
 
@@ -17,4 +19,10 @@
 .restaurant_card:hover {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+
+.restaurant_card_link {
+  text-decoration: none;
+  color: black;
+}
+
 </style>
