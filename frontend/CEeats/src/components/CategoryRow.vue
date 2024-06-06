@@ -3,15 +3,15 @@
 </script>
 
 <template>
-  <div class="category_row">
-    <SingleCategory v-for="(category, i) in 2" :key="i"/>
-  </div>
+    <RouterLink class="category_row" to="/resultats">
+      <SingleCategory v-for="(category, i) in 2" :key="i"/>
+    </RouterLink>
 </template>
 
 <style scoped>
 .category_row {
   display: flex;
-  flex-direction: row!important;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0;
