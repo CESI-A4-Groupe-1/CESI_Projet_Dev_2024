@@ -7,7 +7,7 @@ const User_DB : User[] = [];
 
 export default class AuthController {
     register = (req: any, res: any) => {
-        const user = new User(req.body.username, bcrypt.hashSync(req.body.password, 10))
+        const user = new User(req.body.username, bcrypt.hashSync(req.body.password, 10), req.body.role)
         User_DB.push(user)
         return res.status(201).json({
             "msg": "New User Created"
@@ -63,6 +63,8 @@ export default class AuthController {
                 const user = User_DB.find((u) => u.username === decoded.username);
                 // response
                 if (user) {
+                    res.setHeader("X-User-Id", "1"); // TODO: get id from db
+                    res.setHeader("X-User-Role", user.role); // TODO: get role from db
                     return res.status(200).json({
                         message: "User Authenticated",
                         token: token,
