@@ -6,5 +6,6 @@ app.listen(3001, () => {
 })
 
 app.get("/", (req: any, res: any) => {
+    console.log(req.headers)
     res.status(200).json({msg: "Welcome to the Orders Service"})
 })
