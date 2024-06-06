@@ -1,5 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
+import ExploreView from '@/views/customer/ExploreView.vue'
+import ResultsView from '@/views/customer/ResultsView.vue'
 import TagView from '@/views/customer/TagsView.vue'
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
@@ -19,6 +21,16 @@ const router = createRouter({
             path: '/',
             name: 'test',
             component: MainView
+        },
+        { 
+          path: '/parcourir', 
+          name: 'parcourir', 
+          component: ExploreView 
+        },
+        { 
+          path: '/resultats', 
+          name: 'resultats', 
+          component: ResultsView 
         },
         {
             path: '/parcourir',
