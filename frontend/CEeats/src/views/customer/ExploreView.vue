@@ -13,14 +13,17 @@ export default {
     //TODO : utiliser cette section comme l'équivalent d'un évènement "onready" de HTML basique pour envoyer un fetch au serveurs de catégories
     this.categories_array = ["a", "b", "c", "d", "e", "f", "g", "h"]
   },
-  methods: {}
+  methods: {
+    //TODO : fonction de recherche pour l'élément 'search' ou utilisation d'un composant déjà existant (potentiellement primevue)
+    //TODO : méthode get_category()
+  }
 }
 </script>
 
 
 <template>
   <main>
-    <input class="search" placeholder="Search"  />
+    <input class="search" placeholder="Search"/>
     <h2 class="topCategories">Top Categories</h2>
     <div class="category_container">
       <CategoryCard v-for="(row, i) in categories_array" :key="i" :tag-name='row' style="margin: 5px"></CategoryCard>

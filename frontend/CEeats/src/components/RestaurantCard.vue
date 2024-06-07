@@ -28,6 +28,7 @@
   align-items: center;
   border: 1px solid rgb(243, 243, 243);
   border-radius: 12px;
+  overflow: hidden;
   .restaurant_info {
     width: 100%;
     padding: 10px;
@@ -39,6 +40,11 @@
     }
   }
 }
+
+.restaurant_card:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
 img {
   padding: 1rem;
   height: 60px;
