@@ -20,7 +20,7 @@ export default {
 
 <template>
   <main>
-    <input class="search" placeholder="Search"></input>
+    <input class="search" placeholder="Search"  />
     <h2 class="topCategories">Top Categories</h2>
     <div class="category_container">
       <CategoryCard v-for="(row, i) in categories_array" :key="i" :tag-name='row' style="margin: 5px"></CategoryCard>
