@@ -1,28 +1,37 @@
 <script setup lang="js">
-  import Menue from "@/components/Menue.vue";
-  import {useRoute} from "vue-router";
-
-  const route = useRoute();
-  let value = route.params.id;
-
-  let menues = ["Menu 1", "Menu 2", "Menu 3", "Menu 4", "Menu 5"];
-
-  const scrollToMenu = (event, index) => {
-    event.preventDefault(); // Empêche le comportement par défaut du lien
-    const element = document.getElementById(`heading${index}`);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" }); // Défilement en douceur
-    }
-  };
-
+import Menue from "@/components/Menue.vue";
 </script>
+
+<script lang="js">
+export default {
+  data() {
+    return {
+      menues: ["Menu 1", "Menu 2", "Menu 3", "Menu 4", "Menu 5"]
+    }
+  },
+  methods: {
+    scrollToMenu(event, index) {
+      event.preventDefault(); // Empêche le comportement par défaut du lien
+      const element = document.getElementById(`heading${index}`);
+      if (element) {
+        element.scrollIntoView({behavior: "smooth"}); // Défilement en douceur
+      }
+    },
+  }
+}
+</script>
+
 
 <template>
   <main>
-    <div class="restaurant_banner"></div>
+    <div class="restaurant_banner">
+      <div class="button_return">
+        <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
+      </div>
+    </div>
     <div class="restaurant_top">
       <div class="restaurant_infos">
-        <h2 class="restaurant_name">Restaurants {{ value }}</h2>
+        <h2 class="restaurant_name">Restaurants {{ $route.params.id }}</h2>
         <p class="restaurant_details">
           #.9 (2000) - 5000 km - Ouverture: 12:00-22:00 <br>
           adresse - $$
@@ -31,7 +40,8 @@
       <nav class="list_menues">
         <ul class="list">
           <li class="menue">
-            <a href="#" class="menue_link" v-for="(menue, i) in menues" :key="i" @click="(event) => scrollToMenu(event, i)">
+            <a href="#" class="menue_link" v-for="(menue, i) in menues" :key="i"
+               @click="(event) => scrollToMenu(event, i)">
               {{ menues[i] }}
             </a>
           </li>
@@ -47,9 +57,16 @@
 <style scoped>
 .restaurant_banner {
   height: 200px;
-  background-image:url("https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt48366c92248b30a1/65ce4cf60bdd87040aaea572/400x400_RU_Cheeseburger_PtitwrapRanch_McFishMayo_frite_coca_petit.png?width=1200&height=630&crop=1200:630");
+  background-image: url("https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt48366c92248b30a1/65ce4cf60bdd87040aaea572/400x400_RU_Cheeseburger_PtitwrapRanch_McFishMayo_frite_coca_petit.png?width=1200&height=630&crop=1200:630");
   background-size: cover;
-  background-position: bottom center
+  background-position: bottom center;
+  position: relative;
+}
+
+.button_return {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .restaurant_top {
@@ -69,6 +86,7 @@
 
 .list, .menue {
   display: inline-block;
+
   a {
     padding: 0 15px;
   }

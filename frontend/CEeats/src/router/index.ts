@@ -3,6 +3,7 @@ import MainView from '@/views/MainView.vue'
 import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
 import RestaurantView from '@/views/customer/RestaurantView.vue'
+import OrdersView from "@/views/customer/OrdersView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -34,11 +35,10 @@ const router = createRouter({
           component: ResultsView 
         },
         // temporaire le temps de tester. se mettre d'accord sur le nom des routes.
-        {
-            path: '/restaurants/:id',
-            name: 'restaurant',
-            component: RestaurantView
-        },
+        // ---------------------------------------------------------------- //
+        { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
+        { path: '/users/:id/orders', name: 'orders', component: OrdersView },
+        // ---------------------------------------------------------------- //
 
         {
             path: '/users',
@@ -48,7 +48,7 @@ const router = createRouter({
                 {
                     path: '/:id/orders',
                     name: 'users_orders',
-                    component: MainView,
+                    component: OrdersView,
                     beforeEnter: (to, from, next): void => {
                         let isAdmin: boolean = authenticateAdmin();
                         if (isAdmin) {
