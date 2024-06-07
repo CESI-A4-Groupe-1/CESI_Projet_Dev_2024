@@ -33,11 +33,21 @@ services:
         container_name: accounts
         expose:
             - "${ACCOUNTS_PORT}"
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
+
         ports:
             - "${ACCOUNTS_PORT}:${ACCOUNTS_PORT}"
         command: npm run dev
         networks:
             - app-network
+        depends_on:
+            - db
     menus:
         build:
             context: services/menus
@@ -125,7 +135,7 @@ services:
         container_name: db
         restart: always
         ports:
-            -   "3306:3306"
+            -   "${MYSQL_PORT}:${MYSQL_PORT}"
         volumes:
             - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
             - db_data:/var/lib/mysql
