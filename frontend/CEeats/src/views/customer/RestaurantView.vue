@@ -6,17 +6,21 @@ import Menue from "@/components/Menue.vue";
 export default {
   data() {
     return {
+      // Ici, mettre les variables
       menues: ["Menu 1", "Menu 2", "Menu 3", "Menu 4", "Menu 5"]
     }
   },
   methods: {
+    // Ici, mettre les méthodes
     scrollToMenu(event, index) {
-      event.preventDefault(); // Empêche le comportement par défaut du lien
+      event.preventDefault();
       const element = document.getElementById(`heading${index}`);
       if (element) {
-        element.scrollIntoView({behavior: "smooth"}); // Défilement en douceur
+        element.scrollIntoView({behavior: "smooth"});
       }
     },
+    //TODO : Fonction get_menue() qui renvoie menue:[article:{nom, prix, description, img}]. Donner la valuer au composant 'Menue'
+    //TODO : Fonction add_to_order(). Une gestion du panier sera nécessaire.
   }
 }
 </script>
@@ -54,6 +58,7 @@ export default {
   </main>
 </template>
 
+<!--TODO : styliser la page-->
 <style scoped>
 .restaurant_banner {
   height: 200px;

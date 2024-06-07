@@ -2,11 +2,19 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "OrderCard"
+  name: "OrderCard",
+  components: {},
+  props: {
+    //TODO : Récupérer valeur du restaurant
+  },
+  setup(props, { emit }) {
+    // Mettre le code ici
+  }
 })
 </script>
 
 <template>
+<!--  TODO : Ouvrir view détail de la commande avec liste des articles-->
   <div class="order_card">
     <div class="logo_and_info">
       <img src="https://images.bfmtv.com/UDAdpp33jU96JAWSB1v2R8KbfUg=/0x0:1196x1192/600x0/images/-458880.jpg" alt="mcdo">
@@ -24,6 +32,7 @@ export default defineComponent({
 
 </template>
 
+<!--TODO : styliser le composant-->
 <style scoped>
 img {
   height: 90px;
@@ -49,5 +58,4 @@ img {
   flex-direction: row;
   align-items: center;
 }
-
 </style>

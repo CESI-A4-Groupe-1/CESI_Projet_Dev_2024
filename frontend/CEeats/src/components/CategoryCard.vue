@@ -1,12 +1,24 @@
 <script setup lang="ts">
 
 </script>
+<script>
+
+export default {
+  data() {
+
+  },
+  props: [
+    "tagName"
+  ]
+}
+
+</script>
 
 <template>
-  <div class="single_category">
-    <p class="middle">Catégorie 1</p>
-    <p class="category_name">Catégorie 1</p>
-  </div>
+  <RouterLink to="/resultats" class="single_category">
+    <p class="middle">{{ tagName }}</p>
+    <p class="category_name">{{ tagName }}</p>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>

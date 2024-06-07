@@ -11,6 +11,15 @@ export default defineComponent({
     RestaurantList,
     FilterButton,
   },
+  props: {
+    // TODO : Récupérer la catégorie
+    //TODO : Récupérer la valeur des filtres de 'FilterButton'
+  },
+  setup(props, { emit }) {
+    // Mettre le code ici
+    //TODO : Fonction de recherche. Retourne restaurants.
+    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérer. Passer la valeur au composant 'RestaurantList'.
+  }
 })
 
 </script>
@@ -38,6 +47,7 @@ export default defineComponent({
   </main>
 </template>
 
+<!--TODO : styliser la page-->
 <style lang="scss" scoped>
   .return_and_search {
     display: flex;
@@ -85,5 +95,4 @@ export default defineComponent({
       margin-right: 16px;
     }
   }
-
 </style>
