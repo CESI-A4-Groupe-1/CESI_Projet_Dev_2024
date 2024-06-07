@@ -237,8 +237,10 @@ DROP TABLE IF EXISTS `permission_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `permission_roles` (
+  `PermissionRolesId` int NOT NULL AUTO_INCREMENT,
   `RoleID` int DEFAULT NULL,
   `PermissionID` int DEFAULT NULL,
+  PRIMARY KEY (`PermissionRolesId`),
   KEY `Role_fk` (`RoleID`),
   KEY `Permission_fk` (`PermissionID`),
   CONSTRAINT `Permission_fk` FOREIGN KEY (`PermissionID`) REFERENCES `permissions` (`PermissionID`),
