@@ -1,7 +1,18 @@
-<script setup lang="ts">
+<script lang="ts">
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  name: "OrderCard",
+  components: {
+    CategoryThumbnail,
+    RestaurantList,
+    FilterButton,
+  },
+})
+
 </script>
 
 <template>

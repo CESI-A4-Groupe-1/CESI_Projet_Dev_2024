@@ -1,6 +1,18 @@
-<script setup lang="ts">
+  <script lang="ts">
+  import {defineComponent} from 'vue'
   import RowCategory from "@/components/CategoryRow.vue";
-</script>
+
+  export default defineComponent({
+    name: "OrdersView",
+    components: {
+      RowCategory
+    },
+    props: {},
+    setup(props, { emit }) {
+
+    }
+  })
+  </script>
 
 <template>
   <main>

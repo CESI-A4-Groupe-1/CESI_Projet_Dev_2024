@@ -20,6 +20,7 @@
     align-items: flex-end;
     padding: 10px;
     margin-bottom: 20px;
+    color: black;
     .category_name {
       position: absolute;
       bottom: 0;

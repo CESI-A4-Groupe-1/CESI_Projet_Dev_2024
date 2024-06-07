@@ -1,9 +1,12 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import OrderCard from "@/components/OrderCard.vue";
 
 export default defineComponent({
   name: "OrdersView",
-  components: {},
+  components: {
+    OrderCard
+  },
   props: {},
   setup(props, { emit }) {
 
@@ -12,7 +15,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <h2>Hello</h2>
+  <main>
+    <div class="order" v-for="(order, i) in 4" :key="i">
+      <OrderCard></OrderCard>
+    </div>
+  </main>
 </template>
 
 <style scoped>
