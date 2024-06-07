@@ -1,6 +1,5 @@
 import {Sequelize} from "sequelize-typescript";
 import dotenv from "dotenv";
-import {Compte} from "../models/init-models";
 dotenv.config();
 
 const db = new Sequelize(
