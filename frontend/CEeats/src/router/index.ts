@@ -21,15 +21,15 @@ const router = createRouter({
             name: 'test',
             component: MainView
         },
-        { 
-          path: '/parcourir', 
-          name: 'parcourir', 
-          component: ExploreView 
+        {
+            path: '/parcourir',
+            name: 'parcourir',
+            component: ExploreView
         },
-        { 
-          path: '/resultats', 
-          name: 'resultats', 
-          component: ResultsView 
+        {
+            path: '/resultats',
+            name: 'resultats',
+            component: ResultsView
         },
         {
             path: '/users',
@@ -117,7 +117,7 @@ const router = createRouter({
         {
             path: '/categories',
             name: 'categories_view',
-            component: MainView,
+            component: ExploreView,
         }
     ]
 })
