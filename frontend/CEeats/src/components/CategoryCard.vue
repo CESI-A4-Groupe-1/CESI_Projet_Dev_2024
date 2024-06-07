@@ -14,11 +14,9 @@ export default {
 
 </script>
 <template>
-  <RouterLink to="">
-    <div class="single_category">
-      <p class="middle">{{ tagName }}</p>
-      <p class="category_name">{{ tagName }}</p>
-    </div>
+  <RouterLink to="/categories" class="single_category">
+    <p class="middle">{{ tagName }}</p>
+    <p class="category_name">{{ tagName }}</p>
   </RouterLink>
 
 </template>
