@@ -27,8 +27,7 @@ export default class UserController {
         try {
             const {user_id} = req.params;
 
-            // todo: check if user is of role client
-            if (req.headers['x-user-id'] !== user_id) {
+            if ((await Roles.findByPk(req.headers['x-user-role']))?.role_title === "customer" && req.headers['x-user-id'] !== user_id) {
                 return res.status(403).json({msg: "Forbidden"});
             }
 
@@ -39,4 +38,11 @@ export default class UserController {
             return res.status(500).json({msg: "Internal Server Error"});
         }
     }
+
+    // TODO - add update user functionality
+    updateUser = async (req: any, res: any) => {}
+    // TODO - add delete user functionality
+    deleteUser = async (req: any, res: any) => {}
+
+
 }

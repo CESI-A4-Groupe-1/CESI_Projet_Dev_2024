@@ -1,6 +1,7 @@
 import {initModels} from "../models/init-models";
 import db from "../db/db";
 import {config} from "dotenv";
+import {isAdmin} from "./isAdmin";
 
 config();
 const jwt = require("jsonwebtoken")
@@ -13,31 +14,27 @@ export default class AuthController {
     }
     register = async (req: any, res: any) => {
         try {
-            // Check if user already exists
-            const existingUser = await Compte.findOne({where: {email: req.body.email}});
+            const { email } = req.body;
+            const existingUser = await Compte.findOne({ where: { email } });
+
             if (existingUser) {
-                return res.status(409).json({
-                    "msg": "User Already Exists"
-                });
+                return res.status(409).json({ msg: "User Already Exists" });
             }
-            // Hash password
+
             req.body.password = bcrypt.hashSync(req.body.password, 10);
-            // Create new user
             const compte = new Compte(req.body);
 
-            if ((await compte.getRole()).role_title === "admin") {
-                console.log(req.headers);
+            const userRole = await compte.getRole();
+            if (userRole.role_title === "admin" && !(await isAdmin(req))) {
+                return res.status(401).json({ msg: "Unauthorized" });
             }
-            // Save new user and return without password
-            compte.save()
-                .then((compte) => res.status(201).json(compte))
-                .catch((err: any) => res.status(400).json(err));
-        } catch (err) {
-            console.log(err);
-            res.status(400).json(err);
-        }
 
-        // check if email is already in use
+            await compte.save();
+            return res.status(201).json(compte);
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ msg: "Internal Server Error" });
+        }
     }
 
     login = async (req: any, res: any) => {
@@ -82,7 +79,6 @@ export default class AuthController {
             let decoded;
             try {
                 decoded = jwt.verify(token, process.env.ACCESS_JWT_KEY);
-                console.log(decoded);
             } catch (err) {
                 return res.status(401).json({
                     "msg": "Invalid Credentials"
