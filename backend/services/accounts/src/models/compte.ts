@@ -20,11 +20,12 @@ export interface CompteAttributes {
   updated_at: Date;
   id_parain?: number;
   adresse?: string;
+  deleted_at?: Date;
 }
 
 export type ComptePk = "id";
 export type CompteId = Compte[ComptePk];
-export type CompteOptionalAttributes = "id" | "nom" | "prenom" | "email" | "date_anniv" | "telephone" | "created_at" | "updated_at" | "id_parain" | "adresse";
+export type CompteOptionalAttributes = "id" | "nom" | "prenom" | "email" | "date_anniv" | "telephone" | "created_at" | "updated_at" | "id_parain" | "adresse" | "deleted_at";
 export type CompteCreationAttributes = Optional<CompteAttributes, CompteOptionalAttributes>;
 
 export class Compte extends Model<CompteAttributes, CompteCreationAttributes> implements CompteAttributes {
@@ -42,6 +43,7 @@ export class Compte extends Model<CompteAttributes, CompteCreationAttributes> im
   updated_at!: Date;
   id_parain?: number;
   adresse?: string;
+  deleted_at?: Date;
 
   // Compte belongsTo Compte via id_parain
   id_parain_compte!: Compte;
@@ -158,6 +160,7 @@ export class Compte extends Model<CompteAttributes, CompteCreationAttributes> im
   }, {
     tableName: 'compte',
     timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

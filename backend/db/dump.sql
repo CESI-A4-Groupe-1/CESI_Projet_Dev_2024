@@ -149,6 +149,7 @@ CREATE TABLE `compte` (
   `path_pfp` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `Id_parain` int DEFAULT NULL,
   `adresse` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`),
