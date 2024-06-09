@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
--- Host: localhost    Database: CESEats
+-- Host: 127.0.0.1    Database: CESEats
 -- ------------------------------------------------------
--- Server version	8.0.36-0ubuntu0.22.04.1
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,8 +14,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE Database if not exists CESEats;
-USE CESEats;
+
 --
 -- Table structure for table `articles`
 --
@@ -149,15 +148,15 @@ CREATE TABLE `compte` (
   `path_pfp` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
   `Id_parain` int DEFAULT NULL,
   `adresse` varchar(255) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `Id_parain` (`Id_parain`),
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `compte_ibfk_1` FOREIGN KEY (`Id_parain`) REFERENCES `compte` (`ID`),
   CONSTRAINT `RoleID` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,6 +165,7 @@ CREATE TABLE `compte` (
 
 LOCK TABLES `compte` WRITE;
 /*!40000 ALTER TABLE `compte` DISABLE KEYS */;
+INSERT INTO `compte` VALUES (2,NULL,NULL,'test@test.com',1,'2012-04-23 18:25:43','12345678','011111111',1,'./','2024-06-06 20:11:00','2024-06-06 20:11:00',NULL,'',NULL),(3,'dfajkldskdsffk',NULL,'testttt@test.com',2,'2012-04-23 18:25:43','12345678','011111111',1,'./','2024-06-06 20:12:48','2024-06-09 20:54:36',NULL,'','2024-06-09 20:57:12'),(4,'Doe','John','testc@test.com',1,'2012-04-23 18:25:43','12345678','011111111',1,'./','2024-06-06 20:13:51','2024-06-06 20:13:51',NULL,'',NULL),(5,'Doe','John','tesctc@test.com',1,'2012-04-23 18:25:43','$2b$10$yzB1wgZ7LlvsOEq7OvTsiOtHNvzHwxJuI9Umux.NORiDBLeKGCNAO','011111111',1,'./','2024-06-06 20:15:23','2024-06-06 20:15:23',NULL,'',NULL),(6,'Doe','John','tesctfgffc@test.com',1,'2012-04-23 18:25:43','$2b$10$PKrod9LwSAfc.vD4iN19z.DRFRjgLUvNggBSF1zxHXq6/yAaOHwJm','011111111',1,'./','2024-06-06 20:47:43','2024-06-06 20:47:43',NULL,'',NULL),(7,'Doe','John','tesctfvvvvgffc@test.com',1,'2012-04-23 18:25:43','$2b$10$k/4W6laCta1QP7h2flX0NuYifAMViVBuX/Jh2FcBSFIZlYp87H0he','011111111',1,'./','2024-06-06 20:48:19','2024-06-06 20:48:19',NULL,'',NULL),(8,'Doe','John','tesctfvvvvgvxzcffc@test.com',1,'2012-04-23 18:25:43','$2b$10$lB2ICEDsdIh7ZrsMox.X7eiPodXWPnO9foYNvlOuUHmuR31hHbVSu','011111111',1,'./','2024-06-06 20:48:51','2024-06-06 20:48:51',NULL,'',NULL),(9,'Doe','John','tesctfvvvvcccgvxzcffc@test.com',2,'2012-04-23 18:25:43','$2b$10$hIPAlOvIpddqRoRvtY8jmupDXuYMNdfDkuzzYCi8y0CBex4BGYBf.','05123453255',0,'./','2024-06-06 20:50:09','2024-06-07 13:08:42',NULL,'',NULL),(10,'Doe','John','tesfddffdfddffdt@test.com',1,'2012-04-23 18:25:43','$2b$10$2KouiRkGglA5hhuNrTot7.REcQg22f4R7RMSgMKjvvf5hW4Ap4zMC','011111111',1,'./','2024-06-07 07:59:39','2024-06-07 07:59:39',NULL,'',NULL),(11,'Doe','John','tesfddffddddfddffdt@test.com',1,'2012-04-23 18:25:43','$2b$10$ot/3GnDr.ZE42LBNEKbHuutE93NCeOJE2mP7T0Qrlq./bHOM1UytS','011111111',1,'./','2024-06-07 08:27:48','2024-06-07 08:27:48',NULL,'',NULL),(12,'Doe','John','tesfddffdddffdfddffdt@test.com',1,'2012-04-23 18:25:43','$2b$10$azLbcA0wLBToSKwRZFPMBOc2HcZXqDVhjtUrs2aa3PU5fUXa0RsuS','011111111',1,'./','2024-06-07 09:09:27','2024-06-07 09:09:27',NULL,'',NULL),(13,'Doe','John','tesfddffdddffdfddffssdt@test.com',1,'2012-04-23 18:25:43','$2b$10$vbr3ORn8MmLUpSfn/tTOzuPPLrw1tnuV3LDtsVsJKqFALbEy12lda','011111111',1,'./','2024-06-07 09:09:35','2024-06-07 09:09:35',NULL,'',NULL),(14,'Doe','John','tesfddffdddffdfddffssvvvdt@test.com',1,'2012-04-23 18:25:43','$2b$10$Cn2uS5ldaEI.nmLutMVjVOzpTkhR/weiE2/WxmR.KnQvc7JJJLlhS','011111111',1,'./','2024-06-07 11:59:22','2024-06-07 11:59:22',NULL,'',NULL),(15,'Doe','John','tesfddffdddffdfddffssvvvdddt@test.com',1,'2012-04-23 18:25:43','$2b$10$XVPnvC96GXFZfiaQNLUT1OTZd4BFUxDHv4PQBZ2ukKEYSLSsxRlty','011111111',1,'./','2024-06-07 12:04:12','2024-06-07 12:04:12',NULL,'',NULL),(16,'Doe','John','tesfddffdddffdfddffssvvvddfhjgfdsadt@test.com',1,'2012-04-23 18:25:43','$2b$10$lTSX.wXGt7ZPrIenZEyieOnXoo2XPxmDOq63FlSQU5L4PTVoKAq1a','011111111',1,'./','2024-06-07 13:53:29','2024-06-07 13:53:29',NULL,'',NULL),(17,'Doe','John','arslane@test.fr',2,'2012-04-23 18:25:43','$2b$10$7RPiJt56ynRHXbDorL6l2udKGsaopseezP.FJPu7uz9jn.QVvTO1m','011111111',1,'./','2024-06-07 13:53:51','2024-06-07 13:53:51',NULL,'',NULL),(18,'Doe','John','abc@test.fr',2,'2012-04-23 18:25:43','$2b$10$MZyvwwSXWqAJQN8EYUgPD.2SSZZ92DAn8v2tbSuFdqH82XH20/MOK','011111111',1,'./','2024-06-07 13:57:46','2024-06-07 13:57:46',NULL,'',NULL),(19,'Doe','John','abc@tegst.fr',2,'2012-04-23 18:25:43','$2b$10$3c1kptqJm4X8Pf/PXJqGZO6ZUp4a5Ci39HsOp4HsTJ8YrdB0W7dfK','011111111',1,'./','2024-06-09 18:11:06','2024-06-09 18:11:06',NULL,'',NULL),(20,'Doe','John','abhhc@tegst.fr',2,'2012-04-23 18:25:43','$2b$10$j1tkTgehzEQs.ypPUiTOY.VTjo7/wj/HVJTjEFHXo7yvyIhXZQ6Xe','011111111',1,'./','2024-06-09 19:40:09','2024-06-09 19:40:09',NULL,'',NULL),(21,'Doe','John','ggabhhc@tegst.fr',1,'2012-04-23 18:25:43','$2b$10$4Yk88777/.lOmy8NtDzopeEbtIT6L6Tyw513BqmwwQKhTDhjnCQhq','011111111',1,'./','2024-06-09 19:40:21','2024-06-09 19:40:21',NULL,'',NULL);
 /*!40000 ALTER TABLE `compte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +246,7 @@ CREATE TABLE `permission_roles` (
   KEY `Permission_fk` (`PermissionID`),
   CONSTRAINT `Permission_fk` FOREIGN KEY (`PermissionID`) REFERENCES `permissions` (`PermissionID`),
   CONSTRAINT `Role_fk` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -255,6 +255,7 @@ CREATE TABLE `permission_roles` (
 
 LOCK TABLES `permission_roles` WRITE;
 /*!40000 ALTER TABLE `permission_roles` DISABLE KEYS */;
+INSERT INTO `permission_roles` VALUES (1,1,1),(2,2,2),(3,1,3),(4,1,4),(5,1,5);
 /*!40000 ALTER TABLE `permission_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +271,7 @@ CREATE TABLE `permissions` (
   `Code` varchar(255) DEFAULT NULL,
   `Description` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`PermissionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,6 +280,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+INSERT INTO `permissions` VALUES (1,'create_superuser','allow to create admin user'),(2,'get_user_self','allow user to get account information about themself'),(3,'list_users','allow to get any user or list them'),(4,'update_user',''),(5,'delete_user','');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +327,7 @@ CREATE TABLE `roles` (
   `RoleTitle` varchar(50) DEFAULT NULL,
   `RoleDescription` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`RoleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,6 +336,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'admin',''),(2,'customer','Customer Account'),(3,'restaurant','Restaurant Manager Account'),(4,'delivery','Delivery Driver Account');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,10 +366,6 @@ LOCK TABLES `section` WRITE;
 /*!40000 ALTER TABLE `section` DISABLE KEYS */;
 /*!40000 ALTER TABLE `section` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'CESEats'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -377,4 +376,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-06 10:20:06
+-- Dump completed on 2024-06-09 23:06:49
