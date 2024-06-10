@@ -2,24 +2,34 @@
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
+import router from "@/router";
 
 export default defineComponent({
-  name: "OrderCard",
+  name: "Results",
   components: {
     CategoryThumbnail,
     RestaurantList,
     FilterButton,
   },
+  data() {
+    return {
+
+    }
+  },
   props: {
-    // TODO : Récupérer la catégorie
+    //TODO : Récupérer la catégorie
+
     //TODO : Récupérer la valeur des filtres de 'FilterButton'
   },
-  setup(props, { emit }) {
-    // Mettre le code ici
+  async mounted() {
+    //get category_id from url
     //TODO : Fonction de recherche. Retourne restaurants.
-    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérer. Passer la valeur au composant 'RestaurantList'.
-  }
+
+    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
+    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
+  },
+
 })
 
 </script>
@@ -35,14 +45,15 @@ export default defineComponent({
       <p class="nbr_results">6 résultats</p>
     </div>
     <div class="category_pills">
-      <CategoryThumbnail></CategoryThumbnail>
+      <CategoryThumbnail v-for="(icons, i) in 15" :key="i" :category_id="i"></CategoryThumbnail>
     </div>
     <div class="filters">
       <p>Filters : </p>
       <FilterButton v-for="(icons, i) in 3" :key="i"></FilterButton>
     </div>
     <div class="restaurant_list">
-      <RestaurantList></RestaurantList>
+<!--      FIXME : Définir la variable restaurants -->
+      <RestaurantList :restaurants_array="restaurants"></RestaurantList>
     </div>
   </main>
 </template>

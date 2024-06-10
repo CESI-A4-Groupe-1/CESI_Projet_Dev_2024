@@ -26,7 +26,7 @@ const router = createRouter({
         { 
           path: '/parcourir', 
           name: 'parcourir', 
-          component: ExploreView 
+          component: ExploreView,
         },
         // correspond au 'restaurants' dans ces routes
         {
@@ -36,6 +36,7 @@ const router = createRouter({
         },
         // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
         // ---------------------------------------------------------------- //
+        { path: '/resultats/:id_category', component: ResultsView },
         { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
         { path: '/users/:id/orders', name: 'orders', component: OrdersView },
         // ---------------------------------------------------------------- //

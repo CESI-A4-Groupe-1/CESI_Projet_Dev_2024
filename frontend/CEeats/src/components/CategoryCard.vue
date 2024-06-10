@@ -1,21 +1,23 @@
-<script setup lang="ts">
-
+<script setup>
 </script>
+
 <script>
-
 export default {
+  name: "CategoryCard",
+  components: {
+  },
   data() {
-
   },
   props: [
-    "tagName"
+    "tagName",
+    "category_id"
   ]
 }
 
 </script>
 
 <template>
-  <RouterLink to="/resultats" class="single_category">
+  <RouterLink :to="'/resultats/' + category_id" class="single_category">
     <p class="middle">{{ tagName }}</p>
     <p class="category_name">{{ tagName }}</p>
   </RouterLink>
