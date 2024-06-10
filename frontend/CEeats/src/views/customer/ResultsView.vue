@@ -45,7 +45,7 @@ export default defineComponent({
       <p class="nbr_results">6 résultats</p>
     </div>
     <div class="category_pills">
-      <CategoryThumbnail></CategoryThumbnail>
+      <CategoryThumbnail v-for="(icons, i) in 15" :key="i" :category_id="i"></CategoryThumbnail>
     </div>
     <div class="filters">
       <p>Filters : </p>
