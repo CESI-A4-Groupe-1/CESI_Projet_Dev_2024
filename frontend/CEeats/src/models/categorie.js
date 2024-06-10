@@ -1,6 +1,6 @@
 import CategorieAPI from "../services/Categorie_API.js"
 
-var categorie = function ()
+let categorie = function ()
 {
 				this._init ();
 }
@@ -17,3 +17,4 @@ categorie.prototype._init = function ()
 }
 
 
+module.exports = categorie

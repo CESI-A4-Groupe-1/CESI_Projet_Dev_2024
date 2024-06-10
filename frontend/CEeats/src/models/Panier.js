@@ -1,7 +1,7 @@
 import PanierAPI from "../services/Panier_API.js"
 import Articles from "./Articles.js"
 
-var Panier = function ()
+let Panier = function ()
 {
 				this._init ();
 }
@@ -19,3 +19,4 @@ Panier.prototype._init = function ()
 }
 
 
+module.exports = Panier

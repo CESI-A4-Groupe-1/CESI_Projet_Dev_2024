@@ -2,7 +2,7 @@ import RestaurantAPI from "../services/Restaurant_API.js"
 import Commandes from "./commandes.js"
 import Categorie from "./categories.js"
 
-var Restaurant = function ()
+let Restaurant = function ()
 {
 				this._init ();
 }
@@ -21,3 +21,4 @@ Restaurant.prototype._init = function ()
 }
 
 
+module.exports = Restaurant

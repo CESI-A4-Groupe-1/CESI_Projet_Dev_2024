@@ -1,7 +1,7 @@
 import UserAPI from "../services/User_API.js"
 import Panier from "./Panier.js"
 
-var User = function ()
+let User = function ()
 {
 				this._init ();
 }
@@ -23,3 +23,4 @@ User.prototype._init = function ()
 }
 
 
+module.exports = User

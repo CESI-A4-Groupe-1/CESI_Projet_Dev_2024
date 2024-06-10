@@ -1,5 +1,5 @@
 
-Panier_API = function ()
+let Panier_API = function ()
 {
 				this._init ();
 }
@@ -39,3 +39,4 @@ Panier_API.prototype.delete = function ()
 
 
 
+module.exports = Panier_API

@@ -1,7 +1,7 @@
 import CommandesAPI from "../services/Commandes_API.js"
 import Articles from "./Articles.js"
 
-var Commandes = function ()
+let Commandes = function ()
 {
 				this._init ();
 }
@@ -19,3 +19,4 @@ Commandes.prototype._init = function ()
 }
 
 
+module.exports = Commandes

@@ -1,6 +1,6 @@
 import User from "./User.js"
 
-var Parainage = function ()
+let Parainage = function ()
 {
 				this._init ();
 }
@@ -18,3 +18,4 @@ Parainage.prototype._init = function ()
 }
 
 
+module.exports = Parainage

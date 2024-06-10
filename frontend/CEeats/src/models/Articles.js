@@ -1,6 +1,6 @@
-import ArticleAPI from "../services/Articles_API.js"
+import ArticleAPI from "../services/Articles_API.js";
 
-var Articles = function ()
+let Articles = function ()
 {
 				this._init ();
 }
@@ -17,3 +17,4 @@ Articles.prototype._init = function ()
 }
 
 
+module.exports = Articles

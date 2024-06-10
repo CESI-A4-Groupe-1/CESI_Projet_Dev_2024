@@ -1,5 +1,5 @@
 
-Commandes_API = function ()
+let Commandes_API = function ()
 {
 				this._init ();
 }
@@ -39,3 +39,4 @@ Commandes_API.prototype.delete = function ()
 
 
 
+module.exports = Commandes_API

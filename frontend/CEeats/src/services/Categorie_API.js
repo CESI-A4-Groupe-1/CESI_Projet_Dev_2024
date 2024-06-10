@@ -1,5 +1,5 @@
 
-Categorie_API = function ()
+let Categorie_API = function ()
 {
 				this._init ();
 }
@@ -39,3 +39,4 @@ Categorie_API.prototype.delete = function ()
 
 
 
+module.exports = Categorie_API
