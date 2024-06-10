@@ -23,22 +23,22 @@ const router = createRouter({
             name: 'test',
             component: MainView
         },
-        { 
-          path: '/parcourir', 
-          name: 'parcourir', 
-          component: ExploreView,
+        {
+            path: '/parcourir',
+            name: 'parcourir',
+            component: ExploreView,
         },
         // correspond au 'restaurants' dans ces routes
         {
-          path: '/resultats', 
-          name: 'resultats', 
-          component: ResultsView 
+            path: '/resultats',
+            name: 'resultats',
+            component: ResultsView
         },
         // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
         // ---------------------------------------------------------------- //
-        { path: '/resultats/:id_category', component: ResultsView },
-        { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
-        { path: '/users/:id/orders', name: 'orders', component: OrdersView },
+        {path: '/resultats/:id_category', component: ResultsView},
+        {path: '/restaurants/:id', name: 'restaurant', component: RestaurantView},
+        {path: '/users/:id/orders', name: 'orders', component: OrdersView},
         // ---------------------------------------------------------------- //
 
         {
