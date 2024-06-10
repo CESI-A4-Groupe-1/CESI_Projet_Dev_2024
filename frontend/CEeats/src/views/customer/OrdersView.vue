@@ -7,10 +7,7 @@ export default defineComponent({
   components: {
     OrderCard
   },
-  props: {},
-  setup(props, { emit }) {
-
-  }
+  props: {}
 })
 </script>
 
