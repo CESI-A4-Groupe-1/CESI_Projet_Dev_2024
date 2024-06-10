@@ -29,12 +29,12 @@ const router = createRouter({
           component: ExploreView,
         },
         // correspond au 'restaurants' dans ces routes
-        { 
+        {
           path: '/resultats', 
           name: 'resultats', 
           component: ResultsView 
         },
-        // temporaire le temps de tester. se mettre d'accord sur le nom des routes.
+        // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
         // ---------------------------------------------------------------- //
         { path: '/resultats/:id_category', component: ResultsView },
         { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
@@ -127,7 +127,7 @@ const router = createRouter({
         {
             path: '/categories',
             name: 'categories_view',
-            component: MainView,
+            component: ExploreView,
         }
     ]
 })
