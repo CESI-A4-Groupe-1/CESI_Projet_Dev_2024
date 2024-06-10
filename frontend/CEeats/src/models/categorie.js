@@ -1,6 +1,6 @@
-#include "Categorie_API.js"
+import CategorieAPI from "../services/Categorie_API.js"
 
-categorie = function ()
+var categorie = function ()
 {
 				this._init ();
 }

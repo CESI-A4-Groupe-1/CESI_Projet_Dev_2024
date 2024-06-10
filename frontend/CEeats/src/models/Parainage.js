@@ -1,6 +1,6 @@
-#include "User.js"
+import User from "./User.js"
 
-Parainage = function ()
+var Parainage = function ()
 {
 				this._init ();
 }

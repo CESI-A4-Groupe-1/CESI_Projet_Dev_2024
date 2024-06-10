@@ -1,8 +1,8 @@
-#include "Restaurant_API.js"
-#include "commandes.js"
-#include "categorie.js"
+import RestaurantAPI from "../services/Restaurant_API.js"
+import Commandes from "./commandes.js"
+import Categorie from "./categories.js"
 
-Restaurant = function ()
+var Restaurant = function ()
 {
 				this._init ();
 }

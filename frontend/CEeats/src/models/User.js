@@ -1,7 +1,7 @@
-#include "User_API.js"
-#include "Panier.js"
+import UserAPI from "../services/User_API.js"
+import Panier from "./Panier.js"
 
-User = function ()
+var User = function ()
 {
 				this._init ();
 }

@@ -1,6 +1,6 @@
-#include "Articles_API.js"
+import ArticleAPI from "../services/Articles_API.js"
 
-Articles = function ()
+var Articles = function ()
 {
 				this._init ();
 }

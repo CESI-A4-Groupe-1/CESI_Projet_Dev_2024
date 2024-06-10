@@ -1,7 +1,7 @@
-#include "Panier_API.js"
-#include "Articles.js"
+import PanierAPI from "../services/Panier_API.js"
+import Articles from "./Articles.js"
 
-Panier = function ()
+var Panier = function ()
 {
 				this._init ();
 }

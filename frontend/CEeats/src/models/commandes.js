@@ -1,7 +1,7 @@
-#include "Commandes_API.js"
-#include "Articles.js"
+import CommandesAPI from "../services/Commandes_API.js"
+import Articles from "./Articles.js"
 
-commandes = function ()
+var Commandes = function ()
 {
 				this._init ();
 }
@@ -11,7 +11,7 @@ commandes = function ()
  * _init sets all commandes attributes to their default value. Make sure to call
  * this method within your class constructor
  */
-commandes.prototype._init = function ()
+Commandes.prototype._init = function ()
 {
 				this.m_API_obj = "";
 				this.m_articles = "";
