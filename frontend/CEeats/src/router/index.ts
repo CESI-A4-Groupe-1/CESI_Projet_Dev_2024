@@ -78,7 +78,7 @@ const router = createRouter({
             ]
         },
         {
-            path: '/menus',
+            path: '/restaurants',
             name: 'menus_view',
             component: MainView, //FIXME : Changer le composant pour le vrai composant
             children: [

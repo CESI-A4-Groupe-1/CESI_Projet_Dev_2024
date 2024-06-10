@@ -1,12 +1,10 @@
 import authController from "../controllers/auth.controller"
 import UserController from "../controllers/user.controller";
+import {middlewares} from "../middlewares/middlewares";
+
 export default function (app: any) {
     // logging middleware
-    app.use((req: any, res: any, next: any) => {
-        console.log(req.method, req.url);
-        console.log(req.headers);
-        next();
-    });
+    middlewares(app);
     // routes
     app.post('/register', (new authController()).register)
     app.post('/login', (new authController()).login)

@@ -48,15 +48,15 @@ services:
             - app-network
         depends_on:
             - db
-    menus:
+    restaurants:
         build:
-            context: services/menus
+            context: services/restaurants
             dockerfile: Dockerfile
             target: base
         volumes:
-            - ./services/menus/src:/home/node/app/src
-            - ./services/menus/nodemon.json:/home/node/app/nodemon.json
-        container_name: menus
+            - ./services/restaurants/src:/home/node/app/src
+            - ./services/restaurants/nodemon.json:/home/node/app/nodemon.json
+        container_name: restaurants
         expose:
             - "${MENUS_PORT}"
         ports:
@@ -64,6 +64,14 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
+
     statistics:
         build:
             context: services/statistics
@@ -126,7 +134,7 @@ services:
             - accounts
             - orders_deliveries
             - referrals
-            - menus
+            - restaurants
             - notifications
             - statistics
 
