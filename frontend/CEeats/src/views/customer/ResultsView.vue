@@ -1,9 +1,9 @@
 <script lang="ts">
+import CategoryService from "@/services/CategoryService";
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import {defineComponent, ref} from "vue";
-import router from "@/router";
 
 export default defineComponent({
   name: "Results",
@@ -14,7 +14,8 @@ export default defineComponent({
   },
   data() {
     return {
-
+      categories_array: [],
+      restaurants_array: []
     }
   },
   props: {
@@ -28,6 +29,7 @@ export default defineComponent({
 
     //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
     // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
+    this.categories_array = CategoryService.getAllCategories();
   },
 
 })
@@ -45,15 +47,15 @@ export default defineComponent({
       <p class="nbr_results">6 résultats</p>
     </div>
     <div class="category_pills">
-      <CategoryThumbnail v-for="(icons, i) in 15" :key="i" :category_id="i"></CategoryThumbnail>
+      <CategoryThumbnail v-for="(category, i) in categories_array" :key="i" :category_id="category.id" :category_name="category.name"></CategoryThumbnail>
     </div>
     <div class="filters">
       <p>Filters : </p>
-      <FilterButton v-for="(icons, i) in 3" :key="i"></FilterButton>
+      <FilterButton v-for="(filter, i) in 3" :key="i"></FilterButton>
     </div>
     <div class="restaurant_list">
 <!--      FIXME : Définir la variable restaurants -->
-      <RestaurantList :restaurants_array="restaurants"></RestaurantList>
+      <RestaurantList :restaurants_array="restaurants_array"></RestaurantList>
     </div>
   </main>
 </template>
