@@ -2,6 +2,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
+import RestaurantView from '@/views/customer/RestaurantView.vue'
+import OrdersView from "@/views/customer/OrdersView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -21,16 +23,24 @@ const router = createRouter({
             name: 'test',
             component: MainView
         },
-        {
-            path: '/parcourir',
-            name: 'parcourir',
-            component: ExploreView
+        { 
+          path: '/parcourir', 
+          name: 'parcourir', 
+          component: ExploreView,
         },
+        // correspond au 'restaurants' dans ces routes
         {
-            path: '/resultats',
-            name: 'resultats',
-            component: ResultsView
+          path: '/resultats', 
+          name: 'resultats', 
+          component: ResultsView 
         },
+        // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
+        // ---------------------------------------------------------------- //
+        { path: '/resultats/:id_category', component: ResultsView },
+        { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
+        { path: '/users/:id/orders', name: 'orders', component: OrdersView },
+        // ---------------------------------------------------------------- //
+
         {
             path: '/users',
             name: 'users',
@@ -39,7 +49,7 @@ const router = createRouter({
                 {
                     path: '/:id/orders',
                     name: 'users_orders',
-                    component: MainView,
+                    component: OrdersView,
                     beforeEnter: (to, from, next): void => {
                         let isAdmin: boolean = authenticateAdmin();
                         if (isAdmin) {
@@ -92,11 +102,11 @@ const router = createRouter({
         {
             path: '/restaurants',
             name: 'restaurants_list_view',
-            component: MainView,
+            component: ResultsView,
             children: [
                 {
                     path: '/:id',
-                    component: MainView,
+                    component: RestaurantView,
                     name: "specific_restaurant",
                     children: [
                         {

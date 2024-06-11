@@ -1,19 +1,45 @@
-<script setup lang="ts">
+<script lang="ts">
+import CategoryService from "@/services/CategoryService";
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
+import {defineComponent, ref} from "vue";
+
+export default defineComponent({
+  name: "Results",
+  components: {
+    CategoryThumbnail,
+    RestaurantList,
+    FilterButton,
+  },
+  data() {
+    return {
+      categories_array: [],
+      restaurants_array: []
+    }
+  },
+  props: {
+    //TODO : Récupérer la catégorie
+
+    //TODO : Récupérer la valeur des filtres de 'FilterButton'
+  },
+  async mounted() {
+    //get category_id from url
+    //TODO : Fonction de recherche. Retourne restaurants.
+
+    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
+    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
+    this.categories_array = CategoryService.getAllCategories();
+  },
+
+})
+
 </script>
 
 <template>
   <main>
     <div class="return_and_search">
-      <button class="return">
-        <a @click="$router.go(-1)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-          </svg>
-        </a>
-      </button>
+      <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
       <input class="search" type="text" placeholder="Search">
     </div>
     <div class="results_header">
@@ -21,35 +47,26 @@ import FilterButton from "@/components/FilterButton.vue";
       <p class="nbr_results">6 résultats</p>
     </div>
     <div class="category_pills">
-      <CategoryThumbnail></CategoryThumbnail>
+      <CategoryThumbnail v-for="(category, i) in categories_array" :key="i" :category_id="category.id" :category_name="category.name"></CategoryThumbnail>
     </div>
     <div class="filters">
       <p>Filters : </p>
-      <FilterButton v-for="(icons, i) in 3" :key="i"></FilterButton>
+      <FilterButton v-for="(filter, i) in 3" :key="i"></FilterButton>
     </div>
     <div class="restaurant_list">
-      <RestaurantList></RestaurantList>
+<!--      FIXME : Définir la variable restaurants -->
+      <RestaurantList :restaurants_array="restaurants_array"></RestaurantList>
     </div>
   </main>
 </template>
 
+<!--TODO : styliser la page-->
 <style lang="scss" scoped>
   .return_and_search {
     display: flex;
     flex-direction: row;
     .search{
       width: 100%;
-    }
-    .return {
-      padding: 0.5rem;
-      border-radius: 50%;
-      background-color: transparent;
-      border: 1px solid transparent;
-      margin-right: 8px;
-    }
-    .return:hover {
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    ;
     }
   }
 
@@ -91,5 +108,4 @@ import FilterButton from "@/components/FilterButton.vue";
       margin-right: 16px;
     }
   }
-
 </style>

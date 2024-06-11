@@ -1,4 +1,5 @@
 <script setup lang="js">
+import CategoryService from "@/services/CategoryService.js";
 import CategoryCard from "@/components/CategoryCard.vue";
 </script>
 
@@ -9,21 +10,26 @@ export default {
       categories_array: [],
     }
   },
+  components: {
+    CategoryCard,
+  },
+  methods: {
+    //TODO : fonction de recherche pour l'élément 'search' ou utilisation d'un composant déjà existant (potentiellement primevue)
+  },
   mounted() {
     //TODO : utiliser cette section comme l'équivalent d'un évènement "onready" de HTML basique pour envoyer un fetch au serveurs de catégories
-    this.categories_array = ["a", "b", "c", "d", "e", "f", "g", "h"]
+    this.categories_array = CategoryService.getAllCategories();
   },
-  methods: {}
 }
 </script>
 
 
 <template>
   <main>
-    <input class="search" placeholder="Search"  />
+    <input class="search" placeholder="Search"/>
     <h2 class="topCategories">Top Categories</h2>
     <div class="category_container">
-      <CategoryCard v-for="(row, i) in categories_array" :key="i" :tag-name='row' style="margin: 5px"></CategoryCard>
+      <CategoryCard v-for="(category, i) in categories_array" :key="i" :tag-name='category.name' :category_id="category.id" style="margin: 5px"></CategoryCard>
     </div>
 
   </main>

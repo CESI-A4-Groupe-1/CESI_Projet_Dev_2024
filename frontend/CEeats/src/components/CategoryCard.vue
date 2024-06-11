@@ -1,45 +1,47 @@
-<script setup lang="ts">
-
+<script setup>
 </script>
+
 <script>
-
 export default {
+  name: "CategoryCard",
+  components: {
+  },
   data() {
-
   },
   props: [
-    "tagName"
+    "tagName",
+    "category_id"
   ]
 }
 
 </script>
+
 <template>
-  <RouterLink to="/categories" class="single_category">
+  <RouterLink :to="'/resultats/' + category_id" class="single_category">
     <p class="middle">{{ tagName }}</p>
     <p class="category_name">{{ tagName }}</p>
   </RouterLink>
-
 </template>
 
 <style lang="scss" scoped>
-.single_category {
-  background-color: lightgrey;
-  width: 45%;
-  height: 100px;
-  display: flex;
-  position: relative;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 10px;
-  margin-bottom: 20px;
-
-  .category_name {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 10px;
+  .single_category {
+    background-color: lightgrey;
+    width: 45%;
+    height: 100px;
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: black;
+    .category_name {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 10px;
+    }
   }
-}
 
 .middle {
   transition: .5s ease;
