@@ -3,7 +3,7 @@ import CategoryService from "@/services/CategoryService";
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
 
 export default defineComponent({
   name: "Results",
@@ -19,7 +19,8 @@ export default defineComponent({
     }
   },
   props: {
-    // TODO : Récupérer la catégorie
+    //TODO : Récupérer la catégorie
+
     //TODO : Récupérer la valeur des filtres de 'FilterButton'
   },
   async mounted() {
