@@ -153,7 +153,7 @@ export default class MenusController {
             return res.status(500).json({msg: "Internal Server Error"});
         }
     }
-    deleteMenu = async (req: any, res: any) => {
+    deleteMenu = (req: any, res: any) => {
         const headUserId = req.headers['x-user-id'];
         const { menu_id } = req.params;
 
