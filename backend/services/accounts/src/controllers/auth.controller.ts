@@ -1,82 +1,114 @@
-require('dotenv').config();
+import {initModels} from "../models/init-models";
+import db from "../db/db";
+import {config} from "dotenv";
+import hasPermission from "./hasPermission";
+
+config();
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
-import User from "../models/user.model";
-const User_DB : User[] = [];
+const {Compte} = initModels(db);
 
 export default class AuthController {
-    register = (req: any, res: any) => {
-        const user = new User(req.body.username, bcrypt.hashSync(req.body.password, 10), req.body.role)
-        User_DB.push(user)
-        return res.status(201).json({
-            "msg": "New User Created"
-        });
+    constructor() {
+    }
+    register = async (req: any, res: any) => {
+        try {
+            const { email } = req.body;
+            const existingUser = await Compte.findOne({ where: { email } });
+
+            if (existingUser) {
+                return res.status(409).json({ msg: "User Already Exists" });
+            }
+
+            req.body.password = bcrypt.hashSync(req.body.password, 10);
+            const compte = new Compte(req.body);
+
+
+            if ((await compte.getRole()).role_title === "admin") {
+                hasPermission(req, "create_superuser")
+                    .then((hasPerm) => {
+                        if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    });
+                    }
+
+            compte.save()
+                .then((user) => {
+                    return res.status(201).json(user);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    return res.status(500).json({msg: "Internal Server Error"});
+                });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ msg: "Internal Server Error" });
+        }
     }
 
-    login = (req: any, res: any) => {
-        const {username, password} = req.body
-
-        const user = User_DB.find(
-            (u) => u.username === username && bcrypt.compareSync(password, u.password)
-        );
-        if (user) {
+    login = async (req: any, res: any) => {
+        try {
+            const compte = await Compte.findOne({where: {email: req.body.email}});
+            if (!compte) {
+                return res.status(401).json({
+                    "msg": "User Not Found"
+                });
+            }
+            const isMatch = bcrypt.compareSync(req.body.password, compte.password);
+            if (!isMatch) {
+                return res.status(401).json({
+                    "msg": "Invalid Credentials"
+                });
+            }
             const token = jwt.sign({
-                username: user.username,
-                exp: Math.floor(Date.now() / 1000) + (2 * 60),
+                id: compte.id,
+                email: compte.email,
+                role_id: compte.role_id,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60),
             }, process.env.ACCESS_JWT_KEY);
-
             return res.status(200).json({
                 message: "Login Successful",
                 token: token,
             });
-        } else {
-            return res.status(401).json({
-                message: "Invalid Credentials",
-            });
+        } catch (err) {
+            console.log(err);
+            res.status(400).json(err);
         }
+
     }
 
-    authenticate = (req: any, res: any) => {
-        let token;
+    authenticate = async (req: any, res: any) => {
         try {
-            token = req.headers.authorization.split(" ")[1];
-        }
-         catch (error) {
-            return res.status(401).json({
-                message: "No Token Provided",
-            });
-        }
-
-
-        if (!token) {
-            return res.status(401).json({
-                message: "No Token Provided",
-            });
-        }
-
-        jwt.verify(
-            token,
-            process.env.ACCESS_JWT_KEY,
-            (err: any, decoded: any) => {
-                // check if decoded user exists
-                const user = User_DB.find((u) => u.username === decoded.username);
-                // response
-                if (user) {
-                    res.setHeader("X-User-Id", "1"); // TODO: get id from db
-                    res.setHeader("X-User-Role", user.role); // TODO: get role from db
-                    return res.status(200).json({
-                        message: "User Authenticated",
-                        token: token,
-                    });
-                } else {
-                    return res.status(401).json({
-                        message: "Invalid Credentials",
-                    });
-                }
+            const token = req.headers.authorization?.split(" ")[1];
+            if (!token) {
+                return res.status(401).json({
+                    msg: "Invalid Credentials"
+                });
             }
-
-        )
+            let decoded;
+            try {
+                decoded = jwt.verify(token, process.env.ACCESS_JWT_KEY);
+            } catch (err) {
+                return res.status(401).json({
+                    "msg": "Invalid Credentials"
+                });
+            }
+            const compte = await Compte.findOne({where: {id: decoded.id}});
+            if (!compte) {
+                return res.status(401).json({
+                    "msg": "Invalid Credentials"
+                });
+            }
+            res.setHeader("x-user-id", compte.id);
+            res.setHeader("x-user-role", compte.role_id);
+            return res.status(200).json({
+                message: "User Authenticated",
+                token: token,
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(400).json(err);
+        }
     }
 
 }
