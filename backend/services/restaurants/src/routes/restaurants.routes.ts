@@ -15,6 +15,7 @@ export default function (app: any) {
     app.post('/restaurants/:restaurant_id/menus', (new MenusController()).createMenu)
     app.get('/menus/:menu_id', (new MenusController()).getMenu)
     app.put('/menus/:menu_id', (new MenusController()).updateMenu)
+    app.delete('/menus/:menu_id', (new MenusController()).deleteMenu)
     // app.get('/restaurants/:restaurant_id/menus', )
     // app.post('/restaurants/:restaurant_id', (new ArticleController()).createArticle)
     // app.get('/articles/:article_id', (new ArticleController()).getArticle)

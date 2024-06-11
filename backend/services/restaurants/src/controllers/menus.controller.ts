@@ -19,7 +19,7 @@ export default class MenusController {
             hasPermission(req, "list_restaurants")
                 .then((hasPerm) => {
                     if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
-                    Section.findAll({where: {id_restaurant: restaurant_id}})
+                    Section.findAll({where: {id_restaurant: restaurant_id}, include: {model: Articles, as: "articles"}})
                         .then((menus) => {
                             return res.status(200).json(menus);
                         })
@@ -110,16 +110,15 @@ export default class MenusController {
                 applyCreate();
             });
     }
-    // todo - implement update
-    updateMenu = async (req: any, res: any) => {
+    updateMenu = (req: any, res: any) => {
         const headUserId = req.headers['x-user-id'];
-        const { restaurant_id } = req.params;
+        const { menu_id } = req.params;
 
         function applyUpdate() {
-            Section.update(req.body, {where: {id: restaurant_id}})
+            Section.update(req.body, {where: {id: menu_id}})
                 .then((updated) => {
                     if (!updated) return res.status(404).json({msg: "Not Found"});
-                    return res.status(200).json({msg: "User Updated"});
+                    return res.status(200).json({msg: "Menu Updated"});
                 })
                 .catch((err) => {
                     console.error(err);
@@ -128,31 +127,41 @@ export default class MenusController {
         }
 
         try {
-            const restaurant = await Restaurants.findByPk(restaurant_id)
-            if (headUserId === restaurant?.id_restaurateur) {
-                applyUpdate();
-            }
+            if (!headUserId) return res.status(401).json({msg: "Unauthorized"});
 
-            hasPermission(req, "update_restaurant")
-                .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
-                    applyUpdate();
+            Section.findByPk(menu_id)
+                .then((section) => {
+                    if (!section) {
+                        return res.status(404).json({msg: "Not Found"})
+                    }
+                    section.getId_restaurant_restaurant()
+                        .then((restaurant) => {
+                            if (!restaurant) {
+                                return res.status(404).json({msg: "Not Found"})
+                            }
+                            hasPermission(req, "update_restaurant")
+                                .then((hasPerm) => {
+                                    if (!hasPerm && headUserId !== restaurant?.id_restaurateur) return res.status(403).json({msg: "Forbidden"});
+                                    applyUpdate();
+                                })
+                        })
                 })
+
+
         } catch (err) {
             console.error(err);
             return res.status(500).json({msg: "Internal Server Error"});
         }
     }
-    // todo - implement delete
     deleteMenu = async (req: any, res: any) => {
         const headUserId = req.headers['x-user-id'];
-        const { restaurant_id } = req.params;
+        const { menu_id } = req.params;
 
         function applyDelete() {
-            Restaurants.destroy({where: {id: restaurant_id}})
+            Section.destroy({where: {id: menu_id}})
                 .then((deleted) => {
                     if (!deleted) return res.status(404).json({msg: "Not Found"});
-                    return res.status(200).json({msg: "User Deleted"});
+                    return res.status(200).json({msg: "Menu Deleted"});
                 })
                 .catch((err) => {
                     console.error(err);
@@ -161,15 +170,24 @@ export default class MenusController {
         }
 
         try {
-            const restaurant = await Restaurants.findByPk(restaurant_id)
-            if (headUserId === restaurant?.id_restaurateur) {
-                applyDelete();
-            }
-
-            hasPermission(req, "delete_restaurant")
-                .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
-                    applyDelete();
+            Section.findByPk(menu_id)
+                .then((section) => {
+                    if (!section) {
+                        return res.status(404).json({msg: "Not Found"})
+                    }
+                    section.getId_restaurant_restaurant()
+                        .then((restaurant) => {
+                            if (!restaurant) {
+                                return res.status(404).json({
+                                    msg: "Not Found"
+                                });
+                            }
+                            hasPermission(req, "delete_restaurant")
+                                .then((hasPerm) => {
+                                    if (!hasPerm && headUserId !== restaurant?.id_restaurateur) return res.status(403).json({msg: "Forbidden"});
+                                    applyDelete();
+                                });
+                        });
                 })
         } catch (err) {
             console.error(err);
