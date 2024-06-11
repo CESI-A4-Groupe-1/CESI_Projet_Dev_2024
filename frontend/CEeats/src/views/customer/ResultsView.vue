@@ -19,8 +19,7 @@ export default defineComponent({
     }
   },
   props: {
-    //TODO : Récupérer la catégorie
-
+    // TODO : Récupérer la catégorie
     //TODO : Récupérer la valeur des filtres de 'FilterButton'
   },
   async mounted() {

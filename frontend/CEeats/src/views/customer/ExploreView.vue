@@ -4,8 +4,6 @@ import CategoryCard from "@/components/CategoryCard.vue";
 </script>
 
 <script lang="js">
-import CategoryService from "@/services/CategoryService.js";
-
 export default {
   data() {
     return {
