@@ -84,7 +84,7 @@ export default defineComponent({
     overflow-x: scroll;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    justify-content: space-around;
+    justify-content: center;
 
     //put shadows on the side when overflow
     background:
