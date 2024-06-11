@@ -1,6 +1,23 @@
 <script setup lang="ts">
-  import RestaurantCard from "@/components/RestaurantCard.vue";
+import RestaurantCard from "@/components/RestaurantCard.vue";
+import Restaurant from "@/models/Restaurant"
 </script>
+
+<script>
+
+
+export default {
+  mounted: function () {
+    this.stored_Restaurants = (new Restaurant()).getAll()
+  },
+  data() {
+    return {
+      stored_Restaurants: [],
+    }
+  }
+}
+</script>
+
 
 <template>
   <div class="restaurant_card" v-for="(restaurant, i) in 6" :key="i">
