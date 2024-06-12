@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar_class" v-if="isMenuOpen">
+    <!--TODO : Vérifier le nombre de bouton en lien à mettre ici pour que les utilisateurs puissent naviguer correctement sans aller aux mauvais endroit -->
     <RouterLink to="/parcourir" class="neomorphism-button-link">Parcourir</RouterLink>
     <RouterLink to="/resultats" class="neomorphism-button-link">Résultats</RouterLink>
     <RouterLink to="/categories" class="neomorphism-button-link">Catégories</RouterLink>
@@ -29,7 +30,6 @@ h1 {
   color: #2a4252;
   font-size: 34px;
 }
-
 
 
 .sidebar_class {
