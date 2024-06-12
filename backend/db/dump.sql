@@ -19,7 +19,7 @@
 -- Table structure for table `articles`
 --
 
-CREATE Database if not exist CESEats;
+CREATE Database if not exists CESEats;
 USE CESEats;
 
 DROP TABLE IF EXISTS `articles`;
