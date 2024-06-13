@@ -36,7 +36,8 @@ export class VGestionComm extends Model<VGestionCommAttributes, VGestionCommCrea
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      field: 'COMMANDE'
+      field: 'COMMANDE',
+      primaryKey: true,
     },
     contenu: {
       type: DataTypes.INTEGER,

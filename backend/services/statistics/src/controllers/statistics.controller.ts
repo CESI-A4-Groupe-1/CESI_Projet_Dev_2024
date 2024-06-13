@@ -7,9 +7,10 @@ config();
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
-const {Articles, Section, VGraphPrix} = initModels(db);
+const {VGraphPrix, VGestionComm} = initModels(db);
 
 export default class StatisticsController {
+
     constructor() {
     }
 
@@ -29,6 +30,27 @@ export default class StatisticsController {
                     VGraphPrix.findAll({where: {jours: {between: [startDate, endDate]}}})
                         .then((perfs) => {
                             return res.status(200).json(perfs);
+                        })
+                })
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({
+                msg: "Internal Server Error.",
+                err: err
+            })
+        }
+    }
+
+    getOrders(req: any, res: any) {
+        try {
+            hasPermission(req, "get_statistics")
+                .then((hasPerm) => {
+                    if (!hasPerm) return res.status(403).json({msg: "Unauthorized"});
+
+                    VGestionComm.findAll()
+                        .then((comms) => {
+                            return res.status(200).json(comms);
                         })
                 })
 
