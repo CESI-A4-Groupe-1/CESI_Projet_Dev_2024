@@ -4,6 +4,13 @@ import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
 import RestaurantView from '@/views/customer/RestaurantView.vue'
 import OrdersView from "@/views/customer/OrdersView.vue";
+import AccountView from "@/views/customer/AccountView.vue";
+import SettingsView from "@/views/customer/SettingsView.vue";
+import HelpView from "@/views/customer/HelpView.vue";
+import NameFormView from "@/views/customer/NameFormView.vue";
+import PhoneFormView from "@/views/customer/PhoneFormView.vue";
+import EmailFormView from "@/views/customer/EmailFormView.vue";
+import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -38,7 +45,16 @@ const router = createRouter({
         // ---------------------------------------------------------------- //
         { path: '/resultats/:id_category', component: ResultsView },
         { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
-        { path: '/users/:id/orders', name: 'orders', component: OrdersView },
+        { path: '/users/:id/orders', name: 'commandes', component: OrdersView },
+        { path: '/users/:id/account', name: 'profil', component: AccountView },
+
+        { path: '/users/:id/account/update/name', name: 'updateFormName', component: NameFormView },
+        { path: '/users/:id/account/update/phone', name: 'updateFormPhone', component: PhoneFormView },
+        { path: '/users/:id/account/update/email', name: 'updateFormEmail', component: EmailFormView },
+        { path: '/users/:id/account/update/password', name: 'updateFormPassword', component: PasswordFormView },
+
+        { path: '/users/:id/settings', name: 'parametres', component: SettingsView },
+        { path: '/help', name: 'aide', component: HelpView },
         // ---------------------------------------------------------------- //
 
         {
