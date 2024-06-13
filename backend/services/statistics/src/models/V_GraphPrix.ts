@@ -19,7 +19,8 @@ export class VGraphPrix extends Model<VGraphPrixAttributes, VGraphPrixCreationAt
     benef: {
       type: DataTypes.DOUBLE,
       allowNull: true,
-      field: 'Benef'
+      field: 'Benef',
+      primaryKey: true,
     },
     jours: {
       type: DataTypes.DATE,
