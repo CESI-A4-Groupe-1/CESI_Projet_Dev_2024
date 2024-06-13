@@ -1,8 +1,18 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, ref} from 'vue'
 
 export default defineComponent({
-  name: "PasswordFormView"
+  name: "PasswordFormView",
+  data () {
+    return {
+      new_password: '',
+      password: ''
+    }
+  },
+  methods: {
+    new_password: ref(null),
+    password: ref(null)
+  }
 })
 </script>
 

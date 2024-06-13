@@ -13,6 +13,7 @@ import Button from "primevue/button";
 import InputText from "primevue/inputText";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
+import FloatLabel from "primevue/floatlabel";
 
 const app = createApp(App)
 
@@ -22,5 +23,6 @@ app.component('Button', Button)
 app.component('InputText', InputText)
 app.component('InputSwitch', InputSwitch)
 app.component('Password', Password)
+app.component('FloatLabel', FloatLabel)
 
 app.mount('#app')

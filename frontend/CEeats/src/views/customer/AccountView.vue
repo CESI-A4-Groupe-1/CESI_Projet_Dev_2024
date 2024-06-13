@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import 'primeicons/primeicons.css';
+import { AccountService } from '@/services';
 
 export default defineComponent({
   name: "AccountView",
@@ -19,6 +20,15 @@ export default defineComponent({
         const image = document.getElementById("output") as HTMLImageElement;
         image.src = URL.createObjectURL(input.files[0]);
       }
+    },
+    logout() {
+      AccountService.logout()
+          .then((res) => {
+          this.$router.push('/login');
+          })
+          .catch(err => {
+            console.log(err)
+          });
     },
     navigateTo(path: string) {
       this.$router.push(path);
@@ -40,7 +50,7 @@ export default defineComponent({
         <img src="https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg" id="output" width="200" />
       </div>
       <div class="logout">
-        <div class="txt_logout">Déconnexion <i class="pi pi-sign-out"></i></div>
+        <div class="txt_logout" @click="logout()">Déconnexion <i class="pi pi-sign-out"></i></div>
       </div>
     </div>
     <h2 class="personnal_info">Informations personelles</h2>
@@ -100,6 +110,10 @@ $fontColor: rgb(250,250,250);
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.logout {
+  color: red;
 }
 
 .title {

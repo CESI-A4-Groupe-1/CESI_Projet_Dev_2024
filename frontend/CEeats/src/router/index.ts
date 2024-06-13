@@ -11,6 +11,7 @@ import NameFormView from "@/views/customer/NameFormView.vue";
 import PhoneFormView from "@/views/customer/PhoneFormView.vue";
 import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
+import LoginView from "@/views/auth/LoginView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -43,6 +44,7 @@ const router = createRouter({
         },
         // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
         // ---------------------------------------------------------------- //
+        { path: '/login', component: LoginView },
         { path: '/resultats/:id_category', component: ResultsView },
         { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
         { path: '/users/:id/orders', name: 'commandes', component: OrdersView },
