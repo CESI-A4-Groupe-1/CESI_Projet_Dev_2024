@@ -10,6 +10,7 @@ export interface CommandesAttributes {
   id_restaurant: number;
   id_livraison?: number;
   created_at: Date;
+  paid_at?: Date;
   updated_at?: Date;
   validated_at?: Date;
   denied_at?: Date;
@@ -17,7 +18,7 @@ export interface CommandesAttributes {
 
 export type CommandesPk = "id";
 export type CommandesId = Commandes[CommandesPk];
-export type CommandesOptionalAttributes = "id" | "id_livraison" | "created_at" | "updated_at" | "validated_at" | "denied_at";
+export type CommandesOptionalAttributes = "id" | "id_livraison" | "created_at" | "paid_at" | "updated_at" | "validated_at" | "denied_at";
 export type CommandesCreationAttributes = Optional<CommandesAttributes, CommandesOptionalAttributes>;
 
 export class Commandes extends Model<CommandesAttributes, CommandesCreationAttributes> implements CommandesAttributes {
@@ -26,6 +27,7 @@ export class Commandes extends Model<CommandesAttributes, CommandesCreationAttri
   id_restaurant!: number;
   id_livraison?: number;
   created_at!: Date;
+  paid_at?: Date;
   updated_at?: Date;
   validated_at?: Date;
   denied_at?: Date;
@@ -84,6 +86,10 @@ export class Commandes extends Model<CommandesAttributes, CommandesCreationAttri
         key: 'ID'
       },
       field: 'ID_livraison'
+    },
+    paid_at: {
+      type: DataTypes.DATE,
+      allowNull: true
     },
     validated_at: {
       type: DataTypes.DATE,
