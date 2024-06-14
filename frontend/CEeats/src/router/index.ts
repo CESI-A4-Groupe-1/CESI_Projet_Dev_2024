@@ -4,6 +4,7 @@ import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
 import RestaurantView from '@/views/customer/RestaurantView.vue'
 import OrdersView from "@/views/customer/OrdersView.vue";
+import RestorerhomeView from "@/views/restorer/RestorerhomeView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -127,7 +128,13 @@ const router = createRouter({
             path: '/categories',
             name: 'categories_view',
             component: ExploreView,
+        },
+        {
+            path: '/restaurateurs',
+            name: 'categories_view',
+            component: RestorerhomeView,
         }
+
     ]
 })
 

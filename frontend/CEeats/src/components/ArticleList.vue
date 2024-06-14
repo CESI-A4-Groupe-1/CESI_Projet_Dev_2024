@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import ArticleCard from "@/components/ArticleCard.vue";
 
 // Définir l'interface pour un article
