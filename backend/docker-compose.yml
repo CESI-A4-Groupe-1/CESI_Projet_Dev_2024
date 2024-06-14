@@ -1,6 +1,9 @@
 version: "3.9"
 networks:
     app-network:
+volumes:
+    db_data:
+
 
 services:
     orders_deliveries:
@@ -19,6 +22,13 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
     accounts:
         build:
             context: services/accounts
@@ -30,20 +40,30 @@ services:
         container_name: accounts
         expose:
             - "${ACCOUNTS_PORT}"
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
+
         ports:
             - "${ACCOUNTS_PORT}:${ACCOUNTS_PORT}"
         command: npm run dev
         networks:
             - app-network
-    menus:
+        depends_on:
+            - db
+    restaurants:
         build:
-            context: services/menus
+            context: services/restaurants
             dockerfile: Dockerfile
             target: base
         volumes:
-            - ./services/menus/src:/home/node/app/src
-            - ./services/menus/nodemon.json:/home/node/app/nodemon.json
-        container_name: menus
+            - ./services/restaurants/src:/home/node/app/src
+            - ./services/restaurants/nodemon.json:/home/node/app/nodemon.json
+        container_name: restaurants
         expose:
             - "${MENUS_PORT}"
         ports:
@@ -51,6 +71,14 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
+
     statistics:
         build:
             context: services/statistics
@@ -67,6 +95,14 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
+
     referrals:
         build:
             context: services/referrals
@@ -83,6 +119,13 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
     notifications:
         build:
             context: services/notifications
@@ -99,11 +142,18 @@ services:
         command: npm run dev
         networks:
             - app-network
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_USER: "${MYSQL_USER}"
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: "${MYSQL_HOST}"
+            MYSQL_PORT: "${MYSQL_PORT}"
     nginx:
         image: nginx:latest
         container_name: api_gateway
         volumes:
-            - ./api_gateway/nginx.conf:/etc/nginx/nginx.conf
+            - ./api_gateway:/etc/nginx/
         ports:
             - "8080:8080"
 
@@ -113,6 +163,22 @@ services:
             - accounts
             - orders_deliveries
             - referrals
-            - menus
+            - restaurants
             - notifications
             - statistics
+
+    db:
+        image: mysql
+        container_name: db
+        restart: always
+        ports:
+            -   "${MYSQL_PORT}:${MYSQL_PORT}"
+        volumes:
+            - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+            - db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+
+        networks:
+            - app-network

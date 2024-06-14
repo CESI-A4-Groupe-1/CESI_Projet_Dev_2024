@@ -2,7 +2,7 @@
 import Sidebar from '@/components/Sidebar.vue'
 
 export default {
-  components: { Sidebar },
+  components: {Sidebar},
   data() {
     return {
       isMenuOpen: false,
@@ -25,17 +25,9 @@ export default {
 <template>
   <header class="flex-container">
     <button
-      class="btn btn-primary"
-      type="button"
-      style="
-        background: white;
-        color: rgb(42, 66, 82);
-        border-radius: 6px;
-        margin: 0px;
-        text-align: center;
-        border: 4px solid rgb(42, 66, 82);
-      "
-      @click="toggleMenu"
+        class="claymorphism"
+        type="button"
+        @click="toggleMenu"
     >
       Menu
     </button>
@@ -44,18 +36,41 @@ export default {
   </header>
 
   <div
-    v-bind:class="{
+      v-bind:class="{
       main_page_content_1: page_content.page_content_1,
       main_page_content_2: page_content.page_content_2
     }"
   >
-    <sidebar :is-menu-open="isMenuOpen" />
+    <transition name="fade">
+      <sidebar :is-menu-open="isMenuOpen"/>
+    </transition>
 
-    <router-view class="router_class" />
+
+    <router-view class="router_class"/>
   </div>
 </template>
 
 <style scoped>
+.claymorphism {
+  border-radius: 14px;
+  background: #2a4252;
+  box-shadow: 8px 8px 16px #111a21,
+  -8px -8px 16px #436a83;
+  padding: 20px;
+  color: white;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.1s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+
 .flex-container {
   display: flex;
   flex-direction: row;

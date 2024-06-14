@@ -1,25 +1,42 @@
 <script lang="ts">
+import CategoryService from "@/services/CategoryService";
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
-import {defineComponent} from "vue";
+import {RestaurantService} from "@/services";
+import {defineComponent, ref} from "vue";
 
 export default defineComponent({
-  name: "OrderCard",
+  name: "Results",
   components: {
     CategoryThumbnail,
     RestaurantList,
     FilterButton,
   },
+  data() {
+    return {
+      categories_array: [],
+      restaurants_array: []
+    }
+  },
   props: {
-    // TODO : Récupérer la catégorie
+    //TODO : Récupérer la catégorie
+
     //TODO : Récupérer la valeur des filtres de 'FilterButton'
   },
-  setup(props, { emit }) {
-    // Mettre le code ici
+  async mounted() {
+    //get category_id from url
     //TODO : Fonction de recherche. Retourne restaurants.
-    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérer. Passer la valeur au composant 'RestaurantList'.
-  }
+
+    //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
+    RestaurantService.getAllRestaurants()
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+
+    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
+    this.categories_array = CategoryService.getAllCategories();
+  },
+
 })
 
 </script>
@@ -35,14 +52,15 @@ export default defineComponent({
       <p class="nbr_results">6 résultats</p>
     </div>
     <div class="category_pills">
-      <CategoryThumbnail></CategoryThumbnail>
+      <CategoryThumbnail v-for="(category, i) in categories_array" :key="i" :category_id="category.id" :category_name="category.name"></CategoryThumbnail>
     </div>
     <div class="filters">
       <p>Filters : </p>
-      <FilterButton v-for="(icons, i) in 3" :key="i"></FilterButton>
+      <FilterButton v-for="(filter, i) in 3" :key="i"></FilterButton>
     </div>
     <div class="restaurant_list">
-      <RestaurantList></RestaurantList>
+<!--      FIXME : Définir la variable restaurants -->
+      <RestaurantList :restaurants_array="restaurants_array"></RestaurantList>
     </div>
   </main>
 </template>
@@ -71,7 +89,7 @@ export default defineComponent({
     overflow-x: scroll;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    justify-content: space-around;
+    justify-content: center;
 
     //put shadows on the side when overflow
     background:
