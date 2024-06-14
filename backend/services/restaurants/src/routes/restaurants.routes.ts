@@ -2,6 +2,7 @@ import RestaurantController from "../controllers/restaurant.controller";
 import {middlewares} from "../middlewares/middlewares";
 import ArticleController from "../controllers/article.controller";
 import MenusController from "../controllers/menus.controller";
+import CategoryController from "../controllers/categorie.controller";
 
 export default function (app: any) {
     // logging middleware
@@ -21,4 +22,5 @@ export default function (app: any) {
     app.get('/articles/:article_id', (new ArticleController()).getArticle)
     app.put('/articles/:article_id', (new ArticleController()).updateArticle)
     app.delete('/articles/:article_id', (new ArticleController()).deleteArticle)
+    app.get('/categories/', (new CategoryController()).getCategories)
 }

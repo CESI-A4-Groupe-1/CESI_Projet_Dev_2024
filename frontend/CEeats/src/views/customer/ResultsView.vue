@@ -30,13 +30,14 @@ export default defineComponent({
 
     //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
     RestaurantService.getAllRestaurants()
-        .then(res => console.log(res))
+        .then(res => {
+          this.restaurants_array = res.data;
+        })
         .catch(err => console.log(err));
 
     // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
-    this.categories_array = CategoryService.getAllCategories();
+    // this.categories_array = CategoryService.getAllCategories();
   },
-
 })
 
 </script>
@@ -49,7 +50,7 @@ export default defineComponent({
     </div>
     <div class="results_header">
       <h2 class="results">Résultats</h2>
-      <p class="nbr_results">6 résultats</p>
+      <p class="nbr_results">{{ restaurants_array.length }} résultats</p>
     </div>
     <div class="category_pills">
       <CategoryThumbnail v-for="(category, i) in categories_array" :key="i" :category_id="category.id" :category_name="category.name"></CategoryThumbnail>

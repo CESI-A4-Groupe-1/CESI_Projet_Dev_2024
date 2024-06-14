@@ -4,6 +4,8 @@ import CategoryCard from "@/components/CategoryCard.vue";
 </script>
 
 <script lang="js">
+import {RestaurantService} from "@/services/index.js";
+
 export default {
   data() {
     return {
@@ -18,7 +20,11 @@ export default {
   },
   mounted() {
     //TODO : utiliser cette section comme l'équivalent d'un évènement "onready" de HTML basique pour envoyer un fetch au serveurs de catégories
-    this.categories_array = CategoryService.getAllCategories();
+    RestaurantService.getAllCategories()
+        .then(res => {
+          this.categories_array = res.data;
+        })
+        .catch(err => console.log(err))
   },
 }
 </script>
@@ -29,9 +35,8 @@ export default {
     <input class="search" placeholder="Search"/>
     <h2 class="topCategories">Top Categories</h2>
     <div class="category_container">
-      <CategoryCard v-for="(category, i) in categories_array" :key="i" :tag-name='category.name' :category_id="category.id" style="margin: 5px"></CategoryCard>
+      <CategoryCard v-for="(category, i) in categories_array" :key="i" :tag-name='category.titre' :category_id="category.id" style="margin: 5px"></CategoryCard>
     </div>
-
   </main>
 </template>
 

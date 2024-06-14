@@ -1,5 +1,22 @@
-<script setup lang="ts">
+<script setup>
 
+</script>
+
+<script>
+export default {
+  name: "RestaurantCard",
+  components: {
+  },
+  data() {
+    return {
+
+    }
+
+  },
+  props: {
+    restaurant: Object,
+  }
+}
 </script>
 
 <template>
@@ -7,7 +24,7 @@
     <img src="https://images.bfmtv.com/UDAdpp33jU96JAWSB1v2R8KbfUg=/0x0:1196x1192/600x0/images/-458880.jpg" alt="mcdo">
     <div class="restaurant_info">
       <div class="restaurant_card_head">
-        <p class="name">Restaurant 1</p>
+        <p class="name">{{ restaurant.nom }}</p>
         <p class="note">
           <span>
             4.4
