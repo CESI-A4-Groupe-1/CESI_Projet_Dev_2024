@@ -1,13 +1,16 @@
 import Axios from "@/services/APIService.js";
 
 let login = (credentials) => {
-    console.log(credentials);
     return Axios.post('login', credentials);
 }
 
 let logout = () => {
     // TODO : faire fonction logout
     localStorage.removeItem('token');
+}
+
+let getToken = () => {
+    return localStorage.getItem('token')
 }
 
 let saveToken = (token) => {
@@ -24,6 +27,7 @@ let isLogged = () => {
 export const AccountService = {
     login,
     logout,
+    getToken,
     saveToken,
     isLogged
 }

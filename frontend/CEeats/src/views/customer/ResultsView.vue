@@ -3,7 +3,7 @@ import CategoryService from "@/services/CategoryService";
 import RestaurantList from "@/components/RestaurantList.vue";
 import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
-import {getAllRestaurants} from "@/services";
+import {RestaurantService} from "@/services";
 import {defineComponent, ref} from "vue";
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
     //TODO : Fonction de recherche. Retourne restaurants.
 
     //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
-    getAllRestaurants.getAllCategories()
+    RestaurantService.getAllRestaurants()
         .then(res => console.log(res))
         .catch(err => console.log(err));
 

@@ -16,8 +16,9 @@ export default defineComponent({
     async login() {
       AccountService.login(this.user)
           .then(res => {
-            AccountService.saveToken(res.data.access_token)
-            this.$router.push('/restaurants')
+            console.log(res);
+            AccountService.saveToken(res.data.token)
+            this.$router.push('/parcourir')
           })
           .catch(err => console.log(err))
     }
