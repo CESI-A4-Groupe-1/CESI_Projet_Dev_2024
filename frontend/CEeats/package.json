@@ -14,10 +14,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@fortawesome/fontawesome-free": "^6.5.2",
->>>>>>> cc3d11b1bf6c243ddc9449992d98b138efe9f9c7
     "axios": "^1.7.2",
     "node": "^20.14.0",
     "primeicons": "^7.0.0",

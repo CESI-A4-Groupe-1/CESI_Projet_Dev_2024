@@ -30,19 +30,10 @@ export default defineComponent({
 
     //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
     RestaurantService.getAllRestaurants()
-<<<<<<< HEAD
         .then(res => {
           this.restaurants_array = res.data;
         })
         .catch(err => console.log(err));
-=======
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
-
-    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
-    this.categories_array = CategoryService.getAllCategories();
-  },
->>>>>>> cc3d11b1bf6c243ddc9449992d98b138efe9f9c7
 
     // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
     // this.categories_array = CategoryService.getAllCategories();
