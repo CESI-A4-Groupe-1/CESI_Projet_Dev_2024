@@ -4,6 +4,7 @@ import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
 import RestaurantView from '@/views/customer/RestaurantView.vue'
 import OrdersView from "@/views/customer/OrdersView.vue";
+import RestorerhomeView from "@/views/restorer/RestorerhomeView.vue";
 import AccountView from "@/views/customer/AccountView.vue";
 import SettingsView from "@/views/customer/SettingsView.vue";
 import HelpView from "@/views/customer/HelpView.vue";
@@ -146,7 +147,13 @@ const router = createRouter({
             path: '/categories',
             name: 'categories_view',
             component: ExploreView,
+        },
+        {
+            path: '/restaurateurs',
+            name: 'categories_view',
+            component: RestorerhomeView,
         }
+
     ]
 })
 
