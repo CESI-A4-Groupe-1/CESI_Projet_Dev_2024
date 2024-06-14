@@ -1,5 +1,6 @@
 import Axios from "@/services/APIService.js";
 
+<<<<<<< HEAD
 const articles = {
     "article1": {
         nom: "Bœuf Bourguignon",
@@ -47,4 +48,12 @@ export const RestaurantService = {
     getAllCategories,
     getRestaurantMenues,
     getMenueArticles,
+=======
+export let getAllRestaurants = async () => {
+    return Axios.get('/restaurants')
+}
+
+export const RestaurantService = {
+    getAllRestaurants,
+>>>>>>> cc3d11b1bf6c243ddc9449992d98b138efe9f9c7
 }
