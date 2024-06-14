@@ -2,7 +2,7 @@ import Axios from "@/services/APIService.js";
 
 let login = (credentials) => {
     console.log(credentials);
-    return Axios.post('login/', credentials);
+    return Axios.post('login', credentials);
 }
 
 let logout = () => {
