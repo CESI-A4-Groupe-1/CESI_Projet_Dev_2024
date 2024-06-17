@@ -13,7 +13,11 @@ import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
 
+import {messaging} from './firebase';
+
 const app = createApp(App)
+
+app.config.globalProperties.$firebaseMessaging = messaging
 
 app.use(router)
 app.use(PrimeVue)
@@ -22,5 +26,6 @@ app.component('InputText', InputText)
 app.component('InputSwitch', InputSwitch)
 app.component('Password', Password)
 app.component('FloatLabel', FloatLabel)
+
 
 app.mount('#app')

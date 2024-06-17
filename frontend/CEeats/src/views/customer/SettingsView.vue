@@ -1,6 +1,8 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import { ref } from 'vue'
+import {getToken, messaging} from "../../firebase";
+
 
 export default defineComponent({
   name: "SettingsView",
@@ -10,9 +12,23 @@ export default defineComponent({
       checked_other: Boolean
     }
   },
-  method: {
-    checked_notif: ref(false),
-    checked_other: ref(false)
+  methods: {
+    requestNotifications: async (checked: BooleanConstructor) => {
+      console.log(checked)
+      if (checked.valueOf()) {
+        try {
+          const currentToken = await getToken(messaging, {vapidKey: import.meta.env.VITE_PUBLIC_VAPID_KEY});
+          if (currentToken) {
+            console.log('FCM Token:', currentToken);
+            // Send the token to your server to store it
+          } else {
+            console.warn('No registration token available. Request permission to generate one.');
+          }
+        } catch (err) {
+          console.error('Unable to get permission to notify.', err);
+        }
+      }
+    }
   }
 })
 </script>
@@ -25,7 +41,7 @@ export default defineComponent({
         <p class="title">Notifications</p>
         <div class="description_notif">Description du paramètre</div>
       </div>
-      <InputSwitch v-model="checked_notif"/>
+      <InputSwitch v-model="checked_notif" @change="event => requestNotifications(checked_notif)"/>
     </div>
     <div class="setting">
       <div class="other_settings">
