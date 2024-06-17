@@ -17,6 +17,6 @@ install-deps:
 	npm --prefix ./services/accounts install
 	npm --prefix ./services/notifications install
 	npm --prefix ./services/orders_deliveries install
-	npm --prefix ./services/menus install
+	npm --prefix ./services/restaurants install
 	npm --prefix ./services/referrals install
 	npm --prefix ./services/statistics install

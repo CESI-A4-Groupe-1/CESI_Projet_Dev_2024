@@ -2,6 +2,17 @@ import {createRouter, createWebHistory} from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import ExploreView from '@/views/customer/ExploreView.vue'
 import ResultsView from '@/views/customer/ResultsView.vue'
+import RestaurantView from '@/views/customer/RestaurantView.vue'
+import OrdersView from "@/views/customer/OrdersView.vue";
+import RestorerhomeView from "@/views/restorer/RestorerhomeView.vue";
+import AccountView from "@/views/customer/AccountView.vue";
+import SettingsView from "@/views/customer/SettingsView.vue";
+import HelpView from "@/views/customer/HelpView.vue";
+import NameFormView from "@/views/customer/NameFormView.vue";
+import PhoneFormView from "@/views/customer/PhoneFormView.vue";
+import EmailFormView from "@/views/customer/EmailFormView.vue";
+import PasswordFormView from "@/views/customer/PasswordFormView.vue";
+import LoginView from "@/views/auth/LoginView.vue";
 
 //TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
 function authenticateUser(): boolean {
@@ -21,16 +32,34 @@ const router = createRouter({
             name: 'test',
             component: MainView
         },
-        {
-            path: '/parcourir',
-            name: 'parcourir',
-            component: ExploreView
+        { 
+          path: '/parcourir', 
+          name: 'parcourir', 
+          component: ExploreView,
         },
+        // correspond au 'restaurants' dans ces routes
         {
-            path: '/resultats',
-            name: 'resultats',
-            component: ResultsView
+          path: '/resultats', 
+          name: 'resultats', 
+          component: ResultsView 
         },
+        // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
+        // ---------------------------------------------------------------- //
+        { path: '/login', component: LoginView },
+        { path: '/resultats/:id_category', component: ResultsView },
+        { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
+        { path: '/users/:id/orders', name: 'commandes', component: OrdersView },
+        { path: '/users/:id/account', name: 'profil', component: AccountView },
+
+        { path: '/users/:id/account/update/name', name: 'updateFormName', component: NameFormView },
+        { path: '/users/:id/account/update/phone', name: 'updateFormPhone', component: PhoneFormView },
+        { path: '/users/:id/account/update/email', name: 'updateFormEmail', component: EmailFormView },
+        { path: '/users/:id/account/update/password', name: 'updateFormPassword', component: PasswordFormView },
+
+        { path: '/users/:id/settings', name: 'parametres', component: SettingsView },
+        { path: '/help', name: 'aide', component: HelpView },
+        // ---------------------------------------------------------------- //
+
         {
             path: '/users',
             name: 'users',
@@ -39,7 +68,7 @@ const router = createRouter({
                 {
                     path: '/:id/orders',
                     name: 'users_orders',
-                    component: MainView,
+                    component: OrdersView,
                     beforeEnter: (to, from, next): void => {
                         let isAdmin: boolean = authenticateAdmin();
                         if (isAdmin) {
@@ -78,7 +107,7 @@ const router = createRouter({
             ]
         },
         {
-            path: '/menus',
+            path: '/restaurants',
             name: 'menus_view',
             component: MainView, //FIXME : Changer le composant pour le vrai composant
             children: [
@@ -92,11 +121,11 @@ const router = createRouter({
         {
             path: '/restaurants',
             name: 'restaurants_list_view',
-            component: MainView,
+            component: ResultsView,
             children: [
                 {
                     path: '/:id',
-                    component: MainView,
+                    component: RestaurantView,
                     name: "specific_restaurant",
                     children: [
                         {
@@ -118,7 +147,13 @@ const router = createRouter({
             path: '/categories',
             name: 'categories_view',
             component: ExploreView,
+        },
+        {
+            path: '/restaurateurs',
+            name: 'categories_view',
+            component: RestorerhomeView,
         }
+
     ]
 })
 

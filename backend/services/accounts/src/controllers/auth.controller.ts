@@ -79,10 +79,10 @@ export default class AuthController {
 
     authenticate = async (req: any, res: any) => {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization?.split(" ")[1];
             if (!token) {
                 return res.status(401).json({
-                    "msg": "No Token Provided"
+                    msg: "Invalid Credentials"
                 });
             }
             let decoded;
