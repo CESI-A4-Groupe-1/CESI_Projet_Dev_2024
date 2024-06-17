@@ -50,13 +50,9 @@ export default class UserController {
         }
 
         try {
-            if (headUserId === user_id) {
-                doGetUser();
-            }
-
             hasPermission(req, "list_users")
                 .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    if (!hasPerm && headUserId !== user_id) return res.status(403).json({msg: "Forbidden"});
                     doGetUser();
                 })
         } catch (err) {
@@ -82,13 +78,9 @@ export default class UserController {
         }
 
         try {
-            if (headUserId === user_id) {
-                applyUpdateUser();
-            }
-
             hasPermission(req, "update_user")
                 .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    if (!hasPerm && headUserId !== user_id) return res.status(403).json({msg: "Forbidden"});
                     applyUpdateUser();
                 })
         } catch (err) {
@@ -113,13 +105,9 @@ export default class UserController {
         }
 
         try {
-            if (headUserId === user_id) {
-                applyDelete();
-            }
-
             hasPermission(req, "delete_user")
                 .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    if (!hasPerm && headUserId !== user_id) return res.status(403).json({msg: "Forbidden"});
                     applyDelete();
                 })
         } catch (err) {

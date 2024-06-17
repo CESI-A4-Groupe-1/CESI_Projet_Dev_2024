@@ -7,7 +7,7 @@ config();
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
-const {Compte} = initModels(db);
+const { Compte } = initModels(db);
 
 export default class AuthController {
     constructor() {
