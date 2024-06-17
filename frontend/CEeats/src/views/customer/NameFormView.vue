@@ -1,25 +1,76 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent, ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { AccountService } from '@/services/AccountService';
+import User from '@/models/UserModel';
 
 export default defineComponent({
-  name: "NameFormView"
-})
+  name: "AccountView",
+  setup() {
+    const route = useRoute();
+    const userId = ref<string>(route.params.id as string);
+    // Variables réactives
+    const user = ref<User>({
+      id: '',
+      nom: '',
+      prenom: '',
+      email: '',
+      role_id: '',
+      date_anniv: '',
+      password: '',
+      telephone: '',
+      is_notified: false,
+      path_pfp: '',
+      id_parain: '',
+      adresse: '',
+      createdAt: '',
+      updatedAt: '',
+      deletedAt: ''
+    });
+    onMounted(() => {
+      AccountService.getUser(userId.value)
+          .then(res => {
+            user.value = res.data as User;
+            console.log(user);
+          })
+          .catch(err => console.log(err));
+    });
+
+    const updateUser = async () => {
+      try {
+        await AccountService.updateUser(userId.value, user.value);
+        alert("Utilisateur mis à jour avec succès");
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors de la mise à jour de l'utilisateur");
+      }
+    };
+
+    // Retour des variables et fonctions à utiliser dans le template
+    return {
+      user,
+      updateUser
+    };
+  }
+});
 </script>
 
 <template>
   <main>
     <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
-    <h1>Nom</h1>
-    <p>Il s'agit du nom que vous souhaitez que les autres utilisateurs utilisent pour vous désigner</p>
-    <div class="form">
-      <label for="firstname">Prénom</label>
-      <InputText id="firstname" v-model="firstname"/>
-    </div>
-    <div class="form">
-      <label for="lastname">Nom de famille</label>
-      <InputText id="lastname" v-model="lastname"/>
-    </div>
-    <Button label="Mettre à jour" raised />
+    <form @submit.prevent="updateUser">
+      <h1>Nom</h1>
+      <p>Il s'agit du nom que vous souhaitez que les autres utilisateurs utilisent pour vous désigner</p>
+      <div class="form">
+        <label for="firstname">Prénom</label>
+        <InputText id="firstname" v-model="user.prenom" :value="user.prenom"/>
+      </div>
+      <div class="form">
+        <label for="lastname">Nom de famille</label>
+        <InputText id="lastname" v-model="user.nom" :value="user.nom"/>
+      </div>
+      <Button label="Mettre à jour" type="submit" raised />
+    </form>
   </main>
 </template>
 
