@@ -81,6 +81,9 @@ export default class UserController {
             hasPermission(req, "update_user")
                 .then((hasPerm) => {
                     if (!hasPerm && headUserId !== user_id) return res.status(403).json({msg: "Forbidden"});
+                    if (req.body.password) {
+                        req.body.password = bcrypt.hashSync(req.body.password, 10);
+                    }
                     applyUpdateUser();
                 })
         } catch (err) {

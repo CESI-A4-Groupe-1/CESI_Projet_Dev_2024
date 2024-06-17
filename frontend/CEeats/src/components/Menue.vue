@@ -3,15 +3,15 @@ import ArticleList from "@/components/ArticleList.vue";
 
 defineProps ({
   i: Number,
-  menue_name: String
+  menue: Object as any,
 })
 </script>
 
 <template>
   <div class="menue">
-    <h3 class="menue_name" :id="'heading' + i">{{ menue_name }}</h3>
+    <h3 class="menue_name" :id="'heading' + i">{{ menue.titre_section }}</h3>
     <div class="articles">
-      <ArticleList :menue_id="i"></ArticleList>
+      <ArticleList :articles="menue.articles"></ArticleList>
     </div>
   </div>
 </template>

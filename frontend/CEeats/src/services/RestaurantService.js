@@ -40,6 +40,10 @@ let getMenueArticles = async (id) => {
     return articles;
 }
 
+let getRestaurantByCategory = async (category_id) => {
+    return Axios.get(`/restaurants/categories/${category_id}`);
+}
+
 
 export const RestaurantService = {
     getAllRestaurants,
@@ -47,4 +51,5 @@ export const RestaurantService = {
     getAllCategories,
     getRestaurantMenues,
     getMenueArticles,
+    getRestaurantByCategory
 }
