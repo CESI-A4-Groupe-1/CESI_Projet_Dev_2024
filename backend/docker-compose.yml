@@ -56,6 +56,7 @@ services:
         depends_on:
             - db
     restaurants:
+
         build:
             context: services/restaurants
             dockerfile: Dockerfile
