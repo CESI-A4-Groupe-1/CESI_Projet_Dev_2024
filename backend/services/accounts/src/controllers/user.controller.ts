@@ -61,7 +61,7 @@ export default class UserController {
         }
     }
 
-    updateUser = async (req: any, res: any) => {
+    updateUser = (req: any, res: any) => {
         const headUserId = req.headers['x-user-id'];
         const { user_id } = req.params;
 
@@ -115,6 +115,4 @@ export default class UserController {
             return res.status(500).json({msg: "Internal Server Error"});
         }
     }
-
-
 }
