@@ -24,10 +24,20 @@ let isLogged = () => {
     return !!token;
 }
 
+let getUser = (id) => {
+    return Axios.get(`/users/${id}`);
+}
+
+let updateUser = (id, data) => {
+    return Axios.put(`/users/${id}`, data);
+}
+
 export const AccountService = {
     login,
     logout,
     getToken,
     saveToken,
-    isLogged
+    isLogged,
+    getUser,
+    updateUser
 }

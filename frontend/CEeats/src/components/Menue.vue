@@ -11,7 +11,7 @@ defineProps ({
   <div class="menue">
     <h3 class="menue_name" :id="'heading' + i">{{ menue_name }}</h3>
     <div class="articles">
-      <ArticleList></ArticleList>
+      <ArticleList :menue_id="i"></ArticleList>
     </div>
   </div>
 </template>

@@ -7,6 +7,9 @@ export default {
   components: {
   },
   data() {
+    return {
+
+    }
   },
   props: [
     "tagName",

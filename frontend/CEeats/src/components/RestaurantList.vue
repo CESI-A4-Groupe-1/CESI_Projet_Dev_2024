@@ -1,11 +1,32 @@
-<script setup lang="ts">
-  import RestaurantCard from "@/components/RestaurantCard.vue";
+<script setup>
+</script>
+
+<script>
+import {defineComponent} from "vue";
+import RestaurantCard from "@/components/RestaurantCard.vue";
+
+export default defineComponent({
+  name: "Results",
+  components: {
+    RestaurantCard
+  },
+  data() {
+    return {
+    }
+  },
+  props: {
+    restaurants_array: Array
+  },
+  async mounted() {
+  },
+
+})
 </script>
 
 <template>
-  <div class="restaurant_card" v-for="(restaurant, i) in 6" :key="i">
-    <RouterLink class="restaurant_card_link" to="/restaurants/1">
-      <RestaurantCard></RestaurantCard>
+  <div class="restaurant_card" v-for="(restaurant, i) in restaurants_array" :key="i">
+    <RouterLink class="restaurant_card_link" :to="'/restaurants/' + restaurant.id">
+      <RestaurantCard :restaurant="restaurant"></RestaurantCard>
     </RouterLink>
   </div>
 </template>
