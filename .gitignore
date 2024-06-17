@@ -31,3 +31,4 @@ frontend/CEeats/.vscode/extensions.json
 
 .env
 backend/services/notifications/src/serviceAccountKey.json
+frontend/CEeats/.env
