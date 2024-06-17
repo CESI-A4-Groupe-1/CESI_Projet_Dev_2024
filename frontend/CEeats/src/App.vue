@@ -1,4 +1,6 @@
-<script setup>
+<script lang="ts">
+import Sidebar from '@/components/Sidebar.vue'
+import {messaging, getToken} from "./firebase";
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { AccountService } from "@/services/index.js";

@@ -23,6 +23,8 @@ import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
 import {messaging} from './firebase';
 
+import {messaging} from './firebase';
+
 const app = createApp(App)
 
 app.config.globalProperties.$firebaseMessaging = messaging
@@ -43,5 +45,6 @@ app.component('Dropdown', Dropdown)
 app.component('InputGroup', InputGroup)
 app.component('InputGroupAddon', InputGroupAddon)
 app.use(ConfirmationService);
+
 
 app.mount('#app')
