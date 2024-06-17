@@ -1,9 +1,21 @@
 <script lang="ts">
+import { OrderService } from '@/services/OrderService'
+
 export default {
   name: "ArticleCard",
   components: {},
   props: {
     article: Object as any,
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    addToOrder() {
+      console.log(OrderService.addToOrder());
+    }
   }
 }
 
@@ -22,7 +34,7 @@ export default {
       </div>
     </div>
     <div class="button_add">
-      <Button icon="pi pi-plus" severity="secondary" rounded aria-label="AddArticle" />
+      <Button icon="pi pi-plus" severity="secondary" rounded aria-label="AddArticle" @click="addToOrder"/>
     </div>
   </div>
 </template>

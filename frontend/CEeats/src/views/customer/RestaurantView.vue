@@ -3,15 +3,24 @@ import Menue from "@/components/Menue.vue";
 </script>
 
 <script lang="js">
+import { RestaurantService } from "@/services/RestaurantService.js"
+import { useRoute } from 'vue-router'
+
 export default {
   data() {
     return {
       // Ici, mettre les variables
-      menues: ["Menu 1", "Menu 2", "Menu 3", "Menu 4", "Menu 5"]
+      route: useRoute(),
+      menues: [],
+      restaurant: Object
     }
   },
   methods: {
     // Ici, mettre les méthodes
+    capitalizeFirstLetter(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
     scrollToMenu(event, index) {
       event.preventDefault();
       const element = document.getElementById(`heading${index}`);
@@ -21,6 +30,17 @@ export default {
     },
     //TODO : Fonction get_menue() qui renvoie menue:[article:{nom, prix, description, img}]. Donner la valuer au composant 'Menue'
     //TODO : Fonction add_to_order(). Une gestion du panier sera nécessaire.
+  },
+  mounted() {
+    RestaurantService.getRestaurant(this.route.params.id)
+        .then(res => {
+          this.restaurant = res.data;
+        })
+        .catch(err => console.log(err));
+    RestaurantService.getRestaurantMenues(this.route.params.id)
+        .then(res => {
+          this.menues = res;
+        })
   }
 }
 </script>
@@ -35,10 +55,10 @@ export default {
     </div>
     <div class="restaurant_top">
       <div class="restaurant_infos">
-        <h2 class="restaurant_name">Restaurants {{ $route.params.id }}</h2>
+        <h2 class="restaurant_name">{{ capitalizeFirstLetter(restaurant.nom) }}</h2>
         <p class="restaurant_details">
           #.9 (2000) - 5000 km - Ouverture: 12:00-22:00 <br>
-          adresse - $$
+          {{ capitalizeFirstLetter(restaurant.adresse) }} - $$
         </p>
       </div>
       <nav class="list_menues">
