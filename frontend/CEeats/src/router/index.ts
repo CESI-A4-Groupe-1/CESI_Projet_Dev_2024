@@ -14,14 +14,81 @@ import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 
-//TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier la connexion de l'utilisateur
-function authenticateUser(): boolean {
-    return false;
+
+
+function authenticateUser(): any {
+
+    const myHeaders = new Headers();
+
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc0OTI5OTcsImlhdCI6MTcxNzQ5Mjg3N30.tjQyobhQMvrtqmEloqEnBHsg8KokJQP6huOXPmkOmMQ");
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow"
+    };
+    let global_result: boolean = false;
+
+    //FIXME : changer l'url par la bonne url ici
+
+    fetch("localhost:3000/authenticate", requestOptions)
+
+        .then((response) => response.text())
+        .then((result) => {
+
+            //TODO : performer la validation ici en fonction de la réponse du serveur
+            let MesCouillesSurTonFrontEstVrai: boolean = false
+
+            if (MesCouillesSurTonFrontEstVrai) {
+
+                global_result = true;
+
+            } else {
+
+                global_result = false
+
+            }
+        })
+        .catch((error) => console.error(error));
+
+    return global_result;
 }
 
-//TODO : ici la méthode qui sera utilisée pour faire une requête au serveur d'authentification afin de vérifier les permissions de l'utilisateurs
 function authenticateAdmin(): boolean {
-    return false;
+    const myHeaders = new Headers();
+
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc0OTI5OTcsImlhdCI6MTcxNzQ5Mjg3N30.tjQyobhQMvrtqmEloqEnBHsg8KokJQP6huOXPmkOmMQ");
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow"
+    };
+    let global_result: boolean = false;
+
+    //FIXME : changer l'url par la bonne url ici
+
+    fetch("localhost:3000/authenticate", requestOptions)
+
+        .then((response) => response.text())
+        .then((result) => {
+
+            //TODO : performer la validation ici en fonction de la réponse du serveur
+            let MesCouillesSurTonFrontEstVrai: boolean = false
+
+            if (MesCouillesSurTonFrontEstVrai) {
+
+                global_result = true;
+
+            } else {
+
+                global_result = false
+
+            }
+        })
+        .catch((error) => console.error(error));
+
+    return global_result;
 }
 
 const router = createRouter({
@@ -32,32 +99,32 @@ const router = createRouter({
             name: 'test',
             component: MainView
         },
-        { 
-          path: '/parcourir', 
-          name: 'parcourir', 
-          component: ExploreView,
+        {
+            path: '/parcourir',
+            name: 'parcourir',
+            component: ExploreView,
         },
         // correspond au 'restaurants' dans ces routes
         {
-          path: '/resultats', 
-          name: 'resultats', 
-          component: ResultsView 
+            path: '/resultats',
+            name: 'resultats',
+            component: ResultsView
         },
         // FIXME: temporaire le temps de tester. se mettre d'accord sur le nom des routes.
         // ---------------------------------------------------------------- //
-        { path: '/login', component: LoginView },
-        { path: '/resultats/:id_category', component: ResultsView },
-        { path: '/restaurants/:id', name: 'restaurant', component: RestaurantView },
-        { path: '/users/:id/orders', name: 'commandes', component: OrdersView },
-        { path: '/users/:id/account', name: 'profil', component: AccountView },
+        {path: '/login', component: LoginView},
+        {path: '/resultats/:id_category', component: ResultsView},
+        {path: '/restaurants/:id', name: 'restaurant', component: RestaurantView},
+        {path: '/users/:id/orders', name: 'commandes', component: OrdersView},
+        {path: '/users/:id/account', name: 'profil', component: AccountView},
 
-        { path: '/users/:id/account/update/name', name: 'updateFormName', component: NameFormView },
-        { path: '/users/:id/account/update/phone', name: 'updateFormPhone', component: PhoneFormView },
-        { path: '/users/:id/account/update/email', name: 'updateFormEmail', component: EmailFormView },
-        { path: '/users/:id/account/update/password', name: 'updateFormPassword', component: PasswordFormView },
+        {path: '/users/:id/account/update/name', name: 'updateFormName', component: NameFormView},
+        {path: '/users/:id/account/update/phone', name: 'updateFormPhone', component: PhoneFormView},
+        {path: '/users/:id/account/update/email', name: 'updateFormEmail', component: EmailFormView},
+        {path: '/users/:id/account/update/password', name: 'updateFormPassword', component: PasswordFormView},
 
-        { path: '/users/:id/settings', name: 'parametres', component: SettingsView },
-        { path: '/help', name: 'aide', component: HelpView },
+        {path: '/users/:id/settings', name: 'parametres', component: SettingsView},
+        {path: '/help', name: 'aide', component: HelpView},
         // ---------------------------------------------------------------- //
 
         {
