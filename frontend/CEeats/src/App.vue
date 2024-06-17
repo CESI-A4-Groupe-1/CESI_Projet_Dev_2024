@@ -1,5 +1,6 @@
 <script lang="ts">
 import Sidebar from '@/components/Sidebar.vue'
+import {messaging, getToken} from "./firebase";
 
 export default {
   components: {Sidebar},
@@ -17,7 +18,8 @@ export default {
       this.isMenuOpen = !this.isMenuOpen
       this.page_content.page_content_2 = !this.page_content.page_content_2
       this.page_content.page_content_1 = !this.page_content.page_content_2
-    }
+    },
+
   }
 }
 </script>
