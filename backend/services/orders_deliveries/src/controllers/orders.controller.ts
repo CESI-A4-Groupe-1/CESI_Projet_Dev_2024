@@ -132,6 +132,34 @@ export default class OrdersController {
             hasPermission(req, "update_order")
                 .then((hasPerm) => {
                     if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    CommandeList.findOne({where: {id_commande: order_id, id_article: article_id}})
+                    .then((commlist) => {
+                        if (!commlist) {
+                            const article = CommandeList.build({
+                                id_article: req.body.id_article,
+                                id_commande: order_id,
+                                quantite: req.body.quantite
+                            })
+                            article.save()
+                        }
+                        else {
+                            const quantity = {quantite: req.body.quantite}
+                            CommandeList.update(quantity, {where: {id: commlist.id}})
+                                .then((updated) => {
+                                    if (!updated) return res.status(404).json({msg: "Not Found"});
+                                    return res.status(200).json({msg: "Order Updated"});
+                                })
+                                .catch((err) => {
+                                    console.error(err);
+                                    return res.status(500).json({msg: "Internal Server Error"});
+                                })
+                        }
+
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                            return res.status(500).json({msg: "Internal Server Error"});
+                        })
                     const article = CommandeList.build({
                         id_article: req.body.id_article,
                         id_commande: order_id,
