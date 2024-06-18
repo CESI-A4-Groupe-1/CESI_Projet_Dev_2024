@@ -1,4 +1,4 @@
-import {initModels} from "../models/init-models";
+import {Articles, initModels} from "../models/init-models";
 import db from "../db/db";
 import hasPermission from "./hasPermission";
 import {CreatedAt} from "sequelize-typescript";
@@ -20,7 +20,19 @@ export default class OrdersController {
                     Compte.findByPk(user_id)
                         .then((user) => {
                             if (!user) return res.status(404).json({msg: "Not Found"});
-                            Commandes.findAll({where: {id_client: user_id}})
+                            Commandes.findAll(
+                                {
+                                    where: {
+                                        id_client: user_id
+                                    },
+                                    include:
+                                        [
+                                            {
+                                                model: CommandeList,
+                                                as: "commande_lists",
+                                            }
+                                        ]
+                                })
                                 .then((orders) => {
                                     return res.status(200).json(orders);
                                 })
@@ -128,42 +140,74 @@ export default class OrdersController {
         const headOrderId = req.headers['x-user-id'];
         const { order_id } = req.params;
         const { article_id } = req.params;
+
         try {
-            hasPermission(req, "update_order")
-                .then((hasPerm) => {
-                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
-                    const article = CommandeList.build({
-                        id_article: req.body.id_article,
-                        id_commande: order_id,
-                        quantite: req.body.quantite
-                    })
-                    article.save()
-                        .then((article) => {
-                            CommandeList.findByPk(article.id)
-                                .then((commlist) => {
-                                    if (!commlist) return res.status(404).json({msg: "Not Found"});
-                                })
-                                .catch((err) => {
+            hasPermission(req, "update_order").then((hasPerm) => {
+                if (!hasPerm) {
+                    return res.status(403).json({msg: "Forbidden"});
+                }
+
+                CommandeList.findOne({ where: { id_commande: order_id, id_article: article_id } }).then((commlist) => {
+                    if (!commlist) {
+                        // Si aucune commande n'existe pour cet article, créez-en une nouvelle
+                        const article = CommandeList.build({
+                            id_article: req.body.id_article,
+                            id_commande: order_id,
+                            quantite: req.body.quantite
+                        });
+
+                        article.save().then((article) => {
+                            CommandeList.findByPk(article.id).then((commlist) => {
+                                if (!commlist) {
+                                    return res.status(404).json({ msg: "Not Found" });
+                                }
+
+                                const logdate = { updated_at: new Date() };
+                                Commandes.update(logdate, { where: { id: order_id } }).then((updated) => {
+                                    if (!updated) {
+                                        return res.status(404).json({ msg: "Not Found" });
+                                    }
+
+                                    return res.status(200).json({ msg: "Order Updated" });
+                                }).catch((err) => {
                                     console.error(err);
-                                    return res.status(500).json({msg: "Internal Server Error"});
-                                })
-                            const logdate = {updated_at: new Date()}
-                            Commandes.update(logdate, {where: {id: order_id}})
-                                .then((updated) => {
-                                    if (!updated) return res.status(404).json({msg: "Not Found"});
-                                    return res.status(200).json({msg: "Order Updated"});
-                                })
-                                .catch((err) => {
-                                    console.error(err);
-                                    return res.status(500).json({msg: "Internal Server Error"});
-                                })
-                        })
-                })
+                                    return res.status(500).json({ msg: "Internal Server Error" });
+                                });
+                            }).catch((err) => {
+                                console.error(err);
+                                return res.status(500).json({ msg: "Internal Server Error" });
+                            });
+                        }).catch((err) => {
+                            console.error(err);
+                            return res.status(500).json({ msg: "Internal Server Error" });
+                        });
+                    } else {
+                        // Si la commande existe déjà pour cet article, mettez à jour la quantité
+                        CommandeList.update(req.body, { where: { id: commlist.id } }).then((updated) => {
+                            if (!updated) {
+                                return res.status(404).json({ msg: "Not Found" });
+                            }
+
+                            return res.status(200).json({ msg: "Order Updated" });
+                        }).catch((err) => {
+                            console.error(err);
+                            return res.status(500).json({ msg: "Internal Server Error" });
+                        });
+                    }
+                }).catch((err) => {
+                    console.error(err);
+                    return res.status(500).json({ msg: "Internal Server Error" });
+                });
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json({ msg: "Internal Server Error" });
+            });
         } catch (err) {
             console.error(err);
-            return res.status(500).json({msg: "Internal Server Error"});
+            return res.status(500).json({ msg: "Internal Server Error" });
         }
     }
+
 
     updateRemove(req: any, res: any) {
         const headOrderId = req.headers['x-user-id'];
