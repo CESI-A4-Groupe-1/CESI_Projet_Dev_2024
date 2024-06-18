@@ -1,9 +1,11 @@
 <template>
   <div class="sidebar_class" v-if="isMenuOpen">
     <!--TODO : Vérifier le nombre de bouton en lien à mettre ici pour que les utilisateurs puissent naviguer correctement sans aller aux mauvais endroit -->
+    <RouterLink to="/" class="neomorphism-button-link">Accueil</RouterLink>
     <RouterLink to="/parcourir" class="neomorphism-button-link">Parcourir</RouterLink>
-    <RouterLink to="/resultats" class="neomorphism-button-link">Résultats</RouterLink>
-    <RouterLink to="/categories" class="neomorphism-button-link">Catégories</RouterLink>
+    <RouterLink to="/users/1/orders" class="neomorphism-button-link">Panier</RouterLink>
+    <RouterLink to="" class="neomorphism-button-link">Livraisons</RouterLink>
+    <RouterLink to="/users/1/settings" class="neomorphism-button-link">Notifications</RouterLink>
   </div>
 </template>
 <script lang="ts">

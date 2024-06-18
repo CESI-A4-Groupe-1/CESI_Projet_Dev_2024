@@ -12,6 +12,9 @@ import InputText from "primevue/inputtext";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
+import TieredMenu from 'primevue/tieredmenu';
+import InputNumber from 'primevue/inputnumber';
+import Dialog from 'primevue/dialog';
 
 const app = createApp(App)
 
@@ -22,5 +25,8 @@ app.component('InputText', InputText)
 app.component('InputSwitch', InputSwitch)
 app.component('Password', Password)
 app.component('FloatLabel', FloatLabel)
+app.component('TieredMenu', TieredMenu)
+app.component('InputNumber', InputNumber)
+app.component('Dialog', Dialog)
 
 app.mount('#app')
