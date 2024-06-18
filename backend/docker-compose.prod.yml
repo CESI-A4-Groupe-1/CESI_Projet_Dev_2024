@@ -25,3 +25,8 @@ services:
     build:
       target: production
     command: node build/index.js
+
+  admin:
+    build:
+      target: production
+    command: node dist/app.js
