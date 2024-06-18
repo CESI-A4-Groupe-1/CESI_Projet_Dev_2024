@@ -13,7 +13,7 @@ import PhoneFormView from "@/views/customer/PhoneFormView.vue";
 import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
-
+import deliverer_view from "@/views/deliverer/deliverer_view.vue"
 
 
 function authenticateUser(): any {
@@ -219,6 +219,18 @@ const router = createRouter({
             path: '/restaurateurs',
             name: 'categories_view',
             component: RestorerhomeView,
+        },
+        {
+            path: "/deliveries",
+            name: "deliveries_view",
+            component: null,
+            children: [
+                {
+                    path: "{id}",
+                    name: "specific_delivery",
+                    component: deliverer_view
+                }
+            ]
         }
 
     ]
