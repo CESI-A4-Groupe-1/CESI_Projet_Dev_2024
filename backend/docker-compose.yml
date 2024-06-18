@@ -183,3 +183,22 @@ services:
 
         networks:
             - app-network
+    admin:
+        build:
+            context: admin
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./admin/src:/home/node/app/src
+            - ./admin/nodemon.json:/home/node/app/nodemon.json
+        container_name: admin
+        expose:
+            - "3030"
+
+        ports:
+            - "3030:3030"
+        command: npm run dev
+        networks:
+            - app-network
+        depends_on:
+            -   db
