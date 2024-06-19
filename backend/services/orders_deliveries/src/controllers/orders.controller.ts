@@ -1,10 +1,10 @@
-import {Articles, initModels} from "../models/init-models";
+import { initModels} from "../models/init-models";
 import db from "../db/db";
 import hasPermission from "./hasPermission";
 import {CreatedAt} from "sequelize-typescript";
 import * as constants from "node:constants";
 
-const {Compte, Roles, Commandes, Restaurants, CommandeList} = initModels(db);
+const {Compte, Roles, Commandes, Restaurants, CommandeList, Articles} = initModels(db);
 
 export default class OrdersController {
     constructor() {
@@ -30,6 +30,13 @@ export default class OrdersController {
                                             {
                                                 model: CommandeList,
                                                 as: "commande_lists",
+                                                include:
+                                                    [
+                                                        {
+                                                            model: Articles,
+                                                            as: "id_article_article"
+                                                        }
+                                                    ]
                                             }
                                         ]
                                 })

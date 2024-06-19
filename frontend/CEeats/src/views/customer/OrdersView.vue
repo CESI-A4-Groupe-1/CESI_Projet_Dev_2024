@@ -1,7 +1,9 @@
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
 import OrderCard from "@/components/OrderCard.vue";
 import OrderDetailsModal from '@/components/OrderDetailsModal.vue';
+import { OrderService } from '@/services/OrderService'
+import {useRoute} from "vue-router";
 
 export default defineComponent({
   name: "OrdersView",
@@ -11,15 +13,11 @@ export default defineComponent({
   },
   props: {},
   setup() {
+    const route = useRoute();
+    const userId = ref<string>(route.params.id as string);
     const selectedOrder = ref(null);
     const showOrderDetails = ref(false);
-
-    const orders = [
-      { id: 1, name: 'Order 1', details: 'Details for Order 1' },
-      { id: 2, name: 'Order 2', details: 'Details for Order 2' },
-      { id: 3, name: 'Order 3', details: 'Details for Order 3' },
-      { id: 4, name: 'Order 4', details: 'Details for Order 4' }
-    ];
+    let orders = ref([]);
 
     const selectOrder = (order) => {
       selectedOrder.value = order;
@@ -30,6 +28,15 @@ export default defineComponent({
       showOrderDetails.value = false;
       selectedOrder.value = null;
     };
+
+    onMounted( () => {
+        OrderService.getOrders(userId.value)
+            .then(res => {
+              orders.value = res.data;
+              console.log(res.data);
+            })
+            .catch(err => console.log(err));
+    })
 
     return {
       orders,
@@ -43,9 +50,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <main>
-    <div class="order" v-for="(order, i) in orders" :key="order.id" @click="selectOrder(order)">
-      <OrderCard></OrderCard>
+  <main v-if="orders">
+    <div class="order" v-for="(order, i) in orders" :key="i" @click="selectOrder(order)">
+      <OrderCard :order="order"></OrderCard>
     </div>
     <OrderDetailsModal v-if="showOrderDetails" :order="selectedOrder" @close="closeModal"></OrderDetailsModal>
   </main>
@@ -54,6 +61,7 @@ export default defineComponent({
 <!--TODO : styliser la page-->
 <style scoped>
 .modal {
+  max-width: 600px;
   position: fixed;
   top: 50%;
   left: 50%;

@@ -1,27 +1,41 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent, onMounted, ref } from 'vue';
+import { RestaurantService } from "@/services";
 
 export default defineComponent({
   name: "OrderCard",
-  components: {},
   props: {
-    //TODO : Récupérer valeur du restaurant
+    order: Object as () => any,
   },
-  setup(props, { emit }) {
-    // Mettre le code ici
+  setup(props) {
+    const restaurant = ref<any>(null);
+
+    onMounted(() => {
+      RestaurantService.getRestaurant(props.order.id_restaurant)
+          .then(res => {
+            restaurant.value = res.data;
+          })
+          .catch(err => {
+            console.error('Erreur lors de la récupération des informations du restaurant :', err);
+          });
+    });
+
+    return {
+      restaurant,
+    };
   }
-})
+});
 </script>
 
 <template>
 <!--  TODO : Ouvrir view détail de la commande avec liste des articles-->
   <div class="order_card">
     <div class="logo_and_info">
-      <img src="https://images.bfmtv.com/UDAdpp33jU96JAWSB1v2R8KbfUg=/0x0:1196x1192/600x0/images/-458880.jpg" alt="mcdo">
+      <img v-if="restaurant" src="https://images.bfmtv.com/UDAdpp33jU96JAWSB1v2R8KbfUg=/0x0:1196x1192/600x0/images/-458880.jpg" :alt="restaurant.nom">
       <div class="info_order">
-        <h2 class="restaurant">Nom restaurant</h2>
-        <p class="address">Adresse</p>
-        <p class="price">Prix : 29 UEC</p>
+        <h2 class="restaurant" v-if="restaurant">{{ restaurant.nom }}</h2>
+        <p class="address" v-if="restaurant">{{ restaurant.adresse }}</p>
+        <p class="price" v-if="order">Prix : 29 UEC</p>
       </div>
     </div>
     <div class="status_command">

@@ -1,23 +1,32 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import {AccountService} from "@/services/index.js";
 import { useRouter } from 'vue-router';
 
 const menu = ref();
 const router = useRouter();
+
+let user_id = 0;
+
+onMounted(() => {
+  if (AccountService.isLogged()) {
+    user_id = localStorage.getItem("user_id");
+  }
+});
+
 const items = ref([
   {
     label: 'Profil',
     icon: 'pi pi-user',
     command: () => {
-      router.push('/users/1/account');
+      router.push(`/users/${user_id}/account`);
     }
   },
   {
     label: 'Paramètres',
     icon: 'pi pi-cog',
     command: () => {
-      router.push('/users/1/settings');
+      router.push(`/users/${user_id}/settings`);
     }
   },
   {

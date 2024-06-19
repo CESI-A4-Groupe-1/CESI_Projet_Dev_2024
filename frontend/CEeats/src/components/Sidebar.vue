@@ -3,17 +3,29 @@
     <!--TODO : Vérifier le nombre de bouton en lien à mettre ici pour que les utilisateurs puissent naviguer correctement sans aller aux mauvais endroit -->
     <RouterLink to="/" class="neomorphism-button-link">Accueil</RouterLink>
     <RouterLink to="/parcourir" class="neomorphism-button-link">Parcourir</RouterLink>
-    <RouterLink to="/users/1/orders" class="neomorphism-button-link">Panier</RouterLink>
+    <RouterLink :to="`/users/${user_id}/orders`" class="neomorphism-button-link">Panier</RouterLink>
     <RouterLink to="" class="neomorphism-button-link">Livraisons</RouterLink>
-    <RouterLink to="/users/1/settings" class="neomorphism-button-link">Notifications</RouterLink>
+    <RouterLink :to="`/users/${user_id}/settings`" class="neomorphism-button-link">Notifications</RouterLink>
   </div>
 </template>
 <script lang="ts">
+import {AccountService} from "@/services";
+
 export default {
   name: 'mainpage-sidebar',
   props: {
     isMenuOpen: {}
-  }
+  },
+  data() {
+    return{
+      user_id: '' as string
+    }
+  },
+  mounted() {
+    if(AccountService.isLogged()){
+      this.user_id = localStorage.getItem('user_id') ?? ''
+    }
+  },
 }
 </script>
 <style scoped>
