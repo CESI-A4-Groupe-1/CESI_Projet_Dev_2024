@@ -15,6 +15,8 @@ import FloatLabel from "primevue/floatlabel";
 import TieredMenu from 'primevue/tieredmenu';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
+import ConfirmDialog from "primevue/confirmdialog";
+import ConfirmationService from 'primevue/confirmationservice';
 
 const app = createApp(App)
 
@@ -28,5 +30,7 @@ app.component('FloatLabel', FloatLabel)
 app.component('TieredMenu', TieredMenu)
 app.component('InputNumber', InputNumber)
 app.component('Dialog', Dialog)
+app.component('ConfirmDialog', ConfirmDialog)
+app.use(ConfirmationService);
 
 app.mount('#app')

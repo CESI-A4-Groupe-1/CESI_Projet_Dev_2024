@@ -1,7 +1,8 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
-import '@/assets/main.css'
-import {RestaurantService} from "@/services";
+import { defineComponent } from 'vue';
+import '@/assets/main.css';
+import { RestaurantService } from "@/services";
+import { OrderService } from '@/services/OrderService';
 
 export default defineComponent({
   name: "OrderDetailsModal",
@@ -14,7 +15,81 @@ export default defineComponent({
   data() {
     return {
       restaurant: {} as any,
-      formattedDate: ''
+      formattedDate: '',
+      status: '',
+      statusClass: '',
+      total: Number
+    };
+  },
+  methods: {
+    async takeOffArticle(article) {
+      if (article.quantite > 0) {
+        article.quantite--;
+        OrderService.addArticleToOrder(article.id_commande, article.id_article, article)
+            .then(res => {
+              console.log('Article ajouté à la commande:', res);
+            })
+            .catch(err => console.error(err));
+      }
+    },
+    async addArticle(article) {
+      article.quantite++;
+      OrderService.addArticleToOrder(article.id_commande, article.id_article, article)
+          .then(res => {
+            console.log('Article ajouté à la commande:', res);
+          })
+          .catch(err => console.error(err));
+    },
+    isTakeOffDisabled(quantity) {
+      return quantity <= 0; // Disable if quantity is 0 or less
+    },
+    deleteFromOrder(article) {
+      this.$confirm.require({
+        message: 'Voulez-vous supprimer cet article de la commande ?',
+        header: 'Supprimer cet article',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+          label: 'Annuler',
+          severity: 'secondary',
+          outlined: true
+        },
+        acceptProps: {
+          label: 'Supprimer',
+          severity: 'danger'
+        },
+        accept: () => {
+          try {
+            console.log(article);
+            OrderService.deleteArticleFromOrder(article.id_commande, article.id_article);
+            // Ajoutez ici toute logique supplémentaire après la suppression de l'article
+          } catch (error) {
+            console.error('Error deleting article from order:', error);
+          }
+          },
+        reject: () => {
+          console.log('Suppression annulée');
+        }
+      });
+    },
+    async pay() {
+      this.$confirm.require({
+        message: 'Voulez-vous vraiment valider la commande ?',
+        header: 'Payer la commande',
+        icon: 'pi pi-paypal',
+        accept: async () => {
+          try {
+            await OrderService.payOrder(this.order.id);
+            console.log('Commande validée');
+            this.status = 'En préparation'; // Mise à jour de l'état après validation
+            this.statusClass = 'status-preparation';
+          } catch (error) {
+            console.error('Erreur lors de la validation de la commande :', error);
+          }
+        },
+        reject: () => {
+          console.log('Commande non validée');
+        }
+      });
     }
   },
   mounted() {
@@ -32,6 +107,10 @@ export default defineComponent({
     const month = (dateObj.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = dateObj.getUTCFullYear();
     this.formattedDate = `${day}/${month}/${year}`;
+
+    this.status = OrderService.getOrderStatus(this.order);
+    this.statusClass = OrderService.getOrderStatusClass(this.order);
+    this.total = OrderService.getTotalPrice(this.order.commande_lists);
   },
   emits: ['close']
 });
@@ -43,32 +122,34 @@ export default defineComponent({
     <div class="modal">
       <Button icon="pi pi-times" class="close" severity="secondary" text rounded aria-label="Bookmark" @click="$emit('close')"></Button>
       <div class="modal_header">
-        <h2>Commande pour : {{ restaurant.nom }}</h2>
-        <p class="status">Status : {{  }}</p>
+        <h2>Commande pour : <RouterLink :to="`/restaurants/${restaurant.id}`">{{ restaurant.nom }}</RouterLink></h2>
+        <p :class="['status', statusClass]">Status : {{ status }}</p>
         <p>Fait le : {{ formattedDate }}</p>
       </div>
       <br>
       <div class="model_body">
         <p class="content">Contenu :</p>
-<!--        <div class="details">-->
-<!--          <p class="articles">{{nbr}}x{{article}}</p>-->
-<!--          <p class="price">{{price}}€</p>-->
-<!--        </div>-->
-        <div class="order-list" v-for="(article, i) in order.commande_lists" :key="i">
-            <div class="order-item">
-              <div class="quantity">
-                <Button icon="pi pi-minus" text aria-label="takeOffArticle" severity="secondary" @click="takeOffArticle"/>
-                <span class="quatite">{{ article.quantite }}</span>
-                <Button icon="pi pi-plus" text aria-label="addArticle" severity="secondary" @click="addArticle"/>
-              </div>
-              <span class="product-name">{{ article.id_article_article.nom }}</span>
-              <span class="total-price">{{ article.id_article_article.prix*article.quantite }}€</span>
-              <Button icon="pi pi-trash" severity="danger" text rounded aria-label="Supprimer" />
+        <div class="order-list">
+          <div class="order-item" v-for="(article, i) in order.commande_lists" :key="i">
+            <div class="quantity">
+              <Button v-if="status=='Commande non validée'" icon="pi pi-minus" text aria-label="takeOffArticle" severity="secondary"
+                      :disabled="isTakeOffDisabled(article.quantite)"
+                      @click="takeOffArticle(article)"></Button>
+              <span class="quantity">{{ article.quantite }}</span>
+              <Button v-if="status=='Commande non validée'" icon="pi pi-plus" text aria-label="addArticle" severity="secondary"
+                      @click="addArticle(article)"></Button>
             </div>
-           </div>
+            <span class="product-name">{{ article.id_article_article.nom }}</span>
+            <span class="total-price">{{ article.id_article_article.prix * article.quantite }}€</span>
+            <Button v-if="status=='Commande non validée'" icon="pi pi-trash" severity="danger" text rounded aria-label="Supprimer" @click="deleteFromOrder(article)"/>
+          </div>
+          <ConfirmDialog></ConfirmDialog>
         </div>
       </div>
+      <p class="total_price">Total : {{ total }}€</p>
+      <Button v-if="status=='Commande non validée'" label="Valider et payer" @click="pay"/>
     </div>
+  </div>
 </template>
 
 <style scoped>

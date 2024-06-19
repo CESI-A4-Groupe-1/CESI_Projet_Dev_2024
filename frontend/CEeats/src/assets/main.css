@@ -22,3 +22,28 @@
     overflow-y: auto;
     position: relative;
 }
+
+
+.status {
+    font-weight: bold;
+}
+
+.status-not-validated {
+    color: grey;
+}
+
+.status-preparation {
+    color: orange;
+}
+
+.status-delivery {
+    color: blue;
+}
+
+.status-delivered {
+    color: green;
+}
+
+.status-unknown {
+    color: red;
+}
