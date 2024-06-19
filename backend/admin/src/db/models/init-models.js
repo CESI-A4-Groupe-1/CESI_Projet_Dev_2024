@@ -1,5 +1,10 @@
 import _sequelize from "sequelize";
 const DataTypes = _sequelize.DataTypes;
+import _V_GestionComm from  "./V_GestionComm.js";
+import _V_GraphPrix from  "./V_GraphPrix.js";
+import _V_PrixComm from  "./V_PrixComm.js";
+import _V_TotalArticles from  "./V_TotalArticles.js";
+import _V_TotalCommande from  "./V_TotalCommande.js";
 import _articles from  "./articles.js";
 import _categories from  "./categories.js";
 import _commande_list from  "./commande_list.js";
@@ -15,6 +20,11 @@ import _roles from  "./roles.js";
 import _section from  "./section.js";
 
 export default function initModels(sequelize) {
+  const V_GestionComm = _V_GestionComm.init(sequelize, DataTypes);
+  const V_GraphPrix = _V_GraphPrix.init(sequelize, DataTypes);
+  const V_PrixComm = _V_PrixComm.init(sequelize, DataTypes);
+  const V_TotalArticles = _V_TotalArticles.init(sequelize, DataTypes);
+  const V_TotalCommande = _V_TotalCommande.init(sequelize, DataTypes);
   const articles = _articles.init(sequelize, DataTypes);
   const categories = _categories.init(sequelize, DataTypes);
   const commande_list = _commande_list.init(sequelize, DataTypes);
@@ -61,6 +71,11 @@ export default function initModels(sequelize) {
   section.hasMany(articles, { as: "articles", foreignKey: "id_section"});
 
   return {
+    V_GestionComm,
+    V_GraphPrix,
+    V_PrixComm,
+    V_TotalArticles,
+    V_TotalCommande,
     articles,
     categories,
     commande_list,
