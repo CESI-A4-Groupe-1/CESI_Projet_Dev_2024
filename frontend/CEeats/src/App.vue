@@ -1,70 +1,6 @@
-<script setup>
-import {onMounted, ref} from "vue";
-import {AccountService} from "@/services/index.js";
-import { useRouter } from 'vue-router';
-
-const menu = ref();
-const router = useRouter();
-
-let user_id = 0;
-
-onMounted(() => {
-  if (AccountService.isLogged()) {
-    user_id = localStorage.getItem("user_id");
-  }
-});
-
-const items = ref([
-  {
-    label: 'Profil',
-    icon: 'pi pi-user',
-    command: () => {
-      router.push(`/users/${user_id}/account`);
-    }
-  },
-  {
-    label: 'Paramètres',
-    icon: 'pi pi-cog',
-    command: () => {
-      router.push(`/users/${user_id}/settings`);
-    }
-  },
-  {
-    label: 'Aide',
-    icon: 'pi pi-question',
-    command: () => {
-      router.push('/help');
-    }
-  },
-  {
-    separator: true
-  },
-  {
-    label: 'Déconnexion',
-    icon: 'pi pi-sign-out',
-    command: () => {
-      logout();
-    }
-  }
-]);
-
-const toggle = (event) => {
-  menu.value.toggle(event);
-};
-const logout = async () => {
-  try {
-    await AccountService.logout();
-    await router.push('/login');
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-</script>
-
-<script>
-import Sidebar from '@/components/Sidebar.vue';
-import { ref } from "vue";
+<script lang="ts">
+import Sidebar from '@/components/Sidebar.vue'
+import {messaging, getToken} from "./firebase";
 
 export default {
   components: {Sidebar},
@@ -74,15 +10,16 @@ export default {
       page_content: {
         page_content_2: true,
         page_content_1: false
-      },
+      }
     }
   },
   methods: {
     toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-      this.page_content.page_content_2 = !this.page_content.page_content_2;
-      this.page_content.page_content_1 = !this.page_content.page_content_2;
+      this.isMenuOpen = !this.isMenuOpen
+      this.page_content.page_content_2 = !this.page_content.page_content_2
+      this.page_content.page_content_1 = !this.page_content.page_content_2
     },
+
   }
 }
 </script>
@@ -97,10 +34,7 @@ export default {
       Menu
     </button>
     <h1><strong>CESeats</strong></h1>
-    <div class="card flex justify-center">
-      <img class="display_user" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile_picture" @click="toggle" aria-controls="overlay_tmenu">
-      <TieredMenu ref="menu" id="overlay_tmenu" :model="items" popup />
-    </div>
+    <span class="logo">logo</span>
   </header>
 
   <div
@@ -127,14 +61,6 @@ export default {
   padding: 20px;
   color: white;
 }
-
-.display_user {
-  object-fit: cover;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-}
-
 
 .fade-enter-active,
 .fade-leave-active {

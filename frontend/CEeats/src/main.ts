@@ -18,7 +18,11 @@ import Dialog from 'primevue/dialog';
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
 
+import {messaging} from './firebase';
+
 const app = createApp(App)
+
+app.config.globalProperties.$firebaseMessaging = messaging
 
 app.use(router)
 app.use(PrimeVue)
@@ -32,5 +36,6 @@ app.component('InputNumber', InputNumber)
 app.component('Dialog', Dialog)
 app.component('ConfirmDialog', ConfirmDialog)
 app.use(ConfirmationService);
+
 
 app.mount('#app')
