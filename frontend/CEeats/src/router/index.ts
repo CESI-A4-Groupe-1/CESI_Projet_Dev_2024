@@ -128,7 +128,6 @@ const router = createRouter({
 
         {path: '/users/:id/settings', name: 'parametres', component: SettingsView},
         {path: '/help', name: 'aide', component: HelpView},
-
         {path: '/restaurateurs/history', name: "specific_history", component: RestorerhistoryView },
         // ---------------------------------------------------------------- //
 

@@ -137,9 +137,6 @@ const commands : Commands = {
   },
 
 };
-
-
-
 </script>
 
 <template>
