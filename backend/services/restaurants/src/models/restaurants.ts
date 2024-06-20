@@ -12,11 +12,12 @@ export interface RestaurantsAttributes {
   adresse: string;
   id_tag: number;
   description?: string;
+  image?: string;
 }
 
 export type RestaurantsPk = "id";
 export type RestaurantsId = Restaurants[RestaurantsPk];
-export type RestaurantsOptionalAttributes = "id" | "description";
+export type RestaurantsOptionalAttributes = "id" | "description" | "image";
 export type RestaurantsCreationAttributes = Optional<RestaurantsAttributes, RestaurantsOptionalAttributes>;
 
 export class Restaurants extends Model<RestaurantsAttributes, RestaurantsCreationAttributes> implements RestaurantsAttributes {
@@ -26,6 +27,7 @@ export class Restaurants extends Model<RestaurantsAttributes, RestaurantsCreatio
   adresse!: string;
   id_tag!: number;
   description?: string;
+  image?: string;
 
   // Restaurants belongsTo Categories via id_tag
   id_tag_category!: Categories;
@@ -103,6 +105,11 @@ export class Restaurants extends Model<RestaurantsAttributes, RestaurantsCreatio
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'Description'
+    },
+    image: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'image'
     }
   }, {
     tableName: 'restaurants',

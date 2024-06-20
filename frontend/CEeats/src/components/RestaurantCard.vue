@@ -1,5 +1,5 @@
 <script setup>
-
+import defaultImage from '@/assets/no-image.jpg';
 </script>
 
 <script>
@@ -21,7 +21,7 @@ export default {
 
 <template>
   <div class="restaurant_card">
-    <img src="https://images.bfmtv.com/UDAdpp33jU96JAWSB1v2R8KbfUg=/0x0:1196x1192/600x0/images/-458880.jpg" alt="mcdo">
+    <img :src="restaurant.image ? restaurant.image : defaultImage" :alt="restaurant.nom">
     <div class="restaurant_info">
       <div class="restaurant_card_head">
         <p class="name">{{ restaurant.nom }}</p>
