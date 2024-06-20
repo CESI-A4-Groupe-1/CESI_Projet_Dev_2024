@@ -13,7 +13,6 @@ import PhoneFormView from "@/views/customer/PhoneFormView.vue";
 import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
-import CustomerMainView from "@/views/customer/CustomerMainView.vue";
 import SignUpView from "@/views/auth/SignUpView.vue";
 import {AccountService} from "@/services";
 
@@ -111,7 +110,7 @@ const routes = [
     {
         path: '/home',
         name: 'home',
-        component: CustomerMainView,
+        component: MainView,
         meta: { requiresAuth: true, roles: [1, 2] }
     },
     {
