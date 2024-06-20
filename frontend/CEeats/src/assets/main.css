@@ -23,6 +23,31 @@
     position: relative;
 }
 
+.body {
+    display: grid;
+    place-items: center; /* Centre horizontalement et verticalement */
+}
+
+.core {
+    width: 50%;
+    border-color: lightgrey;
+    border-radius: 10px !important;
+    border-width: 1px !important;
+    border-style: solid;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+}
+
+.mb {
+    margin-bottom: 20px;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
 
 .status {
     font-weight: bold;
