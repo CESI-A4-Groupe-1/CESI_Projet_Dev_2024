@@ -12,7 +12,7 @@ import InputText from "primevue/inputtext";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
-
+import Sidebar from "primevue/sidebar";
 import {messaging} from './firebase';
 
 const app = createApp(App)

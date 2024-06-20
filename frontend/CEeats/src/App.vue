@@ -1,12 +1,16 @@
+<script setup lang="ts">
+import { ref } from "vue";
+const visible = ref(false);
+</script>
 <script lang="ts">
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from 'primevue/sidebar'
 import {messaging, getToken} from "./firebase";
 
 export default {
   components: {Sidebar},
   data() {
     return {
-      isMenuOpen: false,
+      visible: false,
       page_content: {
         page_content_2: true,
         page_content_1: false
@@ -15,7 +19,6 @@ export default {
   },
   methods: {
     toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
       this.page_content.page_content_2 = !this.page_content.page_content_2
       this.page_content.page_content_1 = !this.page_content.page_content_2
     },
@@ -26,52 +29,58 @@ export default {
 
 <template>
   <header class="flex-container">
-    <button
-        class="claymorphism"
-        type="button"
-        @click="toggleMenu"
-    >
-      Menu
-    </button>
+    <Button icon="pi pi-arrow-right" @click="visible = true; console.log('bouton')" />
     <h1><strong>CESeats</strong></h1>
     <span class="logo">logo</span>
   </header>
-
+  <div class="card flex justify-center">
+    <Sidebar v-model:visible="visible" header="Menu">
+      <div class="flex-list">
+      <RouterLink to="/home" class="button-link"><i class="pi pi-home" style="font-size: 1rem"/> Accueil</RouterLink>
+      <p/>
+      <RouterLink to="/parcourir" class="button-link"><i class="pi pi-search" style="font-size: 1rem"/> Parcourir</RouterLink>
+      <p/>
+      <RouterLink to="/commandes" class="button-link"><i class="pi pi-cart-arrow-down" style="font-size: 1rem"/> Paniers</RouterLink>
+      <p/>
+      <RouterLink to="/deliveries" class="button-link"><i class="pi pi-truck" style="font-size: 1rem"/> Livraisons</RouterLink>
+      <p/>
+      <RouterLink to="/notifications" class="button-link"><i class="pi pi-bell" style="font-size: 1rem"/> Notifications</RouterLink>
+      <p/>
+      </div>
+    </Sidebar>
+  </div>
   <div
       v-bind:class="{
       main_page_content_1: page_content.page_content_1,
       main_page_content_2: page_content.page_content_2
     }"
   >
-    <transition name="fade">
-      <sidebar :is-menu-open="isMenuOpen"/>
-    </transition>
-
-
     <router-view class="router_class"/>
   </div>
 </template>
 
 <style scoped>
-.claymorphism {
-  border-radius: 14px;
-  background: #2a4252;
-  box-shadow: 8px 8px 16px #111a21,
-  -8px -8px 16px #436a83;
+.button-link {
+  border-radius: 5px;
+  background: #fdfdfd;
   padding: 20px;
+  display: block;
+  width: 100%;
+  color: dimgray;
+  font-size: 20px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: #fdfdfd;
+  transition-duration: 0.2s;
+}
+
+.button-link:hover {
+  background-color: #04AA6D; /* Green */
   color: white;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: #04AA6D;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.1s linear;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 
 .flex-container {
   display: flex;
@@ -80,6 +89,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   align-content: center;
+}
+
+.flex-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .generic_button {
