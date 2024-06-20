@@ -15,6 +15,8 @@ import FloatLabel from "primevue/floatlabel";
 import Sidebar from "primevue/sidebar";
 import {messaging} from './firebase';
 
+import {messaging} from './firebase';
+
 const app = createApp(App)
 
 app.config.globalProperties.$firebaseMessaging = messaging

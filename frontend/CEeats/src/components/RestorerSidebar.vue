@@ -9,12 +9,12 @@ export default {
 
 <template>
   <div class="right-sidebar">
-    <div>
-      <h1> Commandes en cours </h1>
-    </div>
-    <div>
-      <RestorerOrderList></RestorerOrderList>
-      <!-- Ajouter le composant liste de commandes-->
+    <h2>Commande en cours</h2>
+    <div class="container">
+      <div>
+        <RestorerOrderList :title="true"></RestorerOrderList>
+        <!-- Ajouter le composant liste de commandes-->
+      </div>
     </div>
   </div>
 </template>
@@ -35,5 +35,10 @@ h1 {
   border-width: 5px;
   border-style: solid;
   border-color: black;
+}
+
+.container {
+  height: 400px;
+  overflow: auto;
 }
 </style>

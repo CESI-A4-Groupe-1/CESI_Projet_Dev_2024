@@ -1,14 +1,14 @@
-<script lang="js">
+<script lang="ts">
 import RestorerSidebar from "@/components/RestorerSidebar.vue";
 import RestorerList from "@/components/RestorerList.vue";
 
 
 export default {
-      name: 'RestorerhomeView',
-      components: {
-        RestorerSidebar,
-        RestorerList,
-      },
+  name: 'RestorerhomeView',
+  components: {
+    RestorerSidebar,
+    RestorerList,
+  },
 }
 </script>
 

@@ -14,6 +14,9 @@ import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import deliverer_view from "@/views/deliverer/deliverer_view.vue"
+import RestorerhistoryView from "@/views/restorer/RestorerhistoryView.vue";
+import CommercialView from "@/views/commercial/CommercialView.vue";
+import TechnicalView from "@/views/technical/TechnicalView.vue";
 
 
 function authenticateUser(): any {
@@ -125,6 +128,7 @@ const router = createRouter({
 
         {path: '/users/:id/settings', name: 'parametres', component: SettingsView},
         {path: '/help', name: 'aide', component: HelpView},
+        {path: '/restaurateurs/history', name: "specific_history", component: RestorerhistoryView },
         // ---------------------------------------------------------------- //
 
         {
@@ -217,7 +221,7 @@ const router = createRouter({
         },
         {
             path: '/restaurateurs',
-            name: 'categories_view',
+            name: 'restaurateurs',
             component: RestorerhomeView,
         },
         {
@@ -231,6 +235,16 @@ const router = createRouter({
                     component: deliverer_view
                 }
             ]
+        },
+        {
+            path: '/techservice',
+            name: 'technical',
+            component: TechnicalView,
+        },
+        {
+            path: '/commercial',
+            name: 'commercial',
+            component: CommercialView,
         }
 
     ]
