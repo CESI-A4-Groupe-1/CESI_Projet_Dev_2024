@@ -17,7 +17,7 @@ import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
-
+import Sidebar from "primevue/sidebar";
 import {messaging} from './firebase';
 
 const app = createApp(App)
