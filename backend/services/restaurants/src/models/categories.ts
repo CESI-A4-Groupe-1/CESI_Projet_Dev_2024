@@ -5,16 +5,18 @@ import type { Restaurants, RestaurantsId } from './restaurants';
 export interface CategoriesAttributes {
   id: number;
   titre: string;
+  image: string;
 }
 
 export type CategoriesPk = "id";
 export type CategoriesId = Categories[CategoriesPk];
-export type CategoriesOptionalAttributes = "id";
+export type CategoriesOptionalAttributes = "id" | "image";
 export type CategoriesCreationAttributes = Optional<CategoriesAttributes, CategoriesOptionalAttributes>;
 
 export class Categories extends Model<CategoriesAttributes, CategoriesCreationAttributes> implements CategoriesAttributes {
   id!: number;
   titre!: string;
+  image!: string;
 
   // Categories hasMany Restaurants via id_tag
   restaurants!: Restaurants[];
@@ -41,6 +43,10 @@ export class Categories extends Model<CategoriesAttributes, CategoriesCreationAt
     titre: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    image: {
+    type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     tableName: 'categories',

@@ -35,11 +35,10 @@ export default defineComponent({
     RestaurantService.getRestaurantByCategory(this.route.params.id_category)
         .then(res => {
           this.restaurants_array = res.data;
+          console.log(res.data);
         })
         .catch(err => console.log(err));
 
-    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
-    // this.categories_array = CategoryService.getAllCategories();
   },
 })
 
