@@ -1,7 +1,83 @@
-<script lang="ts">
+<script setup>
+import { onMounted, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { AccountService } from "@/services/index.js";
+
+const menu = ref(null);
+const router = useRouter();
+const user_id = ref(localStorage.getItem('user_id') ?? '');
+
+onMounted(() => {
+  if (AccountService.isLogged()) {
+    user_id.value = localStorage.getItem("user_id");
+  }
+});
+
+const items = ref([
+  {
+    label: 'Profil',
+    icon: 'pi pi-user',
+    command: async () => {
+        try {
+          await router.push(`/users/${user_id.value}/account`);
+        } catch (err) {
+          console.error("Failed to navigate to account:", err);
+        }
+    }
+  },
+  {
+    label: 'Paramètres',
+    icon: 'pi pi-cog',
+    command: async () => {
+        try {
+          await router.push(`/users/${user_id.value}/settings`);
+        } catch (err) {
+          console.error("Failed to navigate to settings:", err);
+        }
+    }
+  },
+  {
+    label: 'Aide',
+    icon: 'pi pi-question',
+    command: async () => {
+      try {
+        await router.push('/help');
+      } catch (err) {
+        console.error("Failed to navigate to help:", err);
+      }
+    }
+  },
+  {
+    separator: true
+  },
+  {
+    label: 'Déconnexion',
+    icon: 'pi pi-sign-out',
+    command: async () => {
+      await logout();
+    }
+  }
+]);
+
+const toggle = (event) => {
+  if (menu.value) {
+    menu.value.toggle(event);
+  }
+};
+
+const logout = async () => {
+  try {
+    await AccountService.logout();
+    await router.push('/login');
+  } catch (err) {
+    console.error("Failed to logout:", err);
+  }
+};
+</script>
+
+<script>
 import { defineComponent, ref, computed } from 'vue';
 import Sidebar from 'primevue/sidebar';
-import { AccountService } from '@/services';
 
 export default defineComponent({
   components: { Sidebar },
@@ -15,26 +91,33 @@ export default defineComponent({
       id_user: localStorage.getItem('user_id') ?? '',
     }
   },
-  computed: {
-    isUserIdDefined(): boolean {
-      return !!this.id_user;
-    }
-  },
   methods: {
     toggleMenu() {
       this.page_content.page_content_2 = !this.page_content.page_content_2;
       this.page_content.page_content_1 = !this.page_content.page_content_2;
     },
+    showHeader() {
+      const currentPath = this.$route.path;
+      return currentPath !== '/login' && currentPath !== '/signup';
+    }
   }
 });
 </script>
 
 <template>
-  <header class="flex-container">
+  <header v-if="showHeader()" class="flex-container">
     <Button icon="pi pi-arrow-right" @click="visible = true; console.log('bouton')" />
     <h1><strong>CESeats</strong></h1>
-    <span class="logo">logo</span>
+    <div class="card flex justify-center">
+      <img class="display_user" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile_picture" @click="toggle" aria-controls="overlay_tmenu">
+      <TieredMenu ref="menu" id="overlay_tmenu" :model="items" popup />
+    </div>
   </header>
+
+  <header v-if="!showHeader()" class="header-center">
+    <h1><strong>CESeats</strong></h1>
+  </header>
+
   <div class="card flex justify-center">
     <Sidebar v-model:visible="visible" header="Menu">
       <div class="flex-list">
@@ -62,6 +145,12 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
 .button-link {
   border-radius: 5px;
   background: #fdfdfd;
@@ -79,9 +168,6 @@ export default defineComponent({
 .button-link:hover {
   background-color: #04AA6D; /* Green */
   color: white;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-color: #04AA6D;
 }
 
 .flex-container {
@@ -137,5 +223,31 @@ span.logo {
 
 .router_class {
   grid-area: 1 / 2 / 2 / 3;
+}
+
+.claymorphism {
+  border-radius: 14px;
+  background: #2a4252;
+  box-shadow: 8px 8px 16px #111a21,
+  -8px -8px 16px #436a83;
+  padding: 20px;
+  color: white;
+}
+
+.display_user {
+  object-fit: cover;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.1s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
