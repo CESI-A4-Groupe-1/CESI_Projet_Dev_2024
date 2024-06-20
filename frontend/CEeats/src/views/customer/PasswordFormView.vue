@@ -45,9 +45,9 @@ export default defineComponent({
       <h1>Mot de passe</h1>
       <p>Votre mot de passe doit comporter au moins 8 caractères, dont au moins un chiffre et un caractère non numérique</p>
       <div class="form">
-        <label for="new_password">Nouveau mot de passe</label>
+        <label class="mb-1" for="new_password">Nouveau mot de passe</label>
 
-        <div class="card flex justify-center">
+        <div class="card flex justify-center mb">
           <Password id="new_password"
                     promptLabel="Choose a password"
                     weakLabel="Too simple"
@@ -59,12 +59,12 @@ export default defineComponent({
         </div>
       </div>
       <div class="form">
-        <label for="confirm_password">Confirmer le nouveau mot de passe</label>
-        <div class="card flex justify-center">
+        <label class="mb-1" for="confirm_password">Confirmer le nouveau mot de passe</label>
+        <div class="card flex justify-center mb">
           <Password id="confirm_password" v-model="confirm_password" :feedback="false" toggle-mask/>
         </div>
       </div>
-      <Button label="Mettre à jour" type="submit" raised />
+      <Button class="mb" label="Mettre à jour" type="submit" raised />
     </form>
   </main>
 </template>

@@ -9,7 +9,6 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const userId = ref<string>(route.params.id as string);
-    // Variables réactives
     const user = ref<User>({
       id: '',
       nom: '',
@@ -17,7 +16,6 @@ export default defineComponent({
       email: '',
       role_id: '',
       date_anniv: '',
-      password: '',
       telephone: '',
       is_notified: false,
       path_pfp: '',
@@ -30,22 +28,21 @@ export default defineComponent({
     onMounted(() => {
       AccountService.getUser(userId.value)
           .then(res => {
-            user.value = res.data as User;
+            user.value = { ...res.data, password: undefined } as User;
           })
           .catch(err => console.log(err));
     });
-
     const updateUser = async () => {
       try {
-        await AccountService.updateUser(userId.value, user.value);
+        // Copier l'objet user sans le champ password
+        const { password, ...userWithoutPassword } = user.value;
+        await AccountService.updateUser(userId.value, userWithoutPassword);
         alert("Utilisateur mis à jour avec succès");
       } catch (err) {
         console.error(err);
         alert("Erreur lors de la mise à jour de l'utilisateur");
       }
     };
-
-    // Retour des variables et fonctions à utiliser dans le template
     return {
       user,
       updateUser
@@ -61,10 +58,10 @@ export default defineComponent({
       <h1>Adresse e-mail</h1>
       <p>Utilisez cette adresse e-mail vous connecter et récupérer votre compte.</p>
       <div class="form">
-        <label for="email">E-mail</label>
-        <InputText id="email" v-model="user.email" :value="user.email"/>
+        <label class="mb-1" for="email">E-mail</label>
+        <InputText class="mb" id="email" v-model="user.email" :value="user.email"/>
       </div>
-      <Button label="Mettre à jour" type="submit" raised />
+      <Button class="mb" label="Mettre à jour" type="submit" raised />
     </form>
   </main>
 </template>
