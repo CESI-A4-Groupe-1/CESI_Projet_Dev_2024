@@ -31,7 +31,6 @@ export default defineComponent({
       AccountService.getUser(userId.value)
           .then(res => {
             user.value = res.data as User;
-            console.log(user);
           })
           .catch(err => console.log(err));
     });

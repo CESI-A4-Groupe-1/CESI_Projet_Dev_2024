@@ -179,6 +179,46 @@ export default class RestaurantController {
             return res.status(500).json({msg: "Internal Server Error"});
         }
     }
+    getRestaurantsByCategory(req: any, res: any) {
+        const { category_id } = req.params;
 
+        function doGet() {
+            Restaurants.findAll({
+                    where: {id_tag: category_id},
+                    include:
+                        [
+                            {
+                                model: Section,
+                                as: "sections",
+                                include:
+                                    [
+                                        {
+                                            model: Articles,
+                                            as: "articles"
+                                        }
+                                    ]
+                            }
+                        ]
+                })
+                .then((restaurant) => {
+                    if (!restaurant) return res.status(404).json({msg: "Not Found"});
+                    return res.status(200).json(restaurant);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    return res.status(500).json({msg: "Internal Server Error"});
+                })
+        }
 
+        try {
+            hasPermission(req, "list_restaurants")
+                .then((hasPerm) => {
+                    if (!hasPerm) return res.status(403).json({msg: "Forbidden"});
+                    doGet();
+                })
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({msg: "Internal Server Error"});
+        }
+    }
 }

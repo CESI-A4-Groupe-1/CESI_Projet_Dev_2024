@@ -5,8 +5,9 @@ let login = (credentials) => {
 }
 
 let logout = () => {
-    // TODO : faire fonction logout
     localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_role');
 }
 
 let getToken = () => {
@@ -14,12 +15,15 @@ let getToken = () => {
 }
 
 let saveToken = (token) => {
-    // TODO : stocker le token d'authentification
     localStorage.setItem('token', token);
 }
 
+let saveUser = (user_id, user_role) => {
+    localStorage.setItem('user_id', user_id);
+    localStorage.setItem('user_role', user_role);
+}
+
 let isLogged = () => {
-    // TODO verifier que l'utilisateur est connecté (voir si il y a un token)
     let token = localStorage.getItem('token');
     return !!token;
 }
@@ -37,6 +41,7 @@ export const AccountService = {
     logout,
     getToken,
     saveToken,
+    saveUser,
     isLogged,
     getUser,
     updateUser

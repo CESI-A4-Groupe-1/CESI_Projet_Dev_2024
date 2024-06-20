@@ -61,7 +61,6 @@ export default defineComponent({
       AccountService.getUser(userId.value)
           .then(res => {
             user.value = res.data as User;
-            console.log(user);
           })
           .catch(err => console.log(err));
     });
@@ -128,6 +127,8 @@ export default defineComponent({
       </div>
       <button @click="navigateTo('./account/update/password')"><i class="pi pi-chevron-right"></i></button>
     </div>
+    <h2 class="delete">Suppression du compte</h2>
+    <p class="delete_compte">Supprimez votre compte</p>
   </main>
 </template>
 
@@ -150,7 +151,7 @@ $fontColor: rgb(250,250,250);
   align-items: center;
 }
 
-.logout {
+.logout, .delete_compte {
   color: red;
 }
 

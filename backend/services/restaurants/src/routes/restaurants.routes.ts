@@ -9,6 +9,7 @@ export default function (app: any) {
     middlewares(app);
     app.post('/restaurants', (new RestaurantController()).createRestaurant)
     app.get('/restaurants', (new RestaurantController()).getRestaurants)
+    app.get('/restaurants/categories/:category_id', (new RestaurantController()).getRestaurantsByCategory)
     app.get('/restaurants/:restaurant_id', (new RestaurantController()).getRestaurant)
     app.put('/restaurants/:restaurant_id', (new RestaurantController()).updateRestaurant)
     app.delete('/restaurants/:restaurant_id', (new RestaurantController()).deleteRestaurant)

@@ -12,9 +12,12 @@ import InputText from "primevue/inputtext";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
+import TieredMenu from 'primevue/tieredmenu';
+import InputNumber from 'primevue/inputnumber';
+import Dialog from 'primevue/dialog';
+import ConfirmDialog from "primevue/confirmdialog";
+import ConfirmationService from 'primevue/confirmationservice';
 import Sidebar from "primevue/sidebar";
-import {messaging} from './firebase';
-
 import {messaging} from './firebase';
 
 const app = createApp(App)
@@ -28,6 +31,11 @@ app.component('InputText', InputText)
 app.component('InputSwitch', InputSwitch)
 app.component('Password', Password)
 app.component('FloatLabel', FloatLabel)
+app.component('TieredMenu', TieredMenu)
+app.component('InputNumber', InputNumber)
+app.component('Dialog', Dialog)
+app.component('ConfirmDialog', ConfirmDialog)
+app.use(ConfirmationService);
 
 
 app.mount('#app')

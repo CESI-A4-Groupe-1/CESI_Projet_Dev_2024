@@ -9,7 +9,7 @@ export default defineComponent({
       user: {
         email: '',
         password: ''
-      }
+      },
     }
   },
   methods: {
@@ -18,6 +18,33 @@ export default defineComponent({
           .then(res => {
             console.log(res);
             AccountService.saveToken(res.data.token)
+            AccountService.saveUser(res.data.user_id, res.data.user_role)
+            switch(res.data.user_role) {
+              case 1: {
+                this.$router.push('/parcourir');
+                break;
+              }
+              case 2: {
+                this.$router.push('/parcourir');
+                break;
+              }
+              case 3: {
+                this.$router.push('/parcourir');
+                break;
+              }
+              case 4: {
+                this.$router.push('/parcourir');
+                break;
+              }
+              case 5: {
+                this.$router.push('/parcourir');
+                break;
+              }
+              default: {
+                this.$router.push('/parcourir');
+                break;
+              }
+            }
             this.$router.push('/parcourir')
           })
           .catch(err => console.log(err))

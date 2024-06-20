@@ -71,6 +71,8 @@ export default class AuthController {
             return res.status(200).json({
                 message: "Login Successful",
                 token: token,
+                user_id: compte.id,
+                user_role: compte.role_id
             });
         } catch (err) {
             console.log(err);

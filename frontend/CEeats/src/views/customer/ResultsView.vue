@@ -5,6 +5,8 @@ import CategoryThumbnail from "@/components/CategoryThumbnail.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import {RestaurantService} from "@/services";
 import {defineComponent, ref} from "vue";
+import {useRoute} from "vue-router";
+
 
 export default defineComponent({
   name: "Results",
@@ -16,7 +18,8 @@ export default defineComponent({
   data() {
     return {
       categories_array: [],
-      restaurants_array: []
+      restaurants_array: [],
+      route: useRoute()
     }
   },
   props: {
@@ -29,7 +32,7 @@ export default defineComponent({
     //TODO : Fonction de recherche. Retourne restaurants.
 
     //TODO : Fonction get_restaurants_by_category() à partir de la catégories récupérée. Passer la valeur au composant 'RestaurantList'.
-    RestaurantService.getAllRestaurants()
+    RestaurantService.getRestaurantByCategory(this.route.params.id_category)
         .then(res => {
           this.restaurants_array = res.data;
         })

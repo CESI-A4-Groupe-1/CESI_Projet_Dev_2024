@@ -64,16 +64,16 @@ export default {
       <nav class="list_menues">
         <ul class="list">
           <li class="menue">
-            <a href="#" class="menue_link" v-for="(menue, i) in menues" :key="i"
+            <a href="#" class="menue_link" v-for="(menue, i) in restaurant.sections" :key="i"
                @click="(event) => scrollToMenu(event, i)">
-              {{ menues[i] }}
+              {{ menue.titre_section }}
             </a>
           </li>
         </ul>
       </nav>
     </div>
-    <div class="menues_content" v-for="(menue, i) in menues" :key="i">
-      <Menue :i="i" :menue_name="menue"></Menue>
+    <div class="menues_content" v-for="(menue, i) in restaurant.sections" :key="i">
+      <Menue :i="i" :menue="menue"></Menue>
     </div>
   </main>
 </template>
