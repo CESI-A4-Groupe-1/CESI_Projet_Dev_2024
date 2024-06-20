@@ -49,7 +49,9 @@ export default defineComponent({
   <main>
     <div class="return_and_search">
       <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
-      <input class="search" type="text" placeholder="Search">
+      <InputGroup>
+        <InputText  placeholder="Search" />
+      </InputGroup>
     </div>
     <div class="results_header">
       <h2 class="results">Résultats</h2>

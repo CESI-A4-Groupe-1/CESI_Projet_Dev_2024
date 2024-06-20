@@ -19,7 +19,6 @@ export default defineComponent({
       email: '',
       role_id: '',
       date_anniv: '',
-      password: '',
       telephone: '',
       is_notified: false,
       path_pfp: '',
@@ -30,14 +29,25 @@ export default defineComponent({
       deletedAt: ''
     });
 
-    // Fonction pour charger l'image de profil
     const loadFile = (event: Event) => {
       const input = event.target as HTMLInputElement;
       if (input.files && input.files[0]) {
-        const image = document.getElementById("output") as HTMLImageElement;
-        if (image) {
-          image.src = URL.createObjectURL(input.files[0]);
-        }
+        const file = input.files[0];
+        const imageUrl = URL.createObjectURL(file);
+        user.value.path_pfp = imageUrl;
+        updateUser();
+      }
+    };
+
+    const updateUser = async () => {
+      try {
+        // Copier l'objet user sans le champ password
+        const { password, ...userWithoutPassword } = user.value;
+        await AccountService.updateUser(userId.value, userWithoutPassword);
+        alert("Utilisateur mis à jour avec succès");
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors de la mise à jour de l'utilisateur");
       }
     };
 
@@ -60,7 +70,7 @@ export default defineComponent({
     onMounted(() => {
       AccountService.getUser(userId.value)
           .then(res => {
-            user.value = res.data as User;
+            user.value = { ...res.data, password: undefined } as User;
           })
           .catch(err => console.log(err));
     });
@@ -69,6 +79,7 @@ export default defineComponent({
     return {
       user,
       loadFile,
+      updateUser,
       logout,
       navigateTo
     };
@@ -86,13 +97,13 @@ export default defineComponent({
           <span>Changer l'image</span>
         </label>
         <input id="file" type="file" @change="loadFile"/>
-        <img src="https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg" id="output" width="200"  alt="profile picture"/>
+        <img :src="user.path_pfp" id="output" width="200"  alt="profile picture"/>
       </div>
       <div class="logout" @click="logout()">
         <div class="txt_logout">Déconnexion <i class="pi pi-sign-out"></i></div>
       </div>
     </div>
-    <h2 class="personnal_info">Informations personelles</h2>
+    <h2 class="personnal_info">Informations personnelles</h2>
     <div class="name">
       <div class="display">
         <p class="title">Nom</p>

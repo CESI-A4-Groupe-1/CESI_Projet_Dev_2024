@@ -36,6 +36,10 @@ let updateUser = (id, data) => {
     return Axios.put(`/users/${id}`, data);
 }
 
+let register = (user_data) => {
+    return Axios.post('register', user_data);
+}
+
 export const AccountService = {
     login,
     logout,
@@ -44,5 +48,6 @@ export const AccountService = {
     saveUser,
     isLogged,
     getUser,
-    updateUser
+    updateUser,
+    register
 }

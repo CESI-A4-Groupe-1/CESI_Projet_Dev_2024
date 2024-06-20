@@ -32,7 +32,12 @@ export default {
 
 <template>
   <main>
-    <input class="search" placeholder="Search"/>
+    <InputGroup>
+      <InputGroupAddon>
+        <i class="pi pi-search"></i>
+      </InputGroupAddon>
+      <InputText  placeholder="Search" />
+    </InputGroup>
     <h2 class="topCategories">Top Categories</h2>
     <div class="category_container">
       <CategoryCard v-for="(category, i) in categories_array" :key="i" :tag-name='category.titre' :category_id="category.id" style="margin: 5px"></CategoryCard>
