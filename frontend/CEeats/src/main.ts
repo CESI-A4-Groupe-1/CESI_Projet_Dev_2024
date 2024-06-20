@@ -12,18 +12,20 @@ import InputText from "primevue/inputtext";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
+import Calendar from 'primevue/calendar';
+import Dropdown from "primevue/dropdown";
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
 import TieredMenu from 'primevue/tieredmenu';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
-import Calendar from 'primevue/calendar';
-import Dropdown from "primevue/dropdown";
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-
+import {messaging} from './firebase';
 
 const app = createApp(App)
+
+app.config.globalProperties.$firebaseMessaging = messaging
 
 app.use(router)
 app.use(PrimeVue)

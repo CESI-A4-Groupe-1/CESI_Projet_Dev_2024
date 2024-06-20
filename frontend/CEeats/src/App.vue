@@ -1,151 +1,86 @@
-<script setup>
-import {onMounted, ref} from "vue";
-import {AccountService} from "@/services/index.js";
-import { useRouter } from 'vue-router';
-
-const menu = ref();
-const router = useRouter();
-
-let user_id = 0;
-
-onMounted(() => {
-  if (AccountService.isLogged()) {
-    user_id = localStorage.getItem("user_id");
-  }
-});
-
-const items = ref([
-  {
-    label: 'Profil',
-    icon: 'pi pi-user',
-    command: () => {
-      router.push(`/users/${user_id}/account`);
-    }
-  },
-  {
-    label: 'Paramètres',
-    icon: 'pi pi-cog',
-    command: () => {
-      router.push(`/users/${user_id}/settings`);
-    }
-  },
-  {
-    label: 'Aide',
-    icon: 'pi pi-question',
-    command: () => {
-      router.push('/help');
-    }
-  },
-  {
-    separator: true
-  },
-  {
-    label: 'Déconnexion',
-    icon: 'pi pi-sign-out',
-    command: () => {
-      logout();
-    }
-  }
-]);
-
-const toggle = (event) => {
-  menu.value.toggle(event);
-};
-const logout = async () => {
-  try {
-    await AccountService.logout();
-    await router.push('/login');
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-</script>
-
-<script>
-import Sidebar from '@/components/Sidebar.vue';
+<script setup lang="ts">
 import { ref } from "vue";
+const visible = ref(false);
+</script>
+<script lang="ts">
+import Sidebar from 'primevue/sidebar'
+import {messaging, getToken} from "./firebase";
 
 export default {
   components: {Sidebar},
   data() {
     return {
-      isMenuOpen: false,
+      visible: false,
       page_content: {
         page_content_2: true,
         page_content_1: false
-      },
+      }
     }
   },
   methods: {
     toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-      this.page_content.page_content_2 = !this.page_content.page_content_2;
-      this.page_content.page_content_1 = !this.page_content.page_content_2;
+      this.page_content.page_content_2 = !this.page_content.page_content_2
+      this.page_content.page_content_1 = !this.page_content.page_content_2
     },
+
   }
 }
 </script>
 
 <template>
   <header class="flex-container">
-    <button
-        class="claymorphism"
-        type="button"
-        @click="toggleMenu"
-    >
-      Menu
-    </button>
+    <Button icon="pi pi-arrow-right" @click="visible = true; console.log('bouton')" />
     <h1><strong>CESeats</strong></h1>
-    <div class="card flex justify-center">
-      <img class="display_user" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile_picture" @click="toggle" aria-controls="overlay_tmenu">
-      <TieredMenu ref="menu" id="overlay_tmenu" :model="items" popup />
-    </div>
+    <span class="logo">logo</span>
   </header>
-
+  <div class="card flex justify-center">
+    <Sidebar v-model:visible="visible" header="Menu">
+      <div class="flex-list">
+      <RouterLink to="/home" class="button-link"><i class="pi pi-home" style="font-size: 1rem"/> Accueil</RouterLink>
+      <p/>
+      <RouterLink to="/parcourir" class="button-link"><i class="pi pi-search" style="font-size: 1rem"/> Parcourir</RouterLink>
+      <p/>
+      <RouterLink to="/commandes" class="button-link"><i class="pi pi-cart-arrow-down" style="font-size: 1rem"/> Paniers</RouterLink>
+      <p/>
+      <RouterLink to="/deliveries" class="button-link"><i class="pi pi-truck" style="font-size: 1rem"/> Livraisons</RouterLink>
+      <p/>
+      <RouterLink to="/notifications" class="button-link"><i class="pi pi-bell" style="font-size: 1rem"/> Notifications</RouterLink>
+      <p/>
+      </div>
+    </Sidebar>
+  </div>
   <div
       v-bind:class="{
       main_page_content_1: page_content.page_content_1,
       main_page_content_2: page_content.page_content_2
     }"
   >
-    <transition name="fade">
-      <sidebar :is-menu-open="isMenuOpen"/>
-    </transition>
-
-
     <router-view class="router_class"/>
   </div>
 </template>
 
 <style scoped>
-.claymorphism {
-  border-radius: 14px;
-  background: #2a4252;
-  box-shadow: 8px 8px 16px #111a21,
-  -8px -8px 16px #436a83;
+.button-link {
+  border-radius: 5px;
+  background: #fdfdfd;
   padding: 20px;
+  display: block;
+  width: 100%;
+  color: dimgray;
+  font-size: 20px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: #fdfdfd;
+  transition-duration: 0.2s;
+}
+
+.button-link:hover {
+  background-color: #04AA6D; /* Green */
   color: white;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: #04AA6D;
 }
-
-.display_user {
-  object-fit: cover;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-}
-
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.1s linear;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 
 .flex-container {
   display: flex;
@@ -154,6 +89,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   align-content: center;
+}
+
+.flex-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .generic_button {

@@ -2,6 +2,7 @@ import {initModels} from "../models/init-models";
 import db from "../db/db";
 import {config} from "dotenv";
 import hasPermission from "./hasPermission";
+import sendNotification from "./sendNotification";
 
 config();
 const jwt = require("jsonwebtoken")
@@ -66,6 +67,7 @@ export default class AuthController {
                 role_id: compte.role_id,
                 exp: Math.floor(Date.now() / 1000) + (60 * 60),
             }, process.env.ACCESS_JWT_KEY);
+            await sendNotification(compte.id, {title: "Logged In", body: `Logged in as ${compte.email}`});
             return res.status(200).json({
                 message: "Login Successful",
                 token: token,

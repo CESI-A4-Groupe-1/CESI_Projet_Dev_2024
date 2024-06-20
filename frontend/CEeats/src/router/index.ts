@@ -14,6 +14,12 @@ import EmailFormView from "@/views/customer/EmailFormView.vue";
 import PasswordFormView from "@/views/customer/PasswordFormView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import SignUpView from "@/views/auth/SignUpView.vue";
+import deliverer_view from "@/views/deliverer/deliverer_view.vue"
+import RestorerhistoryView from "@/views/restorer/RestorerhistoryView.vue";
+import CommercialView from "@/views/commercial/CommercialView.vue";
+import TechnicalView from "@/views/technical/TechnicalView.vue";
+
+
 import {AccountService} from "@/services";
 
 const routes = [
@@ -122,6 +128,38 @@ const routes = [
     {
         path: '/:pathMatch(.*)*',
         redirect: '/home'
+    },
+    {
+        path: '/categories',
+        name: 'categories_view',
+        component: ExploreView,
+    },
+    {
+        path: '/restaurateurs',
+        name: 'restaurateurs',
+        component: RestorerhomeView,
+    },
+    {
+        path: "/deliveries",
+        name: "deliveries_view",
+        component: null,
+        children: [
+            {
+                path: "{id}",
+                name: "specific_delivery",
+                component: deliverer_view
+            }
+        ]
+    },
+    {
+        path: '/techservice',
+        name: 'technical',
+        component: TechnicalView,
+    },
+    {
+        path: '/commercial',
+        name: 'commercial',
+        component: CommercialView,
     }
 ];
 
