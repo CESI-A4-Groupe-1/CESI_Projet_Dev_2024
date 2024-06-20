@@ -1,30 +1,32 @@
-<script setup lang="ts">
-import { ref } from "vue";
-const visible = ref(false);
-</script>
 <script lang="ts">
-import Sidebar from 'primevue/sidebar'
-import {messaging, getToken} from "./firebase";
+import { defineComponent, ref, computed } from 'vue';
+import Sidebar from 'primevue/sidebar';
+import { AccountService } from '@/services';
 
-export default {
-  components: {Sidebar},
+export default defineComponent({
+  components: { Sidebar },
   data() {
     return {
       visible: false,
       page_content: {
         page_content_2: true,
         page_content_1: false
-      }
+      },
+      id_user: localStorage.getItem('user_id') ?? '',
+    }
+  },
+  computed: {
+    isUserIdDefined(): boolean {
+      return !!this.id_user;
     }
   },
   methods: {
     toggleMenu() {
-      this.page_content.page_content_2 = !this.page_content.page_content_2
-      this.page_content.page_content_1 = !this.page_content.page_content_2
+      this.page_content.page_content_2 = !this.page_content.page_content_2;
+      this.page_content.page_content_1 = !this.page_content.page_content_2;
     },
-
   }
-}
+});
 </script>
 
 <template>
@@ -36,16 +38,16 @@ export default {
   <div class="card flex justify-center">
     <Sidebar v-model:visible="visible" header="Menu">
       <div class="flex-list">
-      <RouterLink to="/home" class="button-link"><i class="pi pi-home" style="font-size: 1rem"/> Accueil</RouterLink>
-      <p/>
-      <RouterLink to="/parcourir" class="button-link"><i class="pi pi-search" style="font-size: 1rem"/> Parcourir</RouterLink>
-      <p/>
-      <RouterLink to="/commandes" class="button-link"><i class="pi pi-cart-arrow-down" style="font-size: 1rem"/> Paniers</RouterLink>
-      <p/>
-      <RouterLink to="/deliveries" class="button-link"><i class="pi pi-truck" style="font-size: 1rem"/> Livraisons</RouterLink>
-      <p/>
-      <RouterLink to="/notifications" class="button-link"><i class="pi pi-bell" style="font-size: 1rem"/> Notifications</RouterLink>
-      <p/>
+        <RouterLink to="/home" class="button-link"><i class="pi pi-home" style="font-size: 1rem"/> Accueil</RouterLink>
+        <p/>
+        <RouterLink to="/parcourir" class="button-link"><i class="pi pi-search" style="font-size: 1rem"/> Parcourir</RouterLink>
+        <p/>
+        <RouterLink :to="`/users/${id_user}/orders`" class="button-link" v-bind:disabled="!id_user"><i class="pi pi-cart-arrow-down" style="font-size: 1rem"/> Paniers</RouterLink>
+        <p/>
+        <RouterLink to="/deliveries" class="button-link"><i class="pi pi-truck" style="font-size: 1rem"/> Livraisons</RouterLink>
+        <p/>
+        <RouterLink :to="`/users/${id_user}/settings`" class="button-link" v-bind:disabled="!id_user"><i class="pi pi-bell" style="font-size: 1rem"/> Notifications</RouterLink>
+        <p/>
       </div>
     </Sidebar>
   </div>
