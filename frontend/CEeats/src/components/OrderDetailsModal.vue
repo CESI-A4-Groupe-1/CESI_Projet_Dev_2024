@@ -28,6 +28,7 @@ export default defineComponent({
         OrderService.addArticleToOrder(article.id_commande, article.id_article, article)
             .then(res => {
               console.log('Article ajouté à la commande:', res);
+              this.updateTotal();
             })
             .catch(err => console.error(err));
       }
@@ -37,6 +38,7 @@ export default defineComponent({
       OrderService.addArticleToOrder(article.id_commande, article.id_article, article)
           .then(res => {
             console.log('Article ajouté à la commande:', res);
+            this.updateTotal();
           })
           .catch(err => console.error(err));
     },
@@ -57,15 +59,19 @@ export default defineComponent({
           label: 'Supprimer',
           severity: 'danger'
         },
-        accept: () => {
+        accept: async () => {
           try {
             console.log(article);
-            OrderService.deleteArticleFromOrder(article.id_commande, article.id_article);
-            // Ajoutez ici toute logique supplémentaire après la suppression de l'article
+            await OrderService.deleteArticleFromOrder(article.id_commande, article.id_article);
+            const index = this.order.commande_lists.findIndex((item: any) => item.id_article === article.id_article);
+            if (index !== -1) {
+              this.order.commande_lists.splice(index, 1);
+              this.updateTotal();
+            }
           } catch (error) {
-            console.error('Error deleting article from order:', error);
+            console.error('Erreur lors de la suppression de l\'article de la commande:', error);
           }
-          },
+        },
         reject: () => {
           console.log('Suppression annulée');
         }
@@ -82,6 +88,7 @@ export default defineComponent({
             console.log('Commande validée');
             this.status = 'En préparation'; // Mise à jour de l'état après validation
             this.statusClass = 'status-preparation';
+            window.location.reload();
           } catch (error) {
             console.error('Erreur lors de la validation de la commande :', error);
           }
@@ -90,6 +97,9 @@ export default defineComponent({
           console.log('Commande non validée');
         }
       });
+    },
+    updateTotal() {
+      this.total = OrderService.getTotalPrice(this.order.commande_lists);
     }
   },
   mounted() {
@@ -110,7 +120,7 @@ export default defineComponent({
 
     this.status = OrderService.getOrderStatus(this.order);
     this.statusClass = OrderService.getOrderStatusClass(this.order);
-    this.total = OrderService.getTotalPrice(this.order.commande_lists);
+    this.updateTotal();
   },
   emits: ['close']
 });

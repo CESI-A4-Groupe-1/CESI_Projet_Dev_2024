@@ -12,7 +12,6 @@ let addOrder = async (user_id, data) => {
 }
 
 let addArticleToOrder = async (order_id, article_id, data) => {
-    console.log("modification\n", data);
     return Axios.put(`/orders/${order_id}/addarticles/${article_id}`, data);
 }
 
