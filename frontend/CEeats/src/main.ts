@@ -44,4 +44,5 @@ app.component('InputGroup', InputGroup)
 app.component('InputGroupAddon', InputGroupAddon)
 app.use(ConfirmationService);
 
+
 app.mount('#app')

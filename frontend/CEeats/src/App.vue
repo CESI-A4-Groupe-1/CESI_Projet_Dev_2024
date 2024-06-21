@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import {messaging, getToken} from "./firebase";
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { AccountService } from "@/services/index.js";
@@ -75,10 +76,9 @@ const logout = async () => {
 };
 </script>
 
-<script>
-import { defineComponent, ref, computed } from 'vue';
-import Sidebar from 'primevue/sidebar';
-
+<script lang="ts">
+import Sidebar from 'primevue/sidebar'
+import { defineComponent } from 'vue';
 export default defineComponent({
   components: { Sidebar },
   data() {

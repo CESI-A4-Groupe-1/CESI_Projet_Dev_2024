@@ -26,9 +26,9 @@
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
     "vue": "^3.4.21",
+    "web-push": "^3.6.7",
     "vue-chartjs": "^5.3.1",
     "vue-router": "^4.3.0",
-    "web-push": "^3.6.7",
     "workbox-precaching": "^7.1.0"
   },
   "devDependencies": {
