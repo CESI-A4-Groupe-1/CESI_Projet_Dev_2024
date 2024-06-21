@@ -37,18 +37,7 @@ export default defineComponent({
   },
 
   methods: {
-    validerCommande(id) {
-      console.log(`Commande ${id} validée`);
-    },
-    refuserCommande(id) {
-      console.log(`Commande ${id} refusée`);
-    },
-    finaliserCommande(id) {
-      console.log(`Commande ${id} finalisée`);
-    },
-    annulerCommande(id) {
-      console.log(`Commande ${id} annulée`);
-    },
+
     togglePopup() {
       this.isPopupVisible = !this.isPopupVisible;
     }
@@ -58,43 +47,40 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="order_card_container">
-    <div class="order_card_info" @click="togglePopup">
-      <p>{{ command.detaille }}</p>
-      <!--Rajouter une liste des article ici-->
-      <p>Client: {{ command.client }}</p>
-      <p>Livreur: {{ command.livreur }}</p>
-      <div>
-        <ul>
-          <li v-for="item in command.items" :key="item.name">
-            {{ item.quantity }}x {{ item.name }}
-          </li>
-        </ul>
+  <div class="p-card">
+    <div class="order_card_container">
+      <div class="order_card_info" @click="togglePopup">
+        <p>{{ command.detaille }}</p>
+        <!--Rajouter une liste des article ici-->
+        <!--p>Client: {{ command.client }}</p-->
+        <!--p>Livreur: {{ command.livreur }}</p-->
+        <div>
+          <ul class="overflow-item">
+            <li v-for="item in command.items" :key="item.name">
+              {{ item.quantity }}x {{ item.name }}
+            </li>
+          </ul>
+        </div>
       </div>
+      <RestoreOrderPopUp
+          :isVisible="isPopupVisible"
+          :command="command"
+          @close="togglePopup"
+      />
     </div>
-    <div class="order_card_container_btn">
-      <div v-if="showButtons">
-        <button v-if="command.status === 'enCours' "> <!--@click="validerCommande(command.id)"-->Valider</button>
-      </div>
-      <div v-if="showButtons">
-        <button v-if="command.status === 'enCours'"> <!--@click="validerCommande(command.id)"-->Refuser</button>
-      </div>
-      <div v-if="showButtons">
-        <button v-if="command.status === 'finalisee'"> <!--@click="finaliserCommande(command.id)"-->Finaliser</button>
-      </div>
-      <div v-if="showButtons">
-        <button v-if="command.status === 'finalisee'"> <!--@click="annulerCommande(command.id)"-->Annuler</button>
-      </div>
-    </div>
-    <RestoreOrderPopUp
-        :isVisible="isPopupVisible"
-        :command="command"
-        @close="togglePopup"
-    />
   </div>
+
 </template>
 
 <style scoped>
+
+p, li {
+  color: white;
+}
+.p-card {
+  background-color: #04aa6d;
+  margin: 10px 20px 10px 10px;
+}
 .order_card_container {
   display: flex;
   width: 100%
@@ -112,5 +98,9 @@ button {
   width : 100%;
   align-self: center;
   justify-self: center;
+  height: 10vh;
+}
+.overflow-item{
+  overflow: clip;
 }
 </style>

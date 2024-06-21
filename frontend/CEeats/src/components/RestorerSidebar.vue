@@ -10,8 +10,8 @@ export default {
 <template>
   <div class="right-sidebar">
     <h2>Commande en cours</h2>
-    <div class="container">
-      <div>
+    <div>
+      <div class="container">
         <RestorerOrderList :title="true"></RestorerOrderList>
         <!-- Ajouter le composant liste de commandes-->
       </div>
@@ -28,17 +28,17 @@ h1 {
 }
 
 .right-sidebar {
-  position: fixed;
+  position: absolute;
   right: 0;
-  width: 40%;
-  height: fit-content;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black;
+  width: 30%;
+  height: 70%;
+  //border-width: 5px;
+  //border-style: solid;
+  //border-color: black;
 }
 
 .container {
-  height: 400px;
+  height: 350px;
   overflow: auto;
 }
 </style>

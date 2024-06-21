@@ -13,19 +13,19 @@ interface Cards {
 const cards : Cards = {
     card1: {
       nom: "Commandes",
-      icon: "fa-solid fa-fire-burner fa-10x"
+      icon: "fa-solid fa-fire-burner fa-6x"
     },
     card2: {
       nom: "Livraisons",
-      icon: "fa-solid fa-truck fa-10x"
+      icon: "fa-solid fa-truck fa-7x"
     },
     card3: {
       nom: "Gestion des menus",
-      icon: "fa-solid fa-utensils fa-10x"
+      icon: "fa-solid fa-utensils fa-7x"
     },
     card4: {
       nom: "Statistiques",
-      icon: "fa-solid fa-chart-line fa-10x"
+      icon: "fa-solid fa-chart-line fa-7x"
     }
 };
 
