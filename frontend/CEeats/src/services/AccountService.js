@@ -40,6 +40,10 @@ let register = (user_data) => {
     return Axios.post('register', user_data);
 }
 
+let deleteUser = (id) => {
+    return Axios.delete(`/users/${id}`);
+}
+
 export const AccountService = {
     login,
     logout,
@@ -49,5 +53,6 @@ export const AccountService = {
     isLogged,
     getUser,
     updateUser,
-    register
+    register,
+    deleteUser
 }

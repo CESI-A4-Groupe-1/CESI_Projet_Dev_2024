@@ -1,12 +1,15 @@
 <template>
-  <RouterLink :to="'/resultats/' + category_id" class="single_category" :style="{ backgroundImage: 'url(' + (image ? image : defaultImage) + ')' }">
-    <p class="middle">{{ tagName }}</p>
-    <p class="category_name">{{ tagName }}</p>
-  </RouterLink>
+  <div class="single_category" v-if="visible" :style="{ backgroundImage: 'url(' + (image ? image : defaultImage) + ')' }" @click="$router.push(`/resultats/${category_id}`)">
+    <RouterLink :to="`/resultats/${category_id}`">
+      <p class="middle">{{ tagName }}</p>
+      <p class="category_name">{{ tagName }}</p>
+    </RouterLink>
+  </div>
 </template>
 
 <script setup>
 import { RouterLink } from 'vue-router';
+import { RestaurantService } from "@/services/index.js";
 import { ref, computed } from 'vue';
 import defaultImage from '@/assets/no-image.jpg';
 </script>
@@ -18,6 +21,23 @@ export default {
     tagName: String,
     category_id: Number,
     image: String
+  },
+  data() {
+    return {
+      visible: true,
+    }
+  },
+  mounted() {
+    RestaurantService.getRestaurantByCategory(this.category_id)
+        .then(res => {
+          if (res.data.length > 0) {
+            console.log(true)
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+        })
+        .catch(err => console.log(err));
   }
 }
 </script>
@@ -70,7 +90,7 @@ export default {
 
 .single_category:hover .middle {
   opacity: 1;
-  font-size: 16px; /* Taille de police augmentée au survol */
+  font-size: 20px; /* Taille de police augmentée au survol */
 }
 
 .single_category:hover .category_name {
