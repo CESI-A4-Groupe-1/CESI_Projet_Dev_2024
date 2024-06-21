@@ -1,7 +1,12 @@
+<script setup lang="ts">
+import defaultImage from '@/assets/no-image.jpg'
+</script>
+
 <script lang="ts">
 import { OrderService } from '@/services/OrderService'
 import {useRoute} from "vue-router";
 import {ref} from "vue";
+import defaultImage from '@/assets/no-image.jpg'
 
 export default {
     name: "ArticleCard",
@@ -11,7 +16,7 @@ export default {
     data() {
       return {
         route: useRoute(),
-        id_user: 1,
+        id_user: localStorage.getItem('user_id') ?? '',
         orders: [] as Array<any>,
         value: ref(0),
         ordered_restaurants: [] as number[],
@@ -30,9 +35,8 @@ export default {
         this.getOrders(this.id_user)
             .then(() => {
               const restaurantId = this.route.params.id;
-              const existingOrder = this.orders.find(order => Number(order.id_restaurant) === Number(restaurantId) && order.validated_at === null);
+              const existingOrder = this.orders.find(order => Number(order.id_restaurant) === Number(restaurantId) && order.paid_at === null);
               if (!existingOrder) {
-                console.log('in if');
                 // Sinon, créez une nouvelle commande
                 this.createOrder(this.id_user, restaurantId)
                     .then(newOrderId => {
@@ -48,7 +52,6 @@ export default {
                       console.error(err);
                     });
               } else {
-                console.log('in else');
                 let data = {
                   id_article: this.article_id,
                   id_commande: existingOrder.id,
@@ -72,7 +75,6 @@ export default {
             .catch(err => console.log(err));
       },
       updateOrder(order_id: number, article_id: number, data: object) {
-        console.log('in update')
         OrderService.addArticleToOrder(order_id, article_id, data)
             .then(res => {
               console.log('Article ajouté à la commande:', res);
@@ -103,12 +105,12 @@ export default {
         <p class="price">{{ article.prix }}€</p>
         <p class="description">{{ article.description }}</p>
       </div>
-      <div class="image">
+      <div class="cl-image" :style="{ backgroundImage: 'url(' + (article.image ? article.image : defaultImage) + ')' }">
         <div class="button_add">
           <Button icon="pi pi-plus" severity="secondary" rounded aria-label="AddArticle" @click="visible = true"/>
           <Dialog v-model:visible="visible" modal :header="article.nom" :style="{ width: '25rem' }">
-            <span class="text-surface-500 dark:text-surface-400 block mb-8">Choisir la quantité</span>
-            <div class="flex-auto">
+            <span class="text-surface-500 dark:text-surface-400 block mb-1">Choisir la quantité</span>
+            <div class="flex-auto mb">
               <InputNumber v-model="data.quantite" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" :min="0" :max="99">
                 <template #incrementbuttonicon>
                   <span class="pi pi-plus" />
@@ -118,7 +120,7 @@ export default {
                 </template>
               </InputNumber>
             </div>
-            <div class="flex justify-end gap-2">
+            <div class="flex justify-end gap-2 mb mr">
               <Button type="button" label="Annuler" severity="secondary" @click="visible = false"></Button>
               <Button type="button" label="Ajouter à la commande" @click="addToOrder"></Button>
             </div>
@@ -150,7 +152,11 @@ span {
   justify-content: space-between;
 }
 
-.image {
+.mr {
+  margin-right: 5px;
+}
+
+.cl-image {
   height: 150px;
   width: 30%;
   background-image: url("https://www.biofournil.com/wp-content/uploads/2021/02/BRIOCHE-BIOFOURNIL_web.jpg");

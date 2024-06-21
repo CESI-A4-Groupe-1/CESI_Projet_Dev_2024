@@ -18,7 +18,6 @@ export default defineComponent({
       email: '',
       role_id: '',
       date_anniv: '',
-      password: '',
       telephone: '',
       is_notified: false,
       path_pfp: '',
@@ -31,14 +30,16 @@ export default defineComponent({
     onMounted(() => {
       AccountService.getUser(userId.value)
           .then(res => {
-            user.value = res.data as User;
+            user.value = { ...res.data, password: undefined } as User;
           })
           .catch(err => console.log(err));
     });
 
     const updateUser = async () => {
       try {
-        await AccountService.updateUser(userId.value, user.value);
+        // Copier l'objet user sans le champ password
+        const { password, ...userWithoutPassword } = user.value;
+        await AccountService.updateUser(userId.value, userWithoutPassword);
         alert("Utilisateur mis à jour avec succès");
       } catch (err) {
         console.error(err);
@@ -63,10 +64,10 @@ export default defineComponent({
     <p>Utilisez ce numéro pour vous connecter et récupérer votre compte.</p>
 
     <div class="form">
-      <label for="phone">Numéro de téléphone</label>
-      <InputText id="phone" v-model="user.telephone" :value="user.telephone"/>
+      <label class="mb-1" for="phone">Numéro de téléphone</label>
+      <InputText class="mb" id="phone" v-model="user.telephone" :value="user.telephone"/>
     </div>
-    <Button label="Mettre à jour" type="submit" raised />
+    <Button class="mb" label="Mettre à jour" type="submit" raised />
   </form>
 </main>
 </template>

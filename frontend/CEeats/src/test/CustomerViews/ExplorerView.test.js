@@ -1,6 +1,6 @@
 // sum.test.js
 import {expect, test} from 'vitest'
-import ExploreView from "../views/customer/ExploreView.vue";
+import ExploreView from "../../views/customer/ExploreView.vue";
 
 
 

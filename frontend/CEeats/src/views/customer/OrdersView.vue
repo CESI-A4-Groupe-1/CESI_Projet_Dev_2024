@@ -1,9 +1,9 @@
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
 import OrderCard from "@/components/OrderCard.vue";
 import OrderDetailsModal from '@/components/OrderDetailsModal.vue';
 import { OrderService } from '@/services/OrderService'
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "OrdersView",
@@ -17,9 +17,9 @@ export default defineComponent({
     const userId = ref<string>(route.params.id as string);
     const selectedOrder = ref(null);
     const showOrderDetails = ref(false);
-    let orders = ref([]);
+    const orders = ref<any[]>([]);
 
-    const selectOrder = (order) => {
+    const selectOrder = (order: any) => {
       selectedOrder.value = order;
       showOrderDetails.value = true;
     };
@@ -29,31 +29,70 @@ export default defineComponent({
       selectedOrder.value = null;
     };
 
-    onMounted( () => {
-        OrderService.getOrders(userId.value)
-            .then(res => {
-              orders.value = res.data;
-              console.log(res.data);
-            })
-            .catch(err => console.log(err));
-    })
+    onMounted(() => {
+      OrderService.getOrders(userId.value)
+          .then(res => {
+            orders.value = res.data;
+            console.log(res.data);
+          })
+          .catch(err => console.log(err));
+    });
+
+    const ordersByStatus = computed(() => {
+      const groupedOrders: Record<string, any[]> = {
+        "Commande non validée": [],
+        "En préparation": [],
+        "Livrée": []
+      };
+
+      orders.value.forEach(order => {
+        const status = OrderService.getOrderStatus(order);
+        if (groupedOrders[status]) {
+          groupedOrders[status].push(order);
+        }
+      });
+
+      return groupedOrders;
+    });
 
     return {
       orders,
       selectedOrder,
       showOrderDetails,
       selectOrder,
-      closeModal
+      closeModal,
+      ordersByStatus
     };
   }
-})
+});
 </script>
 
 <template>
   <main v-if="orders">
-    <div class="order" v-for="(order, i) in orders" :key="i" @click="selectOrder(order)">
-      <OrderCard :order="order"></OrderCard>
-    </div>
+    <!-- Section pour "Commande non validée" -->
+    <section v-if="ordersByStatus['Commande non validée'].length">
+      <h2>Commandes non validées</h2>
+      <div class="order" v-for="(order, i) in ordersByStatus['Commande non validée']" :key="i" @click="selectOrder(order)">
+        <OrderCard :order="order"></OrderCard>
+      </div>
+    </section>
+
+    <!-- Section pour "En préparation" -->
+    <section v-if="ordersByStatus['En préparation'].length">
+      <h2>Commandes en préparation</h2>
+      <div class="order" v-for="(order, i) in ordersByStatus['En préparation']" :key="i" @click="selectOrder(order)">
+        <OrderCard :order="order"></OrderCard>
+      </div>
+    </section>
+
+    <!-- Section pour "Livrée" -->
+    <section v-if="ordersByStatus['Livrée'].length">
+      <h2>Commandes livrées</h2>
+      <div class="order" v-for="(order, i) in ordersByStatus['Livrée']" :key="i" @click="selectOrder(order)">
+        <OrderCard :order="order"></OrderCard>
+      </div>
+    </section>
+
     <OrderDetailsModal v-if="showOrderDetails" :order="selectedOrder" @close="closeModal"></OrderDetailsModal>
   </main>
 </template>

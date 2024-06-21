@@ -19,7 +19,6 @@ export default defineComponent({
       email: '',
       role_id: '',
       date_anniv: '',
-      password: '',
       telephone: '',
       is_notified: false,
       path_pfp: '',
@@ -30,14 +29,25 @@ export default defineComponent({
       deletedAt: ''
     });
 
-    // Fonction pour charger l'image de profil
     const loadFile = (event: Event) => {
       const input = event.target as HTMLInputElement;
       if (input.files && input.files[0]) {
-        const image = document.getElementById("output") as HTMLImageElement;
-        if (image) {
-          image.src = URL.createObjectURL(input.files[0]);
-        }
+        const file = input.files[0];
+        const imageUrl = URL.createObjectURL(file);
+        user.value.path_pfp = imageUrl;
+        updateUser();
+      }
+    };
+
+    const updateUser = async () => {
+      try {
+        // Copier l'objet user sans le champ password
+        const { password, ...userWithoutPassword } = user.value;
+        await AccountService.updateUser(userId.value, userWithoutPassword);
+        alert("Utilisateur mis à jour avec succès");
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors de la mise à jour de l'utilisateur");
       }
     };
 
@@ -60,7 +70,7 @@ export default defineComponent({
     onMounted(() => {
       AccountService.getUser(userId.value)
           .then(res => {
-            user.value = res.data as User;
+            user.value = { ...res.data, password: undefined } as User;
           })
           .catch(err => console.log(err));
     });
@@ -69,6 +79,7 @@ export default defineComponent({
     return {
       user,
       loadFile,
+      updateUser,
       logout,
       navigateTo
     };
@@ -86,46 +97,46 @@ export default defineComponent({
           <span>Changer l'image</span>
         </label>
         <input id="file" type="file" @change="loadFile"/>
-        <img src="https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_OI4LKNeFgHwvvVju60fejLd9gj43dIcd.jpg" id="output" width="200"  alt="profile picture"/>
+        <img :src="user.path_pfp ? user.path_pfp : '/assets/no-image.jpg'" id="output" width="200"  alt="profile picture"/>
       </div>
       <div class="logout" @click="logout()">
         <div class="txt_logout">Déconnexion <i class="pi pi-sign-out"></i></div>
       </div>
     </div>
-    <h2 class="personnal_info">Informations personelles</h2>
-    <div class="name">
+    <h2 class="personnal_info">Informations personnelles</h2>
+    <div class="name mb">
       <div class="display">
         <p class="title">Nom</p>
         <p class="data">
           {{ user.prenom }} {{ user.nom }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/name')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/name')" />
     </div>
-    <div class="phone">
+    <div class="phone mb">
       <div class="display">
         <p class="title">Numéro de téléphone</p>
         <p class="data">
           {{ user.telephone }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/phone')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/phone')"/>
     </div>
-    <div class="email">
+    <div class="email mb">
       <div class="display">
         <p class="title">Adresse email</p>
         <p class="data">
           {{ user.email }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/email')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/email')"/>
     </div>
     <h2 class="security">Sécurité</h2>
-    <div class="password">
+    <div class="password mb">
       <div class="display">
         <p class="title">Mot de passe</p>
       </div>
-      <button @click="navigateTo('./account/update/password')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/password')"/>
     </div>
     <h2 class="delete">Suppression du compte</h2>
     <p class="delete_compte">Supprimez votre compte</p>
@@ -135,8 +146,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 $circleSize: 165px;
 $radius: 100px;
-$shadow: 0 0 10px 0 rgba(255,255,255,.35);
-$fontColor: rgb(250,250,250);
+$shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+$fontColor: rgb(250, 250, 250);
 
 @mixin object-center {
   display: flex;
@@ -159,7 +170,10 @@ $fontColor: rgb(250,250,250);
   font-weight: bold;
 }
 
-.name, .phone, .email, .password {
+.name,
+.phone,
+.email,
+.password {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -206,5 +220,24 @@ $fontColor: rgb(250,250,250);
       margin: 0 0.5em;
     }
   }
+}
+
+/* Styles for pi buttons */
+.pi {
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.pi-camera {
+  margin-right: 0.5em;
+}
+
+.pi-sign-out {
+  margin-left: 0.5em;
 }
 </style>

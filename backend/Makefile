@@ -20,3 +20,4 @@ install-deps:
 	npm --prefix ./services/restaurants install
 	npm --prefix ./services/referrals install
 	npm --prefix ./services/statistics install
+	yarn --cwd ./admin

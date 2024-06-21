@@ -12,12 +12,15 @@ import InputText from "primevue/inputtext";
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import FloatLabel from "primevue/floatlabel";
+import Calendar from 'primevue/calendar';
+import Dropdown from "primevue/dropdown";
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
 import TieredMenu from 'primevue/tieredmenu';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
-import Sidebar from "primevue/sidebar";
 import {messaging} from './firebase';
 
 const app = createApp(App)
@@ -35,6 +38,10 @@ app.component('TieredMenu', TieredMenu)
 app.component('InputNumber', InputNumber)
 app.component('Dialog', Dialog)
 app.component('ConfirmDialog', ConfirmDialog)
+app.component('Calendar', Calendar)
+app.component('Dropdown', Dropdown)
+app.component('InputGroup', InputGroup)
+app.component('InputGroupAddon', InputGroupAddon)
 app.use(ConfirmationService);
 
 

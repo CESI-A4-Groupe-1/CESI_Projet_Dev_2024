@@ -13,7 +13,7 @@ export default class livraisons extends Model {
     },
     id_livreur: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'compte',
         key: 'ID'
@@ -33,15 +33,15 @@ export default class livraisons extends Model {
     },
     validated_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     picked_up_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     delivered_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

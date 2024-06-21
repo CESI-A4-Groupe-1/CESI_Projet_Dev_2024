@@ -35,11 +35,10 @@ export default defineComponent({
     RestaurantService.getRestaurantByCategory(this.route.params.id_category)
         .then(res => {
           this.restaurants_array = res.data;
+          console.log(res.data);
         })
         .catch(err => console.log(err));
 
-    // fonction getRestaurantsByCategory() = créer des restaurants nom + prix + catégorie + temps de préparation
-    // this.categories_array = CategoryService.getAllCategories();
   },
 })
 
@@ -49,7 +48,9 @@ export default defineComponent({
   <main>
     <div class="return_and_search">
       <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
-      <input class="search" type="text" placeholder="Search">
+      <InputGroup>
+        <InputText  placeholder="Search" />
+      </InputGroup>
     </div>
     <div class="results_header">
       <h2 class="results">Résultats</h2>
