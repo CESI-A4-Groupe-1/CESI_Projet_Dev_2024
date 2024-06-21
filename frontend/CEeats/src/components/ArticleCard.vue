@@ -1,8 +1,11 @@
+<script setup lang="ts">
+import defaultImage from '@/assets/no-image.jpg'
+</script>
+
 <script lang="ts">
 import { OrderService } from '@/services/OrderService'
 import {useRoute} from "vue-router";
 import {ref} from "vue";
-import defaultImage from '@/assets/no-image.jpg'
 
 export default {
     name: "ArticleCard",

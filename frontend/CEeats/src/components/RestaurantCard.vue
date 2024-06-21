@@ -40,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .restaurant_card {
+  max-height: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,8 +64,9 @@ export default {
 }
 
 img {
-  padding: 1rem;
-  height: 60px;
+  padding: 0;
+  padding-right: 1rem!important;
+  height: 100px;
 }
 p {
   margin: 0;

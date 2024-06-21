@@ -39,17 +39,17 @@ export default defineComponent({
     <div class="setting">
       <div class="notifications">
         <p class="title">Notifications</p>
-        <div class="description_notif">Description du paramètre</div>
+        <div class="description_notif">Je souhaite recevoir des notifications de cette application.</div>
       </div>
       <InputSwitch v-model="checked_notif" @change="event => requestNotifications(checked_notif)"/>
     </div>
-    <div class="setting">
-      <div class="other_settings">
-        <p class="title">Autre paramètre</p>
-        <p class="description_other">Description de l'autre paramètre</p>
-      </div>
-      <InputSwitch v-model="checked_other" />
-    </div>
+<!--    <div class="setting">-->
+<!--      <div class="other_settings">-->
+<!--        <p class="title">Autre paramètre</p>-->
+<!--        <p class="description_other">Description de l'autre paramètre</p>-->
+<!--      </div>-->
+<!--      <InputSwitch v-model="checked_other" />-->
+<!--    </div>-->
   </main>
 </template>
 
