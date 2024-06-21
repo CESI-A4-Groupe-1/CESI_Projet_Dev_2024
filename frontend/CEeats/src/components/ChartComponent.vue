@@ -18,8 +18,8 @@ export default {
         datasets: [{
           label: 'Performance Data',
           data: [100, 200, 300, 400, 500, 600, 700], // Y-axis data
-          borderColor: 'red',
-          backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          borderColor: 'green',
+          backgroundColor: 'rgba(4,170,109,0.15)',
           fill: true
         }]
       },

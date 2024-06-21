@@ -45,6 +45,7 @@ export default {
 
 .commandlist_encour {
   border: solid;
+  border-radius: 15px;
   margin-bottom: 10%;
   padding-left: 10%;
 }
@@ -56,6 +57,7 @@ export default {
 
 .commandlist_final {
   border: solid;
+  border-radius: 15px;
   height: 100%;
   padding-left: 10%;
 }

@@ -14,9 +14,9 @@ export default {
 <template>
   <div>
     <h1> {{card.nom}} </h1>
-      <button class ="btn-choice" type="button">
-        <i :class="card.icon"></i>
-      </button>
+    <router-link :to="{ name: 'specific_history' }" class="btn-choice">
+      <i :class="card.icon"></i>
+    </router-link>
   </div>
 </template>
 
@@ -26,10 +26,19 @@ export default {
   align-self: center;
   justify-self: center;
   padding: 10px;
+  background-color: #04aa6d;
+  color: white;
+  border: solid;
+  font-size: 16px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
 }
 i {
   width: 100%;
-  height: 150px;
+  height: 125px;
+  text-align: center;
+
 }
 h1 {
   font-size: 20px;

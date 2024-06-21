@@ -25,5 +25,6 @@ export default defineComponent({
 .dashboard {
   display: flex;
   justify-content: space-between;
+  margin-left:15%;
 }
 </style>

@@ -29,109 +29,133 @@ interface Commands {
 const commands : Commands = {
   command1: {
     id: 1,
-    detaille: "Commande #00000000",
+    detaille: "Commande 1",
     client: "Jane Doe",
     livreur: "John Doe",
     status: "enCours",
     items: [
       {
         articleId: 101,
-        name: "Product A",
+        name: " Bruschetta",
         quantity: 2,
-        price: 19.99
+        price:  5.5
       },
       {
         articleId: 102,
-        name: "Product B",
+        name: "Spaghetti Carbonara",
         quantity: 1,
-        price: 9.99
+        price: 12
       },
       {
         articleId: 103,
-        name: "Product C",
+        name: "Sushi de Saumon ",
         quantity: 3,
-        price: 4.99
+        price:  8.5
+      },
+      {
+        articleId: 101,
+        name: "Ramen",
+        quantity: 2,
+        price: 10
       }
     ]
   },
   command2: {
     id: 2,
-    detaille: "Commande #00000000",
+    detaille: "Commande 2",
     client: "Jane Doe",
     livreur: "John Doe",
     status: "finalisee",
     items: [
       {
         articleId: 101,
-        name: "Product A",
-        quantity: 2,
-        price: 19.99
+        name: " Bruschetta",
+        quantity: 1,
+        price:  5.5
       },
       {
         articleId: 102,
-        name: "Product B",
-        quantity: 1,
-        price: 9.99
+        name: "Spaghetti Carbonara",
+        quantity: 3,
+        price: 12
       },
       {
         articleId: 103,
-        name: "Product C",
-        quantity: 3,
-        price: 4.99
+        name: "Sushi de Saumon ",
+        quantity: 2,
+        price:  8.5
+      },
+      {
+        articleId: 101,
+        name: "Ramen",
+        quantity: 2,
+        price: 10
       }
     ]
   },
   command3: {
     id: 3,
-    detaille: "Commande #00000000",
+    detaille: "Commande 3",
     client: "Jane Doe",
     livreur: "John Doe",
     status: "enCours",
     items: [
       {
         articleId: 101,
-        name: "Product A",
-        quantity: 2,
-        price: 19.99
+        name: " Bruschetta",
+        quantity: 3,
+        price:  5.5
       },
       {
         articleId: 102,
-        name: "Product B",
+        name: "Spaghetti Carbonara",
         quantity: 1,
-        price: 9.99
+        price: 12
       },
       {
         articleId: 103,
-        name: "Product C",
+        name: "Sushi de Saumon ",
         quantity: 3,
-        price: 4.99
+        price:  8.5
+      },
+      {
+        articleId: 101,
+        name: "Ramen",
+        quantity: 4,
+        price: 10
       }
     ]
   },
   command4: {
     id: 4,
-    detaille: "Commande #00000000",
+    detaille: "Commande 4",
     client: "Jane Doe",
     livreur: "John Doe",
     status: "finalisee",
     items: [
       {
         articleId: 101,
-        name: "Product A",
-        quantity: 2,
-        price: 19.99
+        name: " Bruschetta",
+        quantity: 1,
+        price:  5.5
       },
       {
         articleId: 102,
-        name: "Product B",
+        name: "Spaghetti Carbonara",
         quantity: 1,
-        price: 9.99
+        price: 12
       },
       {
         articleId: 103,
-        name: "Product C",
+        name: "Sushi de Saumon ",
         quantity: 3,
-        price: 4.99
+        price:  8.5
+      },
+      {
+        articleId: 101,
+        name: "Ramen",
+        quantity: 3,
+        price: 10
       }
     ]
   },
@@ -141,7 +165,7 @@ const commands : Commands = {
 
 <template>
   <div>
-    <div>
+    <div  class="p-card">
       <RestorerOrderCard
           v-for="(command,i) in commands"
           :key="i" :command="command" class="RestorerOrderCard"
@@ -153,7 +177,8 @@ const commands : Commands = {
 
 <style scoped>
 .RestorerOrderCard {
-  border: solid;
+  //border: solid;
+
   //margin: 5% 5% 5% 5%;
 }
 
