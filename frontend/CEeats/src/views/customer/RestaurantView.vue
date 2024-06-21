@@ -1,5 +1,6 @@
 <script setup lang="js">
 import Menue from "@/components/Menue.vue";
+import defaultImage from "@/assets/no-image.jpg";
 </script>
 
 <script lang="js">
@@ -48,7 +49,7 @@ export default {
 
 <template>
   <main>
-    <div class="restaurant_banner">
+    <div class="restaurant_banner" :style="{ backgroundImage: 'url(' + (restaurant.image ? restaurant.image : defaultImage) + ')' }">
       <div class="button_return">
         <Button icon="pi pi-arrow-left" severity="secondary" text rounded aria-label="Bookmark" @click="$router.go(-1)"></Button>
       </div>
@@ -109,19 +110,31 @@ export default {
   text-align: center;
 }
 
-.list, .menue {
-  display: inline-block;
+.list {
+  list-style-type: none;
+  padding: 0;
+}
 
-  a {
-    padding: 0 15px;
-  }
+.menue {
+  display: inline-block;
+  margin-bottom: 10px; /* Espacement entre les éléments de menu */
 }
 
 .menue_link {
   text-decoration: none;
+  color: #031D44;
+  position: relative;
+  padding-bottom: 5px; /* Espacement sous la ligne de soulignement */
+  transition: border-bottom 0.2s ease;
+  padding-bottom: 10px!important;
+  padding: 20px;
+
+  &:hover {
+    border-bottom: 2px solid #031D44; /* Couleur et épaisseur de la ligne de soulignement au survol */
+  }
 }
 
 .menue_link.active {
-  text-decoration: underline;
+  border-bottom: 2px solid #031D44; /* Ligne de soulignement pour l'élément actif */
 }
 </style>

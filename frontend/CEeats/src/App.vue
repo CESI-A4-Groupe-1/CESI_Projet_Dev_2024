@@ -106,7 +106,7 @@ export default defineComponent({
 
 <template>
   <header v-if="showHeader()" class="flex-container">
-    <Button icon="pi pi-arrow-right" @click="visible = true; console.log('bouton')" />
+    <Button icon="pi pi-bars" @click="visible = true; console.log('bouton')" />
     <h1><strong>CESeats</strong></h1>
     <div class="card flex justify-center">
       <img class="display_user" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile_picture" @click="toggle" aria-controls="overlay_tmenu">

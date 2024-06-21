@@ -97,46 +97,46 @@ export default defineComponent({
           <span>Changer l'image</span>
         </label>
         <input id="file" type="file" @change="loadFile"/>
-        <img :src="user.path_pfp" id="output" width="200"  alt="profile picture"/>
+        <img :src="user.path_pfp ? user.path_pfp : '/assets/no-image.jpg'" id="output" width="200"  alt="profile picture"/>
       </div>
       <div class="logout" @click="logout()">
         <div class="txt_logout">Déconnexion <i class="pi pi-sign-out"></i></div>
       </div>
     </div>
     <h2 class="personnal_info">Informations personnelles</h2>
-    <div class="name">
+    <div class="name mb">
       <div class="display">
         <p class="title">Nom</p>
         <p class="data">
           {{ user.prenom }} {{ user.nom }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/name')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/name')" />
     </div>
-    <div class="phone">
+    <div class="phone mb">
       <div class="display">
         <p class="title">Numéro de téléphone</p>
         <p class="data">
           {{ user.telephone }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/phone')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/phone')"/>
     </div>
-    <div class="email">
+    <div class="email mb">
       <div class="display">
         <p class="title">Adresse email</p>
         <p class="data">
           {{ user.email }}
         </p>
       </div>
-      <button @click="navigateTo('./account/update/email')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/email')"/>
     </div>
     <h2 class="security">Sécurité</h2>
-    <div class="password">
+    <div class="password mb">
       <div class="display">
         <p class="title">Mot de passe</p>
       </div>
-      <button @click="navigateTo('./account/update/password')"><i class="pi pi-chevron-right"></i></button>
+      <Button icon="pi pi-chevron-right" @click="navigateTo('./account/update/password')"/>
     </div>
     <h2 class="delete">Suppression du compte</h2>
     <p class="delete_compte">Supprimez votre compte</p>
@@ -146,8 +146,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 $circleSize: 165px;
 $radius: 100px;
-$shadow: 0 0 10px 0 rgba(255,255,255,.35);
-$fontColor: rgb(250,250,250);
+$shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+$fontColor: rgb(250, 250, 250);
 
 @mixin object-center {
   display: flex;
@@ -170,7 +170,10 @@ $fontColor: rgb(250,250,250);
   font-weight: bold;
 }
 
-.name, .phone, .email, .password {
+.name,
+.phone,
+.email,
+.password {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -217,5 +220,24 @@ $fontColor: rgb(250,250,250);
       margin: 0 0.5em;
     }
   }
+}
+
+/* Styles for pi buttons */
+.pi {
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.pi-camera {
+  margin-right: 0.5em;
+}
+
+.pi-sign-out {
+  margin-left: 0.5em;
 }
 </style>

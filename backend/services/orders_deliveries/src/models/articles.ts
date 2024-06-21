@@ -9,11 +9,12 @@ export interface ArticlesAttributes {
   prix: number;
   id_section: number;
   description?: string;
+  image?: string;
 }
 
 export type ArticlesPk = "id";
 export type ArticlesId = Articles[ArticlesPk];
-export type ArticlesOptionalAttributes = "id" | "description";
+export type ArticlesOptionalAttributes = "id" | "description" | "image";
 export type ArticlesCreationAttributes = Optional<ArticlesAttributes, ArticlesOptionalAttributes>;
 
 export class Articles extends Model<ArticlesAttributes, ArticlesCreationAttributes> implements ArticlesAttributes {
@@ -22,6 +23,7 @@ export class Articles extends Model<ArticlesAttributes, ArticlesCreationAttribut
   prix!: number;
   id_section!: number;
   description?: string;
+  image?: string;
 
   // Articles hasMany CommandeList via id_article
   commande_lists!: CommandeList[];
@@ -72,6 +74,11 @@ export class Articles extends Model<ArticlesAttributes, ArticlesCreationAttribut
       type: DataTypes.STRING(255),
       allowNull: true,
       field: 'Description'
+    },
+    image: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'image'
     }
   }, {
     tableName: 'articles',

@@ -1,7 +1,12 @@
+<script setup lang="ts">
+import defaultImage from '@/assets/no-image.jpg'
+</script>
+
 <script lang="ts">
 import { OrderService } from '@/services/OrderService'
 import {useRoute} from "vue-router";
 import {ref} from "vue";
+import defaultImage from '@/assets/no-image.jpg'
 
 export default {
     name: "ArticleCard",
@@ -100,7 +105,7 @@ export default {
         <p class="price">{{ article.prix }}€</p>
         <p class="description">{{ article.description }}</p>
       </div>
-      <div class="image">
+      <div class="cl-image" :style="{ backgroundImage: 'url(' + (article.image ? article.image : defaultImage) + ')' }">
         <div class="button_add">
           <Button icon="pi pi-plus" severity="secondary" rounded aria-label="AddArticle" @click="visible = true"/>
           <Dialog v-model:visible="visible" modal :header="article.nom" :style="{ width: '25rem' }">
@@ -151,7 +156,7 @@ span {
   margin-right: 5px;
 }
 
-.image {
+.cl-image {
   height: 150px;
   width: 30%;
   background-image: url("https://www.biofournil.com/wp-content/uploads/2021/02/BRIOCHE-BIOFOURNIL_web.jpg");
