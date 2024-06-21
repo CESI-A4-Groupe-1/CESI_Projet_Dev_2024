@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import componentLoader from "../admin/component-loader.js";
 import argon2 from 'argon2';
 import {ListActionResponse, RecordActionResponse} from "adminjs";
-
+import { roleMiddleware, ROLES } from "./roles.js";
 var models = initModels(sequelize);
 
 export const compteResource = {
@@ -27,6 +27,7 @@ export const compteResource = {
         },
         actions: {
             new: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
                 before: async (req) => {
                     if (req.payload?.password) {
                         req.payload.password = bcrypt.hashSync(req.payload.password, 10);
@@ -35,12 +36,16 @@ export const compteResource = {
                 }
             },
             show: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
+
                 after: async (response) => {
                     response.record.params.password = '';
                     return response;
                 }
             },
             edit: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
+
                 before: async (request) => {
                     // no need to hash on GET requests, we'll remove passwords there anyway
                     if (request.method === 'post') {
@@ -60,6 +65,8 @@ export const compteResource = {
                 },
             },
             list: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
+
                 after: async (response: ListActionResponse) => {
                     response.records.forEach((record) => {
                         record.params.password = '';
@@ -67,6 +74,13 @@ export const compteResource = {
                     return response;
                 },
             },
+            delete: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
+            },
+            bulkDelete: {
+                isAccessible: roleMiddleware([ROLES.ADMIN, ROLES.COMMERCIAL]),
+            },
+
         }
 
     }

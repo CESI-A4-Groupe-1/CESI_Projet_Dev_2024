@@ -1,6 +1,6 @@
 import express from 'express';
 import AdminJS from 'adminjs';
-import {buildAuthenticatedRouter} from '@adminjs/express';
+import {AuthenticationContext, buildAuthenticatedRouter} from '@adminjs/express';
 import initializeDb from './db/index.js';
 
 import * as AdminJSSequelize from '@adminjs/sequelize';
@@ -20,6 +20,16 @@ import {vTotalCommandesResource} from "./resources/vTotalCommandesResource.js";
 import {vGestionCommResource} from "./resources/vGestionCommResource.js";
 import {vGraphPrixResource} from "./resources/vGraphPrixResource.js";
 import {compteResource} from "./resources/compteResource.js";
+import {componentLoader, Components} from "./components.js";
+import dashboardHandler from "./components/dashboardHandler.js";
+import {ROLES} from "./resources/roles.js";
+import session from 'express-session';
+import sequelizeStore from 'connect-session-sequelize';
+import {ordersResource} from "./resources/ordersResource.js";
+import {deliveryResource} from "./resources/deliveryResource.js";
+import {permissionRoleResource} from "./resources/permissionRoleResource.js";
+import {notificationsResource} from "./resources/notificationsResource.js";
+import {loggedSessionsResource} from "./resources/loggedSessionResource.js";
 
 console.log("registering adapter")
 AdminJS.registerAdapter({
@@ -31,12 +41,12 @@ console.log("adapter registered")
 
 const port = process.env.PORT || 3030;
 
-const authenticate = async (email: string, password: string) => {
+const authenticate = async (email: string, password: string, context: AuthenticationContext) => {
     const Compte = initModels(sequelize).compte;
     const Roles = initModels(sequelize).roles;
 
     try {
-        const compte = await Compte.findOne({where: {email: email}});
+        const compte = await Compte.findOne({where: {email: email}, include: [{model: Roles, as: "role"}]});
         if (!compte) {
             return null;
         }
@@ -49,17 +59,12 @@ const authenticate = async (email: string, password: string) => {
         if (!role) {
             return null;
         }
-        if (role.getDataValue("role_title") !== "admin") {
+        if (role.getDataValue("role_title") !== ROLES.ADMIN && role.getDataValue("role_title") !== ROLES.COMMERCIAL && role.getDataValue("role_title") !== ROLES.DELIVERY && role.getDataValue("role_title") !== ROLES.RESTAURATEUR) {
             return null;
         }
 
-        // const token = jwt.sign({
-        //     id: compte.id,
-        //     email: compte.email,
-        //     role_id: compte.role_id,
-        //     exp: Math.floor(Date.now() / 1000) + (60 * 60),
-        // }, process.env.ACCESS_JWT_KEY);
-        // await sendNotification(compte.id, {title: "Logged In", body: `Logged in as ${compte.email}`});
+
+
         return Promise.resolve(compte);
     } catch (err) {
         console.log(err);
@@ -87,8 +92,18 @@ const start = async () => {
             vGraphPrixResource,
             vPrixCommResource,
             vTotalArticlesResource,
-            vTotalCommandesResource
+            vTotalCommandesResource,
+            ordersResource,
+            deliveryResource,
+            permissionRoleResource,
+            notificationsResource,
+            loggedSessionsResource
         ],
+        dashboard: {
+            component: Components.Dashboard,
+            handler: dashboardHandler
+        },
+        componentLoader
     };
         console.log("creating admin")
       const admin = new AdminJS(adminOptions);

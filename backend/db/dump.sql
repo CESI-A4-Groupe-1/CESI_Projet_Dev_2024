@@ -36,6 +36,9 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `CLIENT_ADRESSE`*/;
 SET character_set_client = @saved_cs_client;
 
+--
+-- Temporary view structure for view `V_GraphPrix`
+--
 
 DROP TABLE IF EXISTS `V_GraphPrix`;
 /*!50001 DROP VIEW IF EXISTS `V_GraphPrix`*/;
@@ -196,7 +199,7 @@ CREATE TABLE `commandes` (
   KEY `ID_restaurant` (`ID_restaurant`),
   CONSTRAINT `commandes_ibfk_1` FOREIGN KEY (`ID_livraison`) REFERENCES `livraisons` (`ID`),
   CONSTRAINT `commandes_ibfk_2` FOREIGN KEY (`ID_restaurant`) REFERENCES `restaurants` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +273,7 @@ CREATE TABLE `livraisons` (
   PRIMARY KEY (`ID`),
   KEY `id_livreur` (`id_livreur`),
   CONSTRAINT `livraisons_ibfk_1` FOREIGN KEY (`id_livreur`) REFERENCES `compte` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,8 +357,7 @@ CREATE TABLE `permission_roles` (
   KEY `Permission_fk` (`PermissionID`),
   CONSTRAINT `Permission_fk` FOREIGN KEY (`PermissionID`) REFERENCES `permissions` (`PermissionID`),
   CONSTRAINT `Role_fk` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -380,9 +382,7 @@ CREATE TABLE `permissions` (
   `Code` varchar(255) DEFAULT NULL,
   `Description` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`PermissionID`)
-
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +414,7 @@ CREATE TABLE `restaurants` (
   KEY `ID_tag` (`ID_tag`),
   CONSTRAINT `restaurants_ibfk_1` FOREIGN KEY (`ID_restaurateur`) REFERENCES `compte` (`ID`),
   CONSTRAINT `restaurants_ibfk_2` FOREIGN KEY (`ID_tag`) REFERENCES `categories` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,7 +439,6 @@ CREATE TABLE `roles` (
   `RoleTitle` varchar(50) DEFAULT NULL,
   `RoleDescription` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`RoleID`)
-
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -480,6 +479,96 @@ LOCK TABLES `section` WRITE;
 INSERT INTO `section` VALUES (1,1,'Sandbox','Penser à drop avant le 21/06'),(2,1,'Pasta','Plats de ptes divers.'),(3,2,'Sushis','Sushis et sashimis.'),(4,2,'Plats Chauds','Plats cuisins japonais.'),(5,3,'Tacos','Varit de tacos.'),(6,3,'Burritos','Burritos gnreux.'),(7,4,'Burgers','Burgers de qualit.'),(8,4,'Frites','Diffrentes sortes de frites.'),(9,5,'Currys','Divers types de curry.'),(10,5,'Snacks','Snacks pics.'),(11,6,'Pasta Specials','Ptes spciales et sauces.'),(12,7,'Noodles','Nouilles varies.'),(13,8,'Burrito Delights','Burritos spciaux.');
 /*!40000 ALTER TABLE `section` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `V_GestionComm`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_GestionComm`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_GestionComm` AS select `C`.`ID` AS `COMMANDE`,`CL`.`ID` AS `CONTENU`,`T`.`TotalPrix` AS `PRIX`,`R`.`ID` AS `RESTO_ID`,`R`.`Nom` AS `RESTO_NOM`,`U`.`ID` AS `LIVREUR_ID`,((0 <> `U`.`Prenom`) or (0 <> ' ') or (0 <> `U`.`Nom`)) AS `LIVREUR_NOM`,`L`.`ID` AS `LIVRAISON_ID`,(case when (`L`.`validated_at` is not null) then 'Validée' when (`L`.`delivered_at` is not null) then 'Livrée' when (`L`.`picked_up_at` is not null) then 'En livraison' when (`L`.`created_at` is not null) then 'Attente livreur' else 'En préparation' end) AS `LIVRAISON_ETAT`,`L`.`adresse_livraison` AS `CLIENT_ADRESSE` from (((((`commandes` `C` join `commande_list` `CL`) join `restaurants` `R`) join `compte` `U`) join `livraisons` `L`) join `V_TotalCommande` `T`) where ((`C`.`ID` = `CL`.`ID_commande`) and (`C`.`ID_restaurant` = `R`.`ID`) and (`C`.`ID_livraison` = `L`.`ID`) and (`U`.`ID` = `L`.`id_livreur`) and (`C`.`ID` = `T`.`ID`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_GraphPrix`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_GraphPrix`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_GraphPrix` AS with recursive `AnnRange` as (select (now() - interval 1 year) AS `StartDate` union all select (`AnnRange`.`StartDate` + interval 1 day) AS `DATE_ADD(StartDate, INTERVAL 1 DAY)` from `AnnRange` where (`AnnRange`.`StartDate` < now())) select sum(`P`.`TotalComm`) AS `Benef`,cast(date_format(`P`.`dat`,'%Y-%m-%d') as datetime) AS `Jours` from (`V_PrixComm` `P` join `AnnRange` `A`) where (date_format(`P`.`dat`,'%Y-%m-%d') = date_format(`A`.`StartDate`,'%Y-%m-%d')) group by `Jours` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_PrixComm`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_PrixComm`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_PrixComm` AS select `C`.`ID` AS `ID`,sum(`T`.`TotalInd`) AS `TotalComm`,`C`.`validated_at` AS `dat` from (((`commande_list` `CL` join `commandes` `C`) join `articles` `A`) join `V_TotalArticles` `T`) where ((`CL`.`ID_commande` = `C`.`ID`) and (`T`.`ID` = `CL`.`ID`) and (`C`.`validated_at` is not null)) group by `CL`.`ID` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_TotalArticles`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_TotalArticles`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_TotalArticles` AS select `CL`.`ID` AS `ID`,`CL`.`ID_commande` AS `ID_commande`,`CL`.`ID_article` AS `ID_article`,`CL`.`Quantite` AS `Quantite`,`A`.`prix` AS `prix`,(`CL`.`Quantite` * `A`.`prix`) AS `TotalInd` from (`commande_list` `CL` join `articles` `A`) where (`CL`.`ID_article` = `A`.`ID`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `V_TotalCommande`
+--
+
+/*!50001 DROP VIEW IF EXISTS `V_TotalCommande`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_TotalCommande` AS select `C`.`ID` AS `ID`,`CL`.`ID_commande` AS `ID_commande`,sum(`T`.`TotalInd`) AS `TotalPrix` from ((`commande_list` `CL` join `commandes` `C`) join `V_TotalArticles` `T`) where ((`CL`.`ID_commande` = `C`.`ID`) and (`C`.`ID` = `T`.`ID`)) group by `CL`.`ID_commande` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

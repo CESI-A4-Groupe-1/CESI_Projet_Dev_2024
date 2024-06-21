@@ -12,15 +12,13 @@ export default class V_PrixComm extends Model {
       field: 'ID'
     },
     total_comm: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.DOUBLE,
+      allowNull: true,
       field: 'TotalComm'
     },
     dat: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

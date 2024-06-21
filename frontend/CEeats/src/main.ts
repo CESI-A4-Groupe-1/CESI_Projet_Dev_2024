@@ -23,8 +23,6 @@ import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from 'primevue/confirmationservice';
 import {messaging} from './firebase';
 
-import {messaging} from './firebase';
-
 const app = createApp(App)
 
 app.config.globalProperties.$firebaseMessaging = messaging

@@ -18,9 +18,8 @@ export default class V_GestionComm extends Model {
       field: 'CONTENU'
     },
     prix: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.DOUBLE,
+      allowNull: true,
       field: 'PRIX'
     },
     resto_id: {
@@ -30,9 +29,8 @@ export default class V_GestionComm extends Model {
       field: 'RESTO_ID'
     },
     resto_nom: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false,
-      defaultValue: 0,
       field: 'RESTO_NOM'
     },
     livreur_id: {
@@ -43,8 +41,7 @@ export default class V_GestionComm extends Model {
     },
     livreur_nom: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      allowNull: true,
       field: 'LIVREUR_NOM'
     },
     livraison_id: {
@@ -54,15 +51,14 @@ export default class V_GestionComm extends Model {
       field: 'LIVRAISON_ID'
     },
     livraison_etat: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(15),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: "",
       field: 'LIVRAISON_ETAT'
     },
     client_adresse: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false,
-      defaultValue: 0,
       field: 'CLIENT_ADRESSE'
     }
   }, {

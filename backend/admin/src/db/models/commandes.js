@@ -34,6 +34,10 @@ export default class commandes extends Model {
       },
       field: 'ID_livraison'
     },
+    paid_at: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
     validated_at: {
       type: DataTypes.DATE,
       allowNull: true

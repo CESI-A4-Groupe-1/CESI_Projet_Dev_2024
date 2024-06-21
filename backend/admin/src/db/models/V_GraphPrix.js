@@ -5,16 +5,15 @@ export default class V_GraphPrix extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     benef: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.DOUBLE,
+      allowNull: true,
       field: 'Benef'
     },
     jours: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-      field: 'Jours'
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'Jours',
+      primaryKey: true
     }
   }, {
     sequelize,

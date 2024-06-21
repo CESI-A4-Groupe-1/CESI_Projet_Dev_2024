@@ -14,8 +14,7 @@ export default class permissions extends Model {
     code: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      field: 'Code',
-      isTitle: true
+      field: 'Code'
     },
     description: {
       type: DataTypes.STRING(2000),
@@ -35,7 +34,6 @@ export default class permissions extends Model {
           { name: "PermissionID" },
         ]
       },
-
     ]
   });
   }

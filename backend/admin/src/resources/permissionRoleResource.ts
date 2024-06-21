@@ -4,14 +4,9 @@ import {roleMiddleware, ROLES} from "./roles.js";
 
 var models = initModels(sequelize);
 
-export const permissionsResource = {
-    resource: models.permissions,
+export const permissionRoleResource = {
+    resource: models.permission_roles,
     options: {
-        properties: {
-            code: {
-                isTitle: true,
-            }
-        },
         actions: {
             list: {
                 isAccessible: roleMiddleware([ROLES.ADMIN])

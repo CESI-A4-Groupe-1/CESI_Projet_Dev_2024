@@ -14,13 +14,11 @@ export default class V_TotalCommande extends Model {
     id_commande: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
       field: 'ID_commande'
     },
     total_prix: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.DOUBLE,
+      allowNull: true,
       field: 'TotalPrix'
     }
   }, {
